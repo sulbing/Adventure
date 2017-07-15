@@ -52,6 +52,9 @@
     <Filter Include="2DGameFramwork\Image">
       <UniqueIdentifier>{d24ecfc0-bfc4-46f9-91a2-c64994ad7848}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Scene">
+      <UniqueIdentifier>{49154479-a5a8-4c69-985d-da32af2898e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -126,6 +129,12 @@
     <ClInclude Include="sceneManager.h">
       <Filter>2DGameFramwork\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="openingScene.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="worldMapScene.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -187,6 +196,12 @@
     </ClCompile>
     <ClCompile Include="sceneManager.cpp">
       <Filter>2DGameFramwork\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="openingScene.cpp">
+      <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="worldMapScene.cpp">
+      <Filter>MainGame\Scene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

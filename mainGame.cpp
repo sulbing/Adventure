@@ -24,7 +24,11 @@ HRESULT mainGame::init(void)
 {
 	gameNode::init(true);
 
-	
+	SCENEMANAGER->addScene("SCENE_OPENEING", new openingScene);
+	SCENEMANAGER->addScene("SCENE_WORLDMAP", new worldMapScene);
+
+	SCENEMANAGER->changeScene("SCENE_OPENEING");
+
 	return S_OK;
 }
 
@@ -39,6 +43,8 @@ void mainGame::release(void)
 void mainGame::update(void)
 {
 	gameNode::update();
+
+	SCENEMANAGER->update();
 }
 
 //앞으로 여기에다 그려라 
@@ -47,7 +53,9 @@ void mainGame::render(void)
 	PatBlt(getMemDC(), 0, 0, WINSIZEX, WINSIZEY, WHITENESS);
 	//================ 위에 건들지마라 ================
 
-	TIMEMANAGER->render(getMemDC());
+	SCENEMANAGER->render();
+
+	//TIMEMANAGER->render(getMemDC());
 
 	//===============아래도 건들지마라 =================
 	this->getBackBuffer()->render(getHDC(), 0, 0);

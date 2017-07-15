@@ -153,6 +153,7 @@
     <ClInclude Include="keyManager.h" />
     <ClInclude Include="loading.h" />
     <ClInclude Include="mainGame.h" />
+    <ClInclude Include="openingScene.h" />
     <ClInclude Include="progressBar.h" />
     <ClInclude Include="randomFunction.h" />
     <ClInclude Include="sceneManager.h" />
@@ -164,6 +165,7 @@
     <ClInclude Include="timer.h" />
     <ClInclude Include="txtData.h" />
     <ClInclude Include="utils.h" />
+    <ClInclude Include="worldMapScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="animation.cpp" />
@@ -177,6 +179,7 @@
     <ClCompile Include="keyManager.cpp" />
     <ClCompile Include="loading.cpp" />
     <ClCompile Include="mainGame.cpp" />
+    <ClCompile Include="openingScene.cpp" />
     <ClCompile Include="progressBar.cpp" />
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="soundManager.cpp" />
@@ -191,6 +194,7 @@
     <ClCompile Include="txtData.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="winMain.cpp" />
+    <ClCompile Include="worldMapScene.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
