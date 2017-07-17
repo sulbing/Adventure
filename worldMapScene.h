@@ -3,6 +3,10 @@
 
 class worldMapScene : public gameNode
 {
+private:
+	float _cameraX;
+	float _cameraY;
+
 public:
 	HRESULT init(void);
 	void release(void);
