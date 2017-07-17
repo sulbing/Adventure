@@ -141,6 +141,9 @@
     <ClInclude Include="stagePlayer.h">
       <Filter>MainGame\Player</Filter>
     </ClInclude>
+    <ClInclude Include="nymphStage.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -211,6 +214,9 @@
     </ClCompile>
     <ClCompile Include="stagePlayer.cpp">
       <Filter>MainGame\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="nymphStage.cpp">
+      <Filter>MainGame\Scene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
