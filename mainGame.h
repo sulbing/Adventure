@@ -2,6 +2,7 @@
 #include "gameNode.h"
 #include "openingScene.h"
 #include "worldMapScene.h"
+#include "nymphStage.h"
 
 
 class mainGame : public gameNode

@@ -52,6 +52,9 @@
     <Filter Include="2DGameFramwork\Image">
       <UniqueIdentifier>{d24ecfc0-bfc4-46f9-91a2-c64994ad7848}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Player">
+      <UniqueIdentifier>{ade8f5f9-9800-472a-83cd-ad71b7d0b4f3}</UniqueIdentifier>
+    </Filter>
     <Filter Include="MainGame\Scene">
       <UniqueIdentifier>{49154479-a5a8-4c69-985d-da32af2898e1}</UniqueIdentifier>
     </Filter>
@@ -135,6 +138,9 @@
     <ClInclude Include="worldMapScene.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="stagePlayer.h">
+      <Filter>MainGame\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -202,6 +208,9 @@
     </ClCompile>
     <ClCompile Include="worldMapScene.cpp">
       <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="stagePlayer.cpp">
+      <Filter>MainGame\Player</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

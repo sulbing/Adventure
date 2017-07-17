@@ -22,10 +22,18 @@ void worldMapScene::release(void)
 
 void worldMapScene::update(void) 
 {
+<<<<<<< HEAD
 	if (KEYMANAGER->isStayKeyDown(VK_LEFT)) _cameraX -= 5;
 	if (KEYMANAGER->isStayKeyDown(VK_RIGHT)) _cameraX += 5;
 	if (KEYMANAGER->isStayKeyDown(VK_UP)) _cameraY -= 5;
 	if (KEYMANAGER->isStayKeyDown(VK_DOWN)) _cameraY += 5;
+=======
+	if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
+	{
+		SCENEMANAGER->changeScene("SCENE_SAVE_POINT");
+	}
+
+>>>>>>> 0d08f22d2c52f4862e79bb62b71df2c2b7a2736a
 }
 
 void worldMapScene::render(void) 
