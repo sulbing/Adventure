@@ -26,7 +26,6 @@ HRESULT mainGame::init(void)
 
 	SCENEMANAGER->addScene("SCENE_OPENEING", new openingScene);
 	SCENEMANAGER->addScene("SCENE_WORLDMAP", new worldMapScene);
-	SCENEMANAGER->addScene("SCENE_SAVE_POINT", new nymphStage);
 
 	SCENEMANAGER->changeScene("SCENE_OPENEING");
 
