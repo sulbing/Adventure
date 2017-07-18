@@ -23,6 +23,8 @@ void nymphStage::update(void)
 {
 
 	_nymphAni->frameUpdate(TIMEMANAGER->getElapsedTime() * 8);
+
+
 }
 
 void nymphStage::render(void)

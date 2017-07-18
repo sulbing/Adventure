@@ -26,11 +26,21 @@ HRESULT mainGame::init(void)
 
 	addImage();
 
+	DATABASE->pushbackaddVector(4);
+	DATABASE->pushbackaddVector(7);
+	DATABASE->pushbackaddVector(3);
+	DATABASE->pushbackaddVector(7);
+	DATABASE->pushbackaddVector(15);
+
+	_inventoryScene = new inventoryScene;
+	_inventoryScene->init();
+
 	SCENEMANAGER->addScene("SCENE_OPENEING", new openingScene);
 	SCENEMANAGER->addScene("SCENE_WORLDMAP", new worldMapScene);
 	SCENEMANAGER->addScene("SCENE_SAVE_POINT", new nymphStage);
+	SCENEMANAGER->addScene("SCENE_INVENTORY", _inventoryScene);
 
-	SCENEMANAGER->changeScene("SCENE_OPENEING");
+	SCENEMANAGER->changeScene("SCENE_INVENTORY");
 
 	return S_OK;
 }
