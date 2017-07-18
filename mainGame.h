@@ -15,7 +15,8 @@ public:
 	virtual void update(void);		
 	virtual void render(void);
 
-	
+	void addImage();
+
 
 	mainGame();
 	~mainGame();

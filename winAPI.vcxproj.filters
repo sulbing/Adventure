@@ -218,5 +218,8 @@
     <ClCompile Include="nymphStage.cpp">
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="mainGame_Image.cpp">
+      <Filter>MainGame</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

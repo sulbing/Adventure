@@ -8,8 +8,6 @@ openingScene::~openingScene(){}
 
 HRESULT openingScene::init(void)
 {
-	IMAGEMANAGER->addImage("START", "Image/START.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
-
 	return S_OK;
 }
 
