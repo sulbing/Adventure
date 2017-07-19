@@ -73,7 +73,7 @@ void stagePlayer::keyControl()
 	//¿À¸¥ÂÊ ´­·µÀ»¶§
 	if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
 	{
-		if (_state == IDLE || _state == JUMP)
+		if (_state == IDLE || _state == JUMP || _state == WALK) 
 		{
 			_speedX = MOVESPEED;
 			_isRight = true;
@@ -84,19 +84,11 @@ void stagePlayer::keyControl()
 	//¿ÞÂÊ ´­·¶À»¶§
 	if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
 	{
-		if (_state == IDLE || _state == JUMP)
+		if (_state == IDLE || _state == JUMP || _state == WALK)
 		{
 			_speedX = - MOVESPEED;
 			_isRight = false;
 			if (_state == IDLE) _state = WALK;
-		}
-	}
-
-	if (KEYMANAGER->isOnceKeyDown(VK_RIGHT) && (KEYMANAGER->isOnceKeyDown(VK_LEFT)))
-	{
-		if (_state == WALK)
-		{
-			_speedX = 0;
 		}
 	}
 
