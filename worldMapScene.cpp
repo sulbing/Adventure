@@ -8,6 +8,9 @@ worldMapScene::~worldMapScene() {}
 
 HRESULT worldMapScene::init(void)
 {
+	//ÆäÀÌµå ÀÎ/¾Æ¿ô
+	_sceneEffect = new sceneEffect;
+	_sceneEffect->init();
 
 	_background = IMAGEMANAGER->findImage("WORLDMAP");
 	_mapSizeWidth = _background->getWidth();
@@ -16,6 +19,8 @@ HRESULT worldMapScene::init(void)
 	//Áý ¾Õ ÁÂÇ¥
 	_x = 1395;
 	_y = 820;
+
+	_rc = RectMake(_x, _y, 50, 50);
 
 	return S_OK;
 }
@@ -27,6 +32,7 @@ void worldMapScene::release(void)
 
 void worldMapScene::update(void)
 {
+	_sceneEffect->update();
 
 	if (KEYMANAGER->isStayKeyDown(VK_LEFT)) _x -= 3;
 	if (KEYMANAGER->isStayKeyDown(VK_RIGHT)) _x += 3;
@@ -35,12 +41,21 @@ void worldMapScene::update(void)
 
 	if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
 	{
+		_sceneEffect->setFadeOUT(true);
+	}
+	//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
+	if (!_sceneEffect->getChangeScene() && !_sceneEffect->isFadeOUT())
+	{
 		SCENEMANAGER->changeScene("SCENE_SAVE_POINT");
 	}
+
+	_rc = RectMake(_x, _y, 50, 50);
+
+	pixelCollision();
 }
 
 void worldMapScene::render(void)
-{
+{	
 	int x, y;
 	DIRECTION direction;
 	RECT rcSour[4];
@@ -160,7 +175,10 @@ void worldMapScene::render(void)
 	IMAGEMANAGER->findImage("WORLDMAP_PIXEL_COLLISION")->render(getMemDC(), 0, 0);
 
 	RectangleMake(getMemDC(), WINSIZEX / 2, WINSIZEY / 2, 50, 50);
-	RectangleMake(getMemDC(), _x, _y, 20, 50);
+	
+	Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
+
+	_sceneEffect->render();
 
 }
 
@@ -194,5 +212,73 @@ DIRECTION worldMapScene::getDirection(int x, int y)
 
 void worldMapScene::pixelCollision()
 {
+	_probeTop = _rc.top;
+	_probeBottom = _rc.bottom;
+	_probeLeft = _rc.left;
+	_probeRight = _rc.right;
+
+	//TOP
+	for (int i = _probeTop; i < _probeTop + 5; ++i)
+	{
+		COLORREF color = GetPixel(IMAGEMANAGER->findImage("WORLDMAP_PIXEL_COLLISION")->getMemDC(), _x + (_rc.right - _rc.left), i);
+
+		int r = GetRValue(color);
+		int g = GetGValue(color);
+		int b = GetBValue(color);
+
+		if ((r == 0 && g == 0 && b == 255))
+		{
+			_y = i;
+			break;
+		}
+	}
+
+	//BOTTOM
+	for (int i = _probeBottom - 5; i < _probeBottom; ++i)
+	{
+		COLORREF color = GetPixel(IMAGEMANAGER->findImage("WORLDMAP_PIXEL_COLLISION")->getMemDC(), _x + (_rc.right - _rc.left), i);
+
+		int r = GetRValue(color);
+		int g = GetGValue(color);
+		int b = GetBValue(color);
+
+		if ((r == 0 && g == 0 && b == 255))
+		{
+			_y = i - (_rc.bottom - _rc.top);
+			break;
+		}
+	}
+
+	//LEFT
+	for (int i = _probeLeft; i < _probeLeft + 5; ++i)
+	{
+		COLORREF color = GetPixel(IMAGEMANAGER->findImage("WORLDMAP_PIXEL_COLLISION")->getMemDC(), i, _y + (_rc.bottom - _rc.top));
+
+		int r = GetRValue(color);
+		int g = GetGValue(color);
+		int b = GetBValue(color);
+
+		if ((r == 0 && g == 0 && b == 255))
+		{
+			_x = i;
+			break;
+		}
+	}
+
+	//RIGHT
+	for (int i = _probeRight - 5; i < _probeRight; ++i)
+	{
+		COLORREF color = GetPixel(IMAGEMANAGER->findImage("WORLDMAP_PIXEL_COLLISION")->getMemDC(), i, _y + (_rc.bottom - _rc.top));
+
+		int r = GetRValue(color);
+		int g = GetGValue(color);
+		int b = GetBValue(color);
+
+		if ((r == 0 && g == 0 && b == 255))
+		{
+			_x = i - (_rc.right - _rc.left);
+			break;
+		}
+	}
 
 }

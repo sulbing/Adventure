@@ -3,6 +3,9 @@
 
 void mainGame::addImage()
 {
+	//ÆäÀÌµå ÀÎ¾Æ¿ô
+	IMAGEMANAGER->addImage("BLACK", "Image/BLACK.bmp", WINSIZEX, WINSIZEY, false, RGB(255, 0, 255));
+
 	//¿ÀÇÁ´×
 	IMAGEMANAGER->addImage("START", "Image/START.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
 

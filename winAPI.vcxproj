@@ -160,6 +160,7 @@
     <ClInclude Include="openingScene.h" />
     <ClInclude Include="progressBar.h" />
     <ClInclude Include="randomFunction.h" />
+    <ClInclude Include="sceneEffect.h" />
     <ClInclude Include="sceneManager.h" />
     <ClInclude Include="singletonBase.h" />
     <ClInclude Include="soundManager.h" />
@@ -191,6 +192,7 @@
     <ClCompile Include="nymphStage.cpp" />
     <ClCompile Include="openingScene.cpp" />
     <ClCompile Include="progressBar.cpp" />
+    <ClCompile Include="sceneEffect.cpp" />
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="soundManager.cpp" />
     <ClCompile Include="stagePlayer.cpp" />

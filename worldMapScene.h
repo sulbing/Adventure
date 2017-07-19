@@ -1,5 +1,6 @@
 #pragma once
-#include"gameNode.h"
+#include "gameNode.h"
+#include "sceneEffect.h"
 
 enum DIRECTION
 {
@@ -17,17 +18,23 @@ enum DIRECTION
 class worldMapScene : public gameNode
 {
 private:
+	sceneEffect* _sceneEffect;
+
 	image* _background;
 	int _mapSizeWidth;
 	int _mapSizeHeight;
 
-	RECT _rc;
-
 	int _x, _y;				//캐릭터 x, y
+	RECT _rc;				//캐릭터 RECT
+
+	int _probeTop;
+	int _probeBottom;
+	int _probeLeft;
+	int _probeRight;
+
+
 	DIRECTION _direction;
 	RECT _rcSour[4];
-
-	//int _probe
 
 public:
 	HRESULT init(void);

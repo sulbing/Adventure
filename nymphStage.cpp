@@ -51,23 +51,23 @@ void nymphStage::pixelCollision(void)
 {
 	if (_stageFinn->getState() == JUMP)
 	{
-			for (int i = _stageFinn->getY() + _stageFinn->getHeight() / 2 - 20 / 2; i < _stageFinn->getY() + _stageFinn->getHeight(); ++i)
+		for (int i = _stageFinn->getY() + _stageFinn->getHeight() / 2 - 20 / 2; i < _stageFinn->getY() + _stageFinn->getHeight(); ++i)
+		{
+			COLORREF color = GetPixel(IMAGEMANAGER->findImage("savePointCollision")->getMemDC(), _stageFinn->getX(), i);
+
+			int r = GetRValue(color);
+			int g = GetGValue(color);
+			int b = GetBValue(color);
+
+			if ((r == 0 && g == 0 && b == 255))
 			{
-				COLORREF color = GetPixel(IMAGEMANAGER->findImage("savePointCollision")->getMemDC(), _stageFinn->getX(), i);
-
-				int r = GetRValue(color);
-				int g = GetGValue(color);
-				int b = GetBValue(color);
-
-				if ((r == 0 && g == 0 && b == 255))
-				{
-					_stageFinn->setY(i - _stageFinn->getHeight() / 2);
-					//{ i - _stageFinn->getHeight() / 2; } = i - _stageFinn->getHeight() / 2;
-					_stageFinn->setSpeedY(0);
-					_stageFinn->setState(IDLE);
-					break;
-				}
+				_stageFinn->setY(i - _stageFinn->getHeight() / 2);
+				//{ i - _stageFinn->getHeight() / 2; } = i - _stageFinn->getHeight() / 2;
+				_stageFinn->setSpeedY(0);
+				_stageFinn->setState(IDLE);
+				break;
 			}
+		}
 		
 	}
 }

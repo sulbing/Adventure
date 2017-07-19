@@ -1,8 +1,12 @@
 #pragma once
 #include "gameNode.h"
+#include "sceneEffect.h"
 
 class openingScene : public gameNode
 {
+private:
+	sceneEffect* _sceneEffect;
+
 public:
 	HRESULT init(void);
 	void release(void);
