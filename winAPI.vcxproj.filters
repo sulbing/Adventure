@@ -58,6 +58,12 @@
     <Filter Include="MainGame\Scene">
       <UniqueIdentifier>{49154479-a5a8-4c69-985d-da32af2898e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Item">
+      <UniqueIdentifier>{57dff9c6-9ab9-4337-bd04-d0710d3023ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\database">
+      <UniqueIdentifier>{66acfdc0-4bdd-45c5-a6ec-2c325a886a72}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -144,6 +150,15 @@
     <ClInclude Include="nymphStage.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="inventoryScene.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="item.h">
+      <Filter>MainGame\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="database.h">
+      <Filter>MainGame\database</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -220,6 +235,15 @@
     </ClCompile>
     <ClCompile Include="mainGame_Image.cpp">
       <Filter>MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="inventoryScene.cpp">
+      <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="item.cpp">
+      <Filter>MainGame\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="database.cpp">
+      <Filter>MainGame\database</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

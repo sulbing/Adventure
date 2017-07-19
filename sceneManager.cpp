@@ -21,6 +21,7 @@ gameNode* sceneManager::_currentScene = NULL;
 gameNode* sceneManager::_loadingScene = NULL;
 gameNode* sceneManager::_readyScene = NULL;
 
+
 sceneManager::sceneManager()
 {
 }

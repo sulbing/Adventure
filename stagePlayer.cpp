@@ -70,9 +70,10 @@ void stagePlayer::render(void)
 //업데이트에 들어가는 함수들
 void stagePlayer::keyControl()
 {
+	//오른쪽 눌럿을때
 	if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
 	{
-		if (_state == IDLE || _state == JUMP)
+		if (_state == IDLE || _state == JUMP || _state == WALK) 
 		{
 			_speedX = MOVESPEED;
 			_isRight = true;
@@ -80,10 +81,10 @@ void stagePlayer::keyControl()
 		}
 	}
 
-
+	//왼쪽 눌렀을때
 	if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
 	{
-		if (_state == IDLE || _state == JUMP)
+		if (_state == IDLE || _state == JUMP || _state == WALK)
 		{
 			_speedX = - MOVESPEED;
 			_isRight = false;
@@ -91,24 +92,45 @@ void stagePlayer::keyControl()
 		}
 	}
 
+	//위를 눌렀을때
 	if (KEYMANAGER->isOnceKeyDown(VK_UP)) _isLookUp = true;
 	if (KEYMANAGER->isOnceKeyUp(VK_UP)) _isLookUp = false;
 
+	//아래를 눌렀을때
+	if (KEYMANAGER->isStayKeyDown(VK_DOWN))
+	{
+		if (_state == IDLE || _state == WALK || _state == CROUCH)
+		{
+			_state = CROUCH;
+			_speedX = 0;
+		}
+	}
+
+	
+	//d를 눌렀을때
+
+	if (KEYMANAGER->isOnceKeyDown('D'))
+	{
+		_state = JUMP;
+		_speedY -= JUMPPOWER;
+	}
 
 }
 void stagePlayer::stateControl()
 {
 	if (_state == WALK)
 	{
-		if (!KEYMANAGER->isStayKeyDown(VK_RIGHT))
+		if (!KEYMANAGER->isStayKeyDown(VK_RIGHT) && !KEYMANAGER->isStayKeyDown(VK_LEFT))
 		{
 			_state = IDLE;
 			_speedX = 0;
 		}
-		if (!KEYMANAGER->isStayKeyDown(VK_LEFT))
+	}
+	if (_state == CROUCH)
+	{
+		if (!KEYMANAGER->isStayKeyDown(VK_DOWN))
 		{
 			_state = IDLE;
-			_speedX = 0;
 		}
 	}
 }
@@ -119,6 +141,14 @@ void stagePlayer::basicMove()
 	float moveTime = elapsedTime * 100;
 	_x += _speedX * moveTime;
 	_y += _speedY * moveTime;
+
+	//중력적용
+	if (_state == JUMP || _state == JUMPATTACK)
+	{
+		_speedY += GRAVITY * moveTime;
+	}
+
+	_bodyRC = RectMakeCenter(_x, _y, _width, _height);
 }
 
 
