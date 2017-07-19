@@ -10,12 +10,12 @@ private:
 
 	stagePlayer* _stageFinn;
 
-
 public:
 	HRESULT init(void);
 	void release(void);
 	void update(void);
 	void render(void);
+	void pixelCollision(void);
 
 	nymphStage();
 	~nymphStage();

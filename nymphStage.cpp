@@ -31,18 +31,45 @@ void nymphStage::update(void)
 
 	//ÇÉ ¾÷µ¥ÀÌÆ®
 	_stageFinn->update();
+	pixelCollision();
 
 
 }
 
 void nymphStage::render(void)
 {
+	IMAGEMANAGER->findImage("savePointCollision")->render(getMemDC(), 0, 0);
 	IMAGEMANAGER->findImage("savePoint")->render(getMemDC(), 0, 0, 0, 0, WINSIZEX, WINSIZEY);
 	_nymph->aniRender(getMemDC(), 400, WINSIZEY - 208, _nymphAni);
 
 
 	//ÇÉ ·£´õ
 	_stageFinn->render();
+}
+
+void nymphStage::pixelCollision(void)
+{
+	if (_stageFinn->getState() == JUMP)
+	{
+			for (int i = _stageFinn->getY() + _stageFinn->getHeight() / 2 - 20 / 2; i < _stageFinn->getY() + _stageFinn->getHeight(); ++i)
+			{
+				COLORREF color = GetPixel(IMAGEMANAGER->findImage("savePointCollision")->getMemDC(), _stageFinn->getX(), i);
+
+				int r = GetRValue(color);
+				int g = GetGValue(color);
+				int b = GetBValue(color);
+
+				if ((r == 0 && g == 0 && b == 255))
+				{
+					_stageFinn->setY(i - _stageFinn->getHeight() / 2);
+					//{ i - _stageFinn->getHeight() / 2; } = i - _stageFinn->getHeight() / 2;
+					_stageFinn->setSpeedY(0);
+					_stageFinn->setState(IDLE);
+					break;
+				}
+			}
+		
+	}
 }
 
 nymphStage::nymphStage()
