@@ -23,13 +23,11 @@ private:
 
 	RECT _rc;
 
-	int _x, _y; //캐릭터 x, y
+	int _x, _y;				//캐릭터 x, y
 	DIRECTION _direction;
 	RECT _rcSour[4];
 
-
-	float _cameraX;
-	float _cameraY;
+	//int _probe
 
 public:
 	HRESULT init(void);
@@ -38,6 +36,8 @@ public:
 	void render(void);
 
 	DIRECTION getDirection(int x, int y);
+
+	void pixelCollision();
 
 	worldMapScene();
 	~worldMapScene();
