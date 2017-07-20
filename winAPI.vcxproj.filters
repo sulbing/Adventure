@@ -65,7 +65,7 @@
       <UniqueIdentifier>{66acfdc0-4bdd-45c5-a6ec-2c325a886a72}</UniqueIdentifier>
     </Filter>
     <Filter Include="MainGame\Enemy">
-      <UniqueIdentifier>{7aab1866-5e76-4bb7-9874-2c11223da4f1}</UniqueIdentifier>
+      <UniqueIdentifier>{812aa9ea-2d8a-43fb-aeae-2b16650aa748}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -162,13 +162,11 @@
     <ClInclude Include="database.h">
       <Filter>MainGame\database</Filter>
     </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="minion1.h">
-      <Filter>MainGame\Enemy</Filter>
-=======
     <ClInclude Include="sceneEffect.h">
       <Filter>MainGame</Filter>
->>>>>>> e61d8f8e39e7953a702a3f8dc8df75d0d4778920
+    </ClInclude>
+    <ClInclude Include="minion1.h">
+      <Filter>MainGame\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -256,13 +254,11 @@
     <ClCompile Include="database.cpp">
       <Filter>MainGame\database</Filter>
     </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="minion1.cpp">
-      <Filter>MainGame\Enemy</Filter>
-=======
     <ClCompile Include="sceneEffect.cpp">
       <Filter>MainGame</Filter>
->>>>>>> e61d8f8e39e7953a702a3f8dc8df75d0d4778920
+    </ClCompile>
+    <ClCompile Include="minion1.cpp">
+      <Filter>MainGame\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
