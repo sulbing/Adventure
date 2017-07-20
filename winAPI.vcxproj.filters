@@ -64,6 +64,9 @@
     <Filter Include="MainGame\database">
       <UniqueIdentifier>{66acfdc0-4bdd-45c5-a6ec-2c325a886a72}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Enemy">
+      <UniqueIdentifier>{7aab1866-5e76-4bb7-9874-2c11223da4f1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -159,6 +162,9 @@
     <ClInclude Include="database.h">
       <Filter>MainGame\database</Filter>
     </ClInclude>
+    <ClInclude Include="minion1.h">
+      <Filter>MainGame\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -244,6 +250,9 @@
     </ClCompile>
     <ClCompile Include="database.cpp">
       <Filter>MainGame\database</Filter>
+    </ClCompile>
+    <ClCompile Include="minion1.cpp">
+      <Filter>MainGame\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

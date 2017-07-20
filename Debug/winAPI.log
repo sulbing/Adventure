@@ -1,15 +1,2 @@
-﻿  inventoryScene.cpp
-d:\sga\github\adventure\item.h(56): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-d:\sga\github\adventure\inventoryscene.cpp(29): warning C4018: '<': signed/unsigned mismatch
-d:\sga\github\adventure\inventoryscene.cpp(31): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
-d:\sga\github\adventure\inventoryscene.cpp(48): warning C4018: '<': signed/unsigned mismatch
-d:\sga\github\adventure\inventoryscene.cpp(56): warning C4018: '<': signed/unsigned mismatch
-d:\sga\github\adventure\inventoryscene.cpp(69): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
-d:\sga\github\adventure\inventoryscene.cpp(77): warning C4018: '<': signed/unsigned mismatch
-d:\sga\github\adventure\inventoryscene.cpp(79): warning C4244: 'argument': conversion from 'LONG' to 'float', possible loss of data
-d:\sga\github\adventure\inventoryscene.cpp(86): warning C4018: '<': signed/unsigned mismatch
-d:\sga\github\adventure\inventoryscene.cpp(104): warning C4018: '<': signed/unsigned mismatch
-d:\sga\github\adventure\inventoryscene.cpp(119): warning C4018: '<': signed/unsigned mismatch
-d:\sga\github\adventure\inventoryscene.cpp(117): warning C4101: 'rcTemp': unreferenced local variable
-  winAPI.vcxproj -> D:\SGA\github\Adventure\Debug\winAPI.exe
-  winAPI.vcxproj -> D:\SGA\github\Adventure\Debug\winAPI.pdb (Full PDB)
+﻿  winAPI.vcxproj -> D:\Adventure\Debug\winAPI.exe
+  winAPI.vcxproj -> D:\Adventure\Debug\winAPI.pdb (Partial PDB)
