@@ -1,7 +1,7 @@
 #pragma once
 #include "gameNode.h"
 #define JUMPPOWER 10
-#define GRAVITY 0.2
+#define GRAVITY 0.4
 #define MOVESPEED 5
 
 enum PLAYERSTATE

@@ -26,12 +26,6 @@ HRESULT mainGame::init(void)
 
 	addImage();
 
-	DATABASE->pushbackaddVector(4);
-	DATABASE->pushbackaddVector(7);
-	DATABASE->pushbackaddVector(3);
-	DATABASE->pushbackaddVector(7);
-	DATABASE->pushbackaddVector(15);
-
 	_inventoryScene = new inventoryScene;
 	_inventoryScene->init();
 
@@ -40,7 +34,7 @@ HRESULT mainGame::init(void)
 	SCENEMANAGER->addScene("SCENE_SAVE_POINT", new nymphStage);
 	SCENEMANAGER->addScene("SCENE_INVENTORY", _inventoryScene);
 
-	SCENEMANAGER->changeScene("SCENE_INVENTORY");
+	SCENEMANAGER->changeScene("SCENE_OPENEING");
 
 	return S_OK;
 }

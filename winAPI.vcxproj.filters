@@ -162,8 +162,13 @@
     <ClInclude Include="database.h">
       <Filter>MainGame\database</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="minion1.h">
       <Filter>MainGame\Enemy</Filter>
+=======
+    <ClInclude Include="sceneEffect.h">
+      <Filter>MainGame</Filter>
+>>>>>>> e61d8f8e39e7953a702a3f8dc8df75d0d4778920
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -251,8 +256,13 @@
     <ClCompile Include="database.cpp">
       <Filter>MainGame\database</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="minion1.cpp">
       <Filter>MainGame\Enemy</Filter>
+=======
+    <ClCompile Include="sceneEffect.cpp">
+      <Filter>MainGame</Filter>
+>>>>>>> e61d8f8e39e7953a702a3f8dc8df75d0d4778920
     </ClCompile>
   </ItemGroup>
 </Project>
