@@ -1,8 +1,9 @@
 #pragma once
 #include "gameNode.h"
 #define JUMPPOWER 10
-#define GRAVITY 0.4
+#define GRAVITY 0.2
 #define MOVESPEED 5
+#define INTRODISTANCE 100
 
 enum PLAYERSTATE
 {
@@ -17,6 +18,9 @@ enum PLAYERSTATE
 	FINNATTACK3,
 	JAKEATTACK,
 	JUMPATTACK,
+	HIT,
+	INTRO,
+	OUTRO,
 	STATEEND
 };
 
@@ -28,12 +32,18 @@ private:
 	int _currentHP;
 	float _x, _y;
 	float _width, _height;
+	float _startX, _startY;
 	RECT _bodyRC;
 	float _speedX, _speedY;
 	float _jumpPower, _gravity;
 	bool _isRight;
 	bool _isLookUp;
+	bool _isHit;
 	PLAYERSTATE _state;
+
+	image* _basicImage;
+
+	animation* _playerMotion;
 	
 
 	//스테이터스
@@ -56,6 +66,21 @@ private:
 	void keyControl();
 	void stateControl();
 	void basicMove();
+
+	//초기화에 들어갈 함수
+	void animaitionInit();
+
+	//애니메이션관련 함수
+	void aniInput(std::string leftKey, std::string rightKey);
+
+
+
+	//애니메이션 재생 관련 변수
+	int downJumpLeftInt = 0;
+	int downJumpRightInt = 0;
+	int crouchInt = 0;
+	int hitInt = 0;
+	int hitCount = 0;
 
 
 public:
@@ -99,6 +124,8 @@ public:
 	void setJumpPower(float jumpPower) { _jumpPower = jumpPower; }
 	void setGravity(float gravity) { _gravity = gravity; }
 	void setState(PLAYERSTATE state) { _state = state; }
+
+	
 
 	stagePlayer();
 	~stagePlayer();
