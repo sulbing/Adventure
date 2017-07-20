@@ -76,14 +76,15 @@ void stagePlayer::render(void)
 	{
 		if (hitCount % 6 != 0)
 		{
-			_basicImage->aniRender(getMemDC(), _x - _basicImage->getFrameWidth() / 2, _y - _basicImage->getFrameHeight() / 2, _playerMotion);
+			_basicImage->aniRender(getMemDC(), _x - _basicImage->getFrameWidth() / 2 - _camX, _y - _basicImage->getFrameHeight() / 2, _playerMotion);
 		}
-		
+		//카메라 엑스값만큼 빼주기
 	}
 	if (!_isHit)
 	{
-		_basicImage->aniRender(getMemDC(), _x - _basicImage->getFrameWidth() / 2, _y - _basicImage->getFrameHeight() / 2, _playerMotion);
+		_basicImage->aniRender(getMemDC(), _x - _basicImage->getFrameWidth() / 2 - _camX, _y - _basicImage->getFrameHeight() / 2, _playerMotion);
 	}
+		//카메라 엑스값만큼 빼주기
 }
 	
 
@@ -181,6 +182,7 @@ void stagePlayer::stateControl()
 			_state = IDLE;
 			_speedX = 0;
 		}
+		_speedY = 0;
 	}
 
 	
