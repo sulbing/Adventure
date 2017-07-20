@@ -108,6 +108,8 @@ public:
 	float getJumpPower() { return _jumpPower; }
 	float getGravity() { return _gravity; }
 	int getState() { return _state; }
+	bool getIsRight() { return _isRight; }
+	bool getIsHit() { return _isHit; }
 
 	//ผผลอ
 	void setCurrentHP(int HP) { _currentHP = HP; }
