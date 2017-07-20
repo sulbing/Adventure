@@ -23,7 +23,7 @@ void openingScene::update(void)
 {
 	_sceneEffect->update();
 
-	if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
+	if (!_sceneEffect->isFadeIN() && KEYMANAGER->isOnceKeyDown(VK_RETURN))
 	{
 		_sceneEffect->setFadeOUT(true);
 	}

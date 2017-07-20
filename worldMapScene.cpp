@@ -39,7 +39,7 @@ void worldMapScene::update(void)
 	if (KEYMANAGER->isStayKeyDown(VK_UP)) _y -= 3;
 	if (KEYMANAGER->isStayKeyDown(VK_DOWN)) _y += 3;
 
-	if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
+	if (!_sceneEffect->isFadeIN() && KEYMANAGER->isOnceKeyDown(VK_RETURN))
 	{
 		_sceneEffect->setFadeOUT(true);
 	}
@@ -212,15 +212,10 @@ DIRECTION worldMapScene::getDirection(int x, int y)
 
 void worldMapScene::pixelCollision()
 {
-	_probeTop = _rc.top;
-	_probeBottom = _rc.bottom;
-	_probeLeft = _rc.left;
-	_probeRight = _rc.right;
-
-	//TOP
-	for (int i = _probeTop; i < _probeTop + 5; ++i)
+	//LEFTTOP
+	for (int i = 0; i < 5; ++i)
 	{
-		COLORREF color = GetPixel(IMAGEMANAGER->findImage("WORLDMAP_PIXEL_COLLISION")->getMemDC(), _x + (_rc.right - _rc.left), i);
+		COLORREF color = GetPixel(IMAGEMANAGER->findImage("WORLDMAP_PIXEL_COLLISION")->getMemDC(), _rc.left + i, _rc.top + i);
 
 		int r = GetRValue(color);
 		int g = GetGValue(color);
@@ -228,15 +223,14 @@ void worldMapScene::pixelCollision()
 
 		if ((r == 0 && g == 0 && b == 255))
 		{
-			_y = i;
-			break;
+			if (KEYMANAGER->isStayKeyDown(VK_LEFT)) _x += 3;
+			if (KEYMANAGER->isStayKeyDown(VK_UP)) _y += 3;
 		}
 	}
-
-	//BOTTOM
-	for (int i = _probeBottom - 5; i < _probeBottom; ++i)
+	//RIGHTTOP
+	for (int i = 0; i < 5; ++i)
 	{
-		COLORREF color = GetPixel(IMAGEMANAGER->findImage("WORLDMAP_PIXEL_COLLISION")->getMemDC(), _x + (_rc.right - _rc.left), i);
+		COLORREF color = GetPixel(IMAGEMANAGER->findImage("WORLDMAP_PIXEL_COLLISION")->getMemDC(), _rc.left + (_rc.right - _rc.left) + i, _rc.top + i);
 
 		int r = GetRValue(color);
 		int g = GetGValue(color);
@@ -244,15 +238,15 @@ void worldMapScene::pixelCollision()
 
 		if ((r == 0 && g == 0 && b == 255))
 		{
-			_y = i - (_rc.bottom - _rc.top);
-			break;
+			if (KEYMANAGER->isStayKeyDown(VK_LEFT)) _x -= 3;
+			if (KEYMANAGER->isStayKeyDown(VK_UP)) _y += 3;
 		}
 	}
 
-	//LEFT
-	for (int i = _probeLeft; i < _probeLeft + 5; ++i)
+	//RIGHTBOTTOM
+	for (int i = 0; i < 5; ++i)
 	{
-		COLORREF color = GetPixel(IMAGEMANAGER->findImage("WORLDMAP_PIXEL_COLLISION")->getMemDC(), i, _y + (_rc.bottom - _rc.top));
+		COLORREF color = GetPixel(IMAGEMANAGER->findImage("WORLDMAP_PIXEL_COLLISION")->getMemDC(), _rc.left + i, _rc.top + (_rc.bottom - _rc.top) + i);
 
 		int r = GetRValue(color);
 		int g = GetGValue(color);
@@ -260,15 +254,15 @@ void worldMapScene::pixelCollision()
 
 		if ((r == 0 && g == 0 && b == 255))
 		{
-			_x = i;
-			break;
+			if (KEYMANAGER->isStayKeyDown(VK_RIGHT)) _x += 3;
+			if (KEYMANAGER->isStayKeyDown(VK_DOWN)) _y -= 3;
 		}
 	}
 
-	//RIGHT
-	for (int i = _probeRight - 5; i < _probeRight; ++i)
+	//RIGHTBOTTOM
+	for (int i = 0; i < 5; ++i)
 	{
-		COLORREF color = GetPixel(IMAGEMANAGER->findImage("WORLDMAP_PIXEL_COLLISION")->getMemDC(), i, _y + (_rc.bottom - _rc.top));
+		COLORREF color = GetPixel(IMAGEMANAGER->findImage("WORLDMAP_PIXEL_COLLISION")->getMemDC(), _rc.left + (_rc.right - _rc.left) + i, _rc.top + (_rc.bottom - _rc.top) + i);
 
 		int r = GetRValue(color);
 		int g = GetGValue(color);
@@ -276,9 +270,79 @@ void worldMapScene::pixelCollision()
 
 		if ((r == 0 && g == 0 && b == 255))
 		{
-			_x = i - (_rc.right - _rc.left);
-			break;
+			if (KEYMANAGER->isStayKeyDown(VK_LEFT)) _x -= 3;
+			if (KEYMANAGER->isStayKeyDown(VK_DOWN)) _y -= 3;
 		}
 	}
+
+
+	//_probeTop = _rc.top;
+	//_probeBottom = _rc.bottom;
+	//_probeLeft = _rc.left;
+	//_probeRight = _rc.right;
+
+	////TOP
+	//for (int i = _probeTop; i < _probeTop + 5; ++i)
+	//{
+	//	COLORREF color = GetPixel(IMAGEMANAGER->findImage("WORLDMAP_PIXEL_COLLISION")->getMemDC(), _x + (_rc.right - _rc.left), i);
+
+	//	int r = GetRValue(color);
+	//	int g = GetGValue(color);
+	//	int b = GetBValue(color);
+
+	//	if ((r == 0 && g == 0 && b == 255))
+	//	{
+	//		_y = i;
+	//		break;
+	//	}
+	//}
+
+	////BOTTOM
+	//for (int i = _probeBottom - 5; i < _probeBottom; ++i)
+	//{
+	//	COLORREF color = GetPixel(IMAGEMANAGER->findImage("WORLDMAP_PIXEL_COLLISION")->getMemDC(), _x + (_rc.right - _rc.left), i);
+
+	//	int r = GetRValue(color);
+	//	int g = GetGValue(color);
+	//	int b = GetBValue(color);
+
+	//	if ((r == 0 && g == 0 && b == 255))
+	//	{
+	//		_y = i - (_rc.bottom - _rc.top);
+	//		break;
+	//	}
+	//}
+
+	////LEFT
+	//for (int i = _probeLeft; i < _probeLeft + 5; ++i)
+	//{
+	//	COLORREF color = GetPixel(IMAGEMANAGER->findImage("WORLDMAP_PIXEL_COLLISION")->getMemDC(), i, _y + (_rc.bottom - _rc.top));
+
+	//	int r = GetRValue(color);
+	//	int g = GetGValue(color);
+	//	int b = GetBValue(color);
+
+	//	if ((r == 0 && g == 0 && b == 255))
+	//	{
+	//		_x = i;
+	//		break;
+	//	}
+	//}
+
+	////RIGHT
+	//for (int i = _probeRight - 5; i < _probeRight; ++i)
+	//{
+	//	COLORREF color = GetPixel(IMAGEMANAGER->findImage("WORLDMAP_PIXEL_COLLISION")->getMemDC(), i, _y + (_rc.bottom - _rc.top));
+
+	//	int r = GetRValue(color);
+	//	int g = GetGValue(color);
+	//	int b = GetBValue(color);
+
+	//	if ((r == 0 && g == 0 && b == 255))
+	//	{
+	//		_x = i - (_rc.right - _rc.left);
+	//		break;
+	//	}
+	//}
 
 }
