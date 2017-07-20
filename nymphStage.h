@@ -1,14 +1,16 @@
 #pragma once
 #include"gameNode.h"
 #include"stagePlayer.h"
+#include"enemy.h"
 
 class nymphStage : public gameNode
 {
 private:
-	image* _nymph;
-	animation* _nymphAni;
+	image*			_nymph;
+	animation*		 _nymphAni;
 
-	stagePlayer* _stageFinn;
+	stagePlayer*	_stageFinn;
+	enemy*			_mi1;
 
 public:
 	HRESULT init(void);
