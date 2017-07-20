@@ -165,7 +165,7 @@
     <ClInclude Include="sceneEffect.h">
       <Filter>MainGame</Filter>
     </ClInclude>
-    <ClInclude Include="minion1.h">
+    <ClInclude Include="enemy.h">
       <Filter>MainGame\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
@@ -257,7 +257,7 @@
     <ClCompile Include="sceneEffect.cpp">
       <Filter>MainGame</Filter>
     </ClCompile>
-    <ClCompile Include="minion1.cpp">
+    <ClCompile Include="enemy.cpp">
       <Filter>MainGame\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
