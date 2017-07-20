@@ -25,25 +25,27 @@ class enemy : public gameNode
 private:
 	MINIONDIRECTION	_direction;
 
-	image*		_minion1;
-	animation*	_minionAni;
-	RECT		_rc1;
+	//Åä³¢
+	image*		_minion;
+	RECT		_rc;
 
 	bool		_isTurn;
-	float		_x, _y;
+
+	//°ø¿ë
+	animation*	_minionAni;
 	int			_count;
 	int			_maxCount;
 
 	int			_type;
 
 	float		_time;
-
+	float		_x, _y;
 
 
 public:
 	HRESULT init(int type, float x, float y);
 	void release();
-	void update();
+	void update(int type);
 	void render();
 
 	static void rightMove1(void* obj);
@@ -53,8 +55,13 @@ public:
 	static void rightHit1(void* obj);
 	static void leftHit1(void* obj);
 
-	void minion1Move();
+	//Åä³¢
 	void minion1Init();
+	void minion1Move();
+
+	//Áö··ÀÌ
+	void minion2Init();
+	void minion2Move();
 
 	MINIONDIRECTION getDirection(void) { return _direction; }
 	void setDirection(MINIONDIRECTION direction) { _direction = direction; }
@@ -67,7 +74,7 @@ public:
 	void setY(float y) { _y = y; }
 	float getX(void) { return _x; }
 	float getY(void) { return _y; }
-	RECT getRect1(void) { return _rc1; }
+	RECT getRect(void) { return _rc; }
 
 	int getState() { return (int)_direction; }
 

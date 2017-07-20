@@ -22,8 +22,12 @@ HRESULT enemy::init(int type, float x, float y)
 	switch (_type)
 	{
 	case 0:
-		_minion1 = IMAGEMANAGER->findImage("minion1");
+		_minion = IMAGEMANAGER->findImage("minion1");
 		minion1Init();
+		break;
+	case 1:
+		_minion = IMAGEMANAGER->findImage("minion2");
+		minion2Init();
 		break;
 	}
 
@@ -38,24 +42,44 @@ void enemy::release()
 {
 
 }
-void enemy::update()
+void enemy::update(int type)
 {
-	turn();
-	minion1Move();
+	_type = type;
+
+	switch (_type)
+	{
+	case 0:
+		turn();
+		minion1Move();
+		break;
+	case 1:
+		turn();
+		minion2Move();
+	default:
+		break;
+	}
 
 	KEYANIMANAGER->update();
-	_rc1 = RectMakeCenter(_x, _y, _minion1->getFrameWidth(), _minion1->getFrameHeight());
+	_rc = RectMakeCenter(_x, _y, _minion->getFrameWidth(), _minion->getFrameHeight());
 }
 void enemy::render()
 {
-	_minion1->aniRender(getMemDC(), _rc1.left, _rc1.top, _minionAni);
+	_minion->aniRender(getMemDC(), _rc.left, _rc.top, _minionAni);
 }
 void enemy::rightMove1(void* obj)
 {
 	enemy* mi = (enemy*)obj;
 
 	mi->setDirection(DIRECTION_RIGHT_MOVE);
-	mi->setMinionAni(KEYANIMANAGER->findAnimation("minion1RightStop"));
+	switch (mi->getType())
+	{
+	case 0:
+		mi->setMinionAni(KEYANIMANAGER->findAnimation("minion1RightStop"));
+		break;
+	case 1:
+		mi->setMinionAni(KEYANIMANAGER->findAnimation("minion2RightStop"));
+		break;
+	}
 	mi->getMinionAni()->start();
 }
 void enemy::leftMove1(void* obj)
@@ -63,7 +87,15 @@ void enemy::leftMove1(void* obj)
 	enemy* mi = (enemy*)obj;
 
 	mi->setDirection(DIRECTION_LEFT_MOVE);
-	mi->setMinionAni(KEYANIMANAGER->findAnimation("minion1LeftStop"));
+	switch (mi->getType())
+	{
+	case 0:
+		mi->setMinionAni(KEYANIMANAGER->findAnimation("minion1LeftStop"));
+		break;
+	case 1:
+		mi->setMinionAni(KEYANIMANAGER->findAnimation("minion2LeftStop"));
+		break;
+	}
 	mi->getMinionAni()->start();
 }
 void enemy::rightAttack1(void* obj)
@@ -71,7 +103,15 @@ void enemy::rightAttack1(void* obj)
 	enemy* mi = (enemy*)obj;
 
 	mi->setDirection(DIRECTION_RIGHT_ATTACK);
-	mi->setMinionAni(KEYANIMANAGER->findAnimation("minion1RightStop"));
+	switch (mi->getType())
+	{
+	case 0:
+		mi->setMinionAni(KEYANIMANAGER->findAnimation("minion1RightStop"));
+		break;
+	case 1:
+		mi->setMinionAni(KEYANIMANAGER->findAnimation("minion2RightStop"));
+		break;
+	}
 	mi->getMinionAni()->start();
 }
 void enemy::leftAttack1(void* obj)
@@ -79,7 +119,15 @@ void enemy::leftAttack1(void* obj)
 	enemy* mi = (enemy*)obj;
 
 	mi->setDirection(DIRECTION_LEFT_ATTACK);
-	mi->setMinionAni(KEYANIMANAGER->findAnimation("minion1LeftStop"));
+	switch (mi->getType())
+	{
+	case 0 :
+		mi->setMinionAni(KEYANIMANAGER->findAnimation("minion1LeftStop"));
+		break;
+	case 1:
+		mi->setMinionAni(KEYANIMANAGER->findAnimation("minion2LeftStop"));
+		break;
+	}
 	mi->getMinionAni()->start();
 }
 void enemy::rightHit1(void* obj)
@@ -87,7 +135,15 @@ void enemy::rightHit1(void* obj)
 	enemy* mi = (enemy*)obj;
 
 	mi->setDirection(DIRECTION_RIGHT_HIT);
-	mi->setMinionAni(KEYANIMANAGER->findAnimation("minion1RightStop"));
+	switch (mi->getType())
+	{
+	case 0:
+		mi->setMinionAni(KEYANIMANAGER->findAnimation("minion1RightStop"));
+		break;
+	case 1:
+		mi->setMinionAni(KEYANIMANAGER->findAnimation("minion2RightStop"));
+		break;
+	}
 	mi->getMinionAni()->start();
 }
 void enemy::leftHit1(void* obj)
@@ -95,7 +151,15 @@ void enemy::leftHit1(void* obj)
 	enemy* mi = (enemy*)obj;
 
 	mi->setDirection(DIRECTION_LEFT_HIT);
-	mi->setMinionAni(KEYANIMANAGER->findAnimation("minion1LeftStop"));
+	switch (mi->getType())
+	{
+	case 0:
+		mi->setMinionAni(KEYANIMANAGER->findAnimation("minion1LeftStop"));
+		break;
+	case 1:
+		mi->setMinionAni(KEYANIMANAGER->findAnimation("minion2LeftStop"));
+		break;
+	}
 	mi->getMinionAni()->start();
 }
 void enemy::minion1Move()
@@ -104,14 +168,20 @@ void enemy::minion1Move()
 	switch (_isTurn)
 	{
 	case 0:
-		_direction = DIRECTION_RIGHT_MOVE;
-		_minionAni = KEYANIMANAGER->findAnimation("minion1RightMove");
-		_minionAni->start();
+		if (_direction != DIRECTION_RIGHT_MOVE)
+		{
+			_direction = DIRECTION_RIGHT_MOVE;
+			_minionAni = KEYANIMANAGER->findAnimation("minion1RightMove");
+			_minionAni->start();
+		}
 		break;
 	case 1:
-		_direction = DIRECTION_LEFT_MOVE;
-		_minionAni = KEYANIMANAGER->findAnimation("minion1LeftMove");
-		_minionAni->start();
+		if (_direction != DIRECTION_LEFT_MOVE)
+		{
+			_direction = DIRECTION_LEFT_MOVE;
+			_minionAni = KEYANIMANAGER->findAnimation("minion1LeftMove");
+			_minionAni->start();
+		}
 		break;
 	default:
 		break;
@@ -124,24 +194,24 @@ void enemy::minion1Move()
 	case DIRECTION_RIGHT_MOVE:
 		_x += MINION1SPEED;
 		_y += _time * GRAVITY;
-		_rc1 = RectMakeCenter(_x, _y, _minion1->getFrameWidth(), _minion1->getFrameHeight());
+		_rc = RectMakeCenter(_x, _y, _minion->getFrameWidth(), _minion->getFrameHeight());
 		break;
 	case DIRECTION_LEFT_MOVE:
 		_x -= MINION1SPEED;
 		_y += _time * GRAVITY;
-		_rc1 = RectMakeCenter(_x, _y, _minion1->getFrameWidth(), _minion1->getFrameHeight());
+		_rc = RectMakeCenter(_x, _y, _minion->getFrameWidth(), _minion->getFrameHeight());
 		break;
 	case DIRECTION_LEFT_DIE: case DIRECTION_RIGHT_HIT:
 		_x += MINION1SPEED;
-		_rc1 = RectMakeCenter(_x, _y, _minion1->getFrameWidth(), _minion1->getFrameHeight());
+		_rc = RectMakeCenter(_x, _y, _minion->getFrameWidth(), _minion->getFrameHeight());
 	case DIRECTION_RIGHT_DIE: case DIRECTION_LEFT_HIT:
 		_x -= MINION1SPEED;
-		_rc1 = RectMakeCenter(_x, _y, _minion1->getFrameWidth(), _minion1->getFrameHeight());
+		_rc = RectMakeCenter(_x, _y, _minion->getFrameWidth(), _minion->getFrameHeight());
 	}
 }
 void enemy::minion1Init()
 {
-	_rc1 = RectMakeCenter(_x, _y, _minion1->getFrameWidth(), _minion1->getFrameHeight());
+	_rc = RectMakeCenter(_x, _y, _minion->getFrameWidth(), _minion->getFrameHeight());
 
 	int rightStop[] = { 0,1,2,3 };
 	KEYANIMANAGER->addArrayFrameAnimation("minion1RightStop", "minion1", rightStop, 4, 2, true);
@@ -184,5 +254,85 @@ void enemy::turn()
 		_maxCount = RND->getFromIntTo(RNDNUMLOW, RNDNUMMAX);
 		if (_isTurn) _isTurn = false;
 		else _isTurn = true;
+	}
+}
+void enemy::minion2Init()
+{
+	_rc = RectMakeCenter(_x, _y, _minion->getFrameWidth(), _minion->getFrameHeight());
+
+	int rightStop[] = { 0,1,2,3,4,5,6,7 };
+	KEYANIMANAGER->addArrayFrameAnimation("minion2RightStop", "minion2", rightStop, 8, 10, true);
+
+	int leftStop[] = { 10,11,12,13,14,15,16,17 };
+	KEYANIMANAGER->addArrayFrameAnimation("minion2LeftStop", "minion2", leftStop, 8, 10, true);
+
+	int arrRightMove[] = { 20,21,22,23,24,25,26,27,28,29 };
+	KEYANIMANAGER->addArrayFrameAnimation("minion2RightMove", "minion2", arrRightMove, 10, 10, false, rightMove1, this);
+
+	int arrLeftMove[] = { 30,31,32,33,34,35,36,37,38,39 };
+	KEYANIMANAGER->addArrayFrameAnimation("minion2LeftMove", "minion2", arrLeftMove, 10, 10, false, leftMove1, this);
+
+	int arrRightAttack[] = { 60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79 };
+	KEYANIMANAGER->addArrayFrameAnimation("minion2RightAttack", "minion2", arrRightAttack, 20, 20, false, rightAttack1, this);
+
+	int arrLeftAttack[] = { 80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99 };
+	KEYANIMANAGER->addArrayFrameAnimation("minion2LeftAttack", "minion2", arrLeftAttack, 20, 20, false, leftAttack1, this);
+
+	int arrRightHit[] = { 45,46,47,48,49 };
+	KEYANIMANAGER->addArrayFrameAnimation("minion2RightHit", "minion2", arrRightHit, 5, 6, false, rightHit1, this);
+
+	int arrLeftHit[] = { 55,56,57,58,59 };
+	KEYANIMANAGER->addArrayFrameAnimation("minion2LeftHit", "minion2", arrLeftHit, 5, 6, false, leftHit1, this);
+
+	int arrRightDie[] = { 45, 46 };
+	KEYANIMANAGER->addArrayFrameAnimation("minion2RightDie", "minion2", arrRightDie, 2, 1, true);
+
+	int arrLefttDie[] = { 55,56 };
+	KEYANIMANAGER->addArrayFrameAnimation("minion2LeftDie", "minion2", arrRightDie, 2, 1, true);
+
+	_minionAni = KEYANIMANAGER->findAnimation("minion2RightMove");
+	_minionAni->start();
+}
+void enemy::minion2Move()
+{
+	switch (_isTurn)
+	{
+	case 0:
+		if (_direction != DIRECTION_RIGHT_MOVE)
+		{
+			_direction = DIRECTION_RIGHT_MOVE;
+			_minionAni = KEYANIMANAGER->findAnimation("minion2RightMove");
+			_minionAni->start();
+		}
+		break;
+	case 1:
+		if (_direction != DIRECTION_LEFT_MOVE)
+		{
+			_direction = DIRECTION_LEFT_MOVE;
+			_minionAni = KEYANIMANAGER->findAnimation("minion2LeftMove");
+			_minionAni->start();
+		}
+		break;
+	default:
+		break;
+	}
+	switch (_direction)
+	{
+	case DIRECTION_RIGHT_STOP: case DIRECTION_LEFT_STOP:
+		break;
+	case DIRECTION_RIGHT_MOVE:
+		_x += MINION1SPEED;
+		_rc = RectMakeCenter(_x, _y, _minion->getFrameWidth(), _minion->getFrameHeight());
+		break;
+	case DIRECTION_LEFT_MOVE:
+		_x -= MINION1SPEED;
+		_rc = RectMakeCenter(_x, _y, _minion->getFrameWidth(), _minion->getFrameHeight());
+		break;
+	case DIRECTION_LEFT_DIE: case DIRECTION_RIGHT_HIT:
+		_x += MINION1SPEED;
+		_rc = RectMakeCenter(_x, _y, _minion->getFrameWidth(), _minion->getFrameHeight());
+	case DIRECTION_RIGHT_DIE: case DIRECTION_LEFT_HIT:
+		_x -= MINION1SPEED;
+		_rc = RectMakeCenter(_x, _y, _minion->getFrameWidth(), _minion->getFrameHeight());
 	}
 }
