@@ -62,18 +62,18 @@ void stage1::pixelCollision(void)
 	{
 		for (int i = _stageFinn->getX() - _stageFinn->getWidth() / 2; i < _stageFinn->getX() - _stageFinn->getWidth() / 2 + 10; ++i)
 		{
-			COLORREF color = GetPixel(IMAGEMANAGER->findImage("STAGE1_PIXEL_COLLISION")->getMemDC(), i, _stageFinn->getY() + _stageFinn->getHeight() / 2 - 10);
+COLORREF color = GetPixel(IMAGEMANAGER->findImage("STAGE1_PIXEL_COLLISION")->getMemDC(), i, _stageFinn->getY() + _stageFinn->getHeight() / 2 - 10);
 
-			int r = GetRValue(color);
-			int g = GetGValue(color);
-			int b = GetBValue(color);
+int r = GetRValue(color);
+int g = GetGValue(color);
+int b = GetBValue(color);
 
-			if ((r == 0 && g == 0 && b == 255))
-			{
-				_stageFinn->setX(i + _stageFinn->getWidth() / 2);
-				_stageFinn->setSpeedX(0);
-				break;
-			}
+if ((r == 0 && g == 0 && b == 255))
+{
+	_stageFinn->setX(i + _stageFinn->getWidth() / 2);
+	_stageFinn->setSpeedX(0);
+	break;
+}
 		}
 	}
 
@@ -150,21 +150,38 @@ void stage1::camMove(void)
 	{
 		if (_camX >= 0 && _camX < 6370 - WINSIZEX)
 		{
-			if (_stageFinn->getX() > WINSIZEX / 3)
+			if (_stageFinn->getX() + _stageFinn->getWidth() / 2 == 6370)
 			{
-				_camX = _stageFinn->getX() - WINSIZEX / 3;
+				_stageFinn->setSpeedX(0);
+			}
+			if (_camX == 6370 - WINSIZEX);
+			else if (_stageFinn->getX() > WINSIZEX / 3)
+			{
+				if (_stageFinn->getX() - _camX >= WINSIZEX / 3 + 2)
+				{
+					_camX += 3 + _stageFinn->getSpeedX();
+				}
+				else _camX = _stageFinn->getX() - WINSIZEX / 3;
 				_stageFinn->setCamX(_camX);
 			}
 		}
+	
 	}
 
 	else if (_stageFinn->getIsRight() == false)
 	{
+		if (_camX < 0) _camX = 0;
 		if (_camX > 0 && _camX <= 6379 - WINSIZEX)
 		{
-			if (_stageFinn->getX() < 6379 - WINSIZEX / 3)
+			if (_stageFinn->getX() - _stageFinn->getWidth() / 2 == 0) _stageFinn->setSpeedX(0);
+			if (_camX == 0);
+			else if (_stageFinn->getX() < 6379 - WINSIZEX / 3)
 			{
-				_camX = _stageFinn->getX() - WINSIZEX / 3 * 2;
+				if (_stageFinn->getX() - _camX <= WINSIZEX / 3 * 2 - 2)
+				{
+					_camX += _stageFinn->getSpeedX() - 3;
+				}
+				else _camX = _stageFinn->getX() - WINSIZEX / 3 * 2;
 				_stageFinn->setCamX(_camX);
 			}
 		}
