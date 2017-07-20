@@ -4,6 +4,7 @@
 #include "worldMapScene.h"
 #include "nymphStage.h"
 #include "inventoryScene.h"
+#include "stage1.h"
 
 
 class mainGame : public gameNode

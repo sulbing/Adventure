@@ -16,6 +16,9 @@ HRESULT nymphStage::init(void)
 	_stageFinn = new stagePlayer;
 	_stageFinn->init(2, 0, 0, 8, WINSIZEX / 4, WINSIZEY * 3 / 4, true);
 
+	_sceneEffect = new sceneEffect;
+	_sceneEffect->init();
+
 	_mi1 = new enemy;
 	_mi1->init(1, WINSIZEX / 4, WINSIZEY * 3 / 4);
 
@@ -28,6 +31,7 @@ void nymphStage::release(void)
 
 void nymphStage::update(void)
 {
+	_sceneEffect->update();
 
 	_nymphAni->frameUpdate(TIMEMANAGER->getElapsedTime() * 8);
 
@@ -36,6 +40,17 @@ void nymphStage::update(void)
 	pixelCollision();
 
 	_mi1->update(_mi1->getType());
+
+	//¾ÀÀüÈ¯
+	if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
+	{
+		_sceneEffect->setFadeOUT(true);
+	}
+	//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
+	if (!_sceneEffect->getChangeScene() && !_sceneEffect->isFadeOUT())
+	{
+		SCENEMANAGER->changeScene("STAGE1");
+	}
 
 }
 
@@ -54,26 +69,42 @@ void nymphStage::render(void)
 
 void nymphStage::pixelCollision(void)
 {
-	if (_stageFinn->getState() == JUMP)
+	if (_stageFinn->getState() == JUMP || _stageFinn->getState() == HIT)
 	{
-		for (int i = _stageFinn->getY() + _stageFinn->getHeight() / 2 - 20 / 2; i < _stageFinn->getY() + _stageFinn->getHeight(); ++i)
+		if (_stageFinn->getSpeedY() >= 0)
 		{
-			COLORREF color = GetPixel(IMAGEMANAGER->findImage("savePointCollision")->getMemDC(), _stageFinn->getX(), i);
-
-			int r = GetRValue(color);
-			int g = GetGValue(color);
-			int b = GetBValue(color);
-
-			if ((r == 0 && g == 0 && b == 255))
+			for (int i = _stageFinn->getY() + _stageFinn->getHeight() / 2 - 10; i < _stageFinn->getY() + _stageFinn->getHeight() / 2; ++i)
 			{
-				_stageFinn->setY(i - _stageFinn->getHeight() / 2);
-				//{ i - _stageFinn->getHeight() / 2; } = i - _stageFinn->getHeight() / 2;
-				_stageFinn->setSpeedY(0);
-				_stageFinn->setState(IDLE);
-				break;
+				COLORREF color = GetPixel(IMAGEMANAGER->findImage("savePointCollision")->getMemDC(), _stageFinn->getX(), i);
+
+				int r = GetRValue(color);
+				int g = GetGValue(color);
+				int b = GetBValue(color);
+
+				if ((r == 0 && g == 0 && b == 255))
+				{
+					_stageFinn->setY(i - _stageFinn->getHeight() / 2);
+					if (KEYMANAGER->isStayKeyDown(VK_RIGHT) || KEYMANAGER->isStayKeyDown(VK_LEFT)) _stageFinn->setState(WALK);
+					else _stageFinn->setState(IDLE);
+					break;
+				}
 			}
 		}
-		
+	}
+
+	else if (_stageFinn->getState() == WALK || _stageFinn->getState() == IDLE)
+	{
+		COLORREF color = GetPixel(IMAGEMANAGER->findImage("savePointCollision")->getMemDC(), _stageFinn->getX(), _stageFinn->getY() + _stageFinn->getHeight() / 2);
+
+		int r = GetRValue(color);
+		int g = GetGValue(color);
+		int b = GetBValue(color);
+
+		if (!(r == 0 && g == 0 && b == 255))
+		{
+			_stageFinn->setState(JUMP);
+		}
+
 	}
 }
 
