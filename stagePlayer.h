@@ -1,6 +1,6 @@
 #pragma once
 #include "gameNode.h"
-#define JUMPPOWER 10
+#define JUMPPOWER 8
 #define GRAVITY 0.2
 #define MOVESPEED 5
 #define INTRODISTANCE 100
@@ -44,6 +44,9 @@ private:
 	image* _basicImage;
 
 	animation* _playerMotion;
+
+	//카메라 좌표 추가
+	int _camX, _camY;
 	
 
 	//스테이터스
@@ -126,7 +129,8 @@ public:
 	void setJumpPower(float jumpPower) { _jumpPower = jumpPower; }
 	void setGravity(float gravity) { _gravity = gravity; }
 	void setState(PLAYERSTATE state) { _state = state; }
-
+	void setCamX(int x) { _camX = x; }
+	//카메라 x값 받아오기
 	
 
 	stagePlayer();

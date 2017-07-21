@@ -2,6 +2,7 @@
 #include"gameNode.h"
 #include"stagePlayer.h"
 #include"enemy.h"
+#include "sceneEffect.h"
 
 class nymphStage : public gameNode
 {
@@ -11,6 +12,7 @@ private:
 
 	stagePlayer*	_stageFinn;
 	enemy*			_mi1;
+	sceneEffect* _sceneEffect;
 
 public:
 	HRESULT init(void);

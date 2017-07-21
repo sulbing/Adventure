@@ -117,6 +117,11 @@ HRESULT item::init(ITEMLIST itemlist, float x, float y)
 			_frameY = 5;
 		}
 		break;
+		case ITEMLIST_END:
+		{
+			_frameX = 1;
+			_frameY = 5;
+		}
 	}
 
 	return S_OK;

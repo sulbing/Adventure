@@ -4,12 +4,13 @@
 #include "worldMapScene.h"
 #include "nymphStage.h"
 #include "inventoryScene.h"
+#include "statusScene.h"
+#include "stage1.h"
 
 
 class mainGame : public gameNode
 {
 private:
-	inventoryScene* _inventoryScene;
 
 public:
 	virtual HRESULT init(void);		

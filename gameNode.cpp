@@ -15,7 +15,6 @@ HRESULT gameNode::init(void)		//WM_CREATE
 {
 	_hdc = GetDC(_hWnd);
 	_managerInit = false;
-
 	return S_OK;
 }
 

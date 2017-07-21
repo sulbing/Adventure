@@ -22,6 +22,24 @@ HRESULT worldMapScene::init(void)
 
 	_rc = RectMake(_x, _y, 30, 30);
 
+	_eventRC[STAGE_NYMPH_1] = RectMake(771, 292, 40, 25);
+	_eventRC[STAGE_NYMPH_2] = RectMake(1988, 868, 40 ,25);
+	_eventRC[STAGE_HOUSE] = RectMake(1385, 717, 60, 100);
+	_eventRC[STAGE_1_IN] = RectMake(841, 481, 30, 30);
+	_eventRC[STAGE_1_OUT] = RectMake(809, 352, 30, 30);
+	_eventRC[STAGE_2_IN] = RectMake(2126, 1694, 30, 30);
+	_eventRC[STAGE_2_OUT] = RectMake(2204, 1542, 30, 30);
+	_eventRC[STAGE_3_IN] = RectMake(2215, 768, 30, 30);
+	_eventRC[STAGE_3_OUT] = RectMake(2184, 608, 30, 30);
+	_eventRC[STAGE_CHEST] = RectMake(1067, 323, 50, 50);
+	_eventRC[STAGE_MIDBOSS] = RectMake(2286, 1418, 30, 30);
+	_eventRC[JAKE_BRIDGE_IN] = RectMake(1801, 1492, 30, 30);
+	_eventRC[JAKE_BRIDGE_OUT] = RectMake(1801, 1582, 30, 30);
+	_eventRC[JAKE_CLIMB_1] = RectMake(2226, 483, 80, 20);
+	_eventRC[JAKE_CLIMB_2] = RectMake(2361, 291, 60, 20);
+
+	_isEvent = false;
+	
 	return S_OK;
 }
 
@@ -39,19 +57,20 @@ void worldMapScene::update(void)
 	if (KEYMANAGER->isStayKeyDown(VK_UP)) _y -= 3;
 	if (KEYMANAGER->isStayKeyDown(VK_DOWN)) _y += 3;
 
-	if (!_sceneEffect->isFadeIN() && KEYMANAGER->isOnceKeyDown(VK_RETURN))
-	{
-		_sceneEffect->setFadeOUT(true);
-	}
-	//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
-	if (!_sceneEffect->getChangeScene() && !_sceneEffect->isFadeOUT())
-	{
-		SCENEMANAGER->changeScene("SCENE_SAVE_POINT");
-	}
+	//if (!_sceneEffect->isFadeIN() && KEYMANAGER->isOnceKeyDown(VK_RETURN))
+	//{
+	//	_sceneEffect->setFadeOUT(true);
+	//}
+	////¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
+	//if (!_sceneEffect->getChangeScene() && !_sceneEffect->isFadeOUT())
+	//{
+	//	SCENEMANAGER->changeScene("SCENE_SAVE_POINT");
+	//}
 
 	_rc = RectMake(_x, _y, 30, 30);
 
 	pixelCollision();
+	rectCollision();
 }
 
 void worldMapScene::render(void)
@@ -212,107 +231,14 @@ DIRECTION worldMapScene::getDirection(int x, int y)
 
 void worldMapScene::pixelCollision()
 {
-	//bool isCheck = false;
-
-	////LEFTTOP
-	//if (!isCheck)
-	//{
-	//	for (int i = 0; i < 5; ++i)
-	//	{
-	//		COLORREF color = GetPixel(IMAGEMANAGER->findImage("WORLDMAP_PIXEL_COLLISION")->getMemDC(), _rc.left, _rc.top);
-
-	//		int r = GetRValue(color);
-	//		int g = GetGValue(color);
-	//		int b = GetBValue(color);
-
-	//		if ((r == 0 && g == 0 && b == 255))
-	//		{
-	//			isCheck = true;
-
-	//			if (KEYMANAGER->isStayKeyDown(VK_LEFT)) _x += 3;
-	//			if (KEYMANAGER->isStayKeyDown(VK_UP)) _y += 3;
-
-	//			break;
-	//		}
-	//	}
-	//}
-
-	////RIGHTTOP
-	//if (!isCheck)
-	//{
-	//	for (int i = 0; i < 5; ++i)
-	//	{
-	//		COLORREF color = GetPixel(IMAGEMANAGER->findImage("WORLDMAP_PIXEL_COLLISION")->getMemDC(), _rc.right, _rc.top);
-
-	//		int r = GetRValue(color);
-	//		int g = GetGValue(color);
-	//		int b = GetBValue(color);
-
-	//		if ((r == 0 && g == 0 && b == 255))
-	//		{
-	//			isCheck = true;
-
-	//			if (KEYMANAGER->isStayKeyDown(VK_LEFT)) _x -= 3;
-	//			if (KEYMANAGER->isStayKeyDown(VK_UP)) _y += 3;
-
-	//			break;
-	//		}
-	//	}
-	//}
-
-	////LEFTBOTTOM
-	//if (!isCheck)
-	//{
-	//	for (int i = 0; i < 5; ++i)
-	//	{
-	//		COLORREF color = GetPixel(IMAGEMANAGER->findImage("WORLDMAP_PIXEL_COLLISION")->getMemDC(), _rc.left, _rc.bottom);
-
-	//		int r = GetRValue(color);
-	//		int g = GetGValue(color);
-	//		int b = GetBValue(color);
-
-	//		if ((r == 0 && g == 0 && b == 255))
-	//		{
-	//			isCheck = true;
-
-	//			if (KEYMANAGER->isStayKeyDown(VK_RIGHT)) _x += 3;
-	//			if (KEYMANAGER->isStayKeyDown(VK_DOWN)) _y -= 3;
-
-	//			break;
-	//		}
-	//	}
-	//}
-
-	////RIGHTBOTTOM
-	//if (!isCheck)
-	//{
-	//	for (int i = 0; i < 5; ++i)
-	//	{
-	//		COLORREF color = GetPixel(IMAGEMANAGER->findImage("WORLDMAP_PIXEL_COLLISION")->getMemDC(), _rc.right, _rc.bottom);
-
-	//		int r = GetRValue(color);
-	//		int g = GetGValue(color);
-	//		int b = GetBValue(color);
-
-	//		if ((r == 0 && g == 0 && b == 255))
-	//		{
-	//			isCheck = true;
-
-	//			if (KEYMANAGER->isStayKeyDown(VK_LEFT)) _x -= 3;
-	//			if (KEYMANAGER->isStayKeyDown(VK_DOWN)) _y -= 3;
-
-	//			break;
-	//		}
-	//	}
-	//}
-
 	_probeTop = _rc.top;
 	_probeBottom = _rc.bottom;
 	_probeLeft = _rc.left;
 	_probeRight = _rc.right;
 
+
 	//TOP
-	for (int i = _probeTop; i < _probeTop + 5; ++i)
+	for (int i = _probeTop; i > _probeTop - 5; --i)
 	{
 		COLORREF color = GetPixel(IMAGEMANAGER->findImage("WORLDMAP_PIXEL_COLLISION")->getMemDC(), _x + ((_rc.right - _rc.left) / 2), i);
 
@@ -322,14 +248,14 @@ void worldMapScene::pixelCollision()
 
 		if ((r == 0 && g == 0 && b == 255))
 		{
-			_y = i;
+			_y = i + 3;
 			break;
 		}
 	}
 
-	/*
+
 	//BOTTOM
-	for (int i = _probeBottom - 5; i < _probeBottom; ++i)
+	for (int i = _probeBottom; i < _probeBottom + 5; ++i)
 	{
 		COLORREF color = GetPixel(IMAGEMANAGER->findImage("WORLDMAP_PIXEL_COLLISION")->getMemDC(), _x + ((_rc.right - _rc.left) / 2), i);
 
@@ -339,13 +265,13 @@ void worldMapScene::pixelCollision()
 
 		if ((r == 0 && g == 0 && b == 255))
 		{
-			_y = i - ((_rc.bottom - _rc.top) / 2);
+			_y = i - (_rc.bottom - _rc.top) - 3;
 			break;
 		}
 	}
 
 	//LEFT
-	for (int i = _probeLeft; i < _probeLeft + 5; ++i)
+	for (int i = _probeLeft; i > _probeLeft - 5; --i)
 	{
 		COLORREF color = GetPixel(IMAGEMANAGER->findImage("WORLDMAP_PIXEL_COLLISION")->getMemDC(), i, _y + ((_rc.bottom - _rc.top) / 2));
 
@@ -355,13 +281,13 @@ void worldMapScene::pixelCollision()
 
 		if ((r == 0 && g == 0 && b == 255))
 		{
-			_x = i;
+			_x = i + 3;
 			break;
 		}
 	}
 
 	//RIGHT
-	for (int i = _probeRight - 5; i < _probeRight; ++i)
+	for (int i = _probeRight; i < _probeRight + 5; ++i)
 	{
 		COLORREF color = GetPixel(IMAGEMANAGER->findImage("WORLDMAP_PIXEL_COLLISION")->getMemDC(), i, _y + ((_rc.bottom - _rc.top) / 2));
 
@@ -371,10 +297,72 @@ void worldMapScene::pixelCollision()
 
 		if ((r == 0 && g == 0 && b == 255))
 		{
-			_x = i - ((_rc.right - _rc.left) / 2);
+			_x = i - (_rc.right - _rc.left) - 3;
 			break;
 		}
 	}
-	*/
 
+}
+
+
+void worldMapScene::rectCollision()
+{
+	for (int i = 0; i < RECTCOLLISION_END; i++)
+	{
+		RECT temp;
+		if (IntersectRect(&temp, &_rc, &(_eventRC[i])))
+		{
+			switch (i)
+			{
+			case STAGE_NYMPH_1:	case STAGE_NYMPH_2:	case STAGE_HOUSE:
+			{
+				_sceneEffect->setFadeOUT(true);
+
+				//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
+				if (!_sceneEffect->getChangeScene())
+				{
+					SCENEMANAGER->changeScene("SCENE_SAVE_POINT");
+				}
+			}
+				break;
+			case STAGE_1_IN:
+			{
+				_sceneEffect->setFadeOUT(true);
+
+				//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
+				if (!_sceneEffect->getChangeScene())
+				{
+					SCENEMANAGER->changeScene("STAGE1");
+				}
+			}
+				break;
+			case STAGE_1_OUT:
+				break;
+			case STAGE_2_IN:
+				break;
+			case STAGE_2_OUT:
+				break;
+			case STAGE_3_IN:
+				break;
+			case STAGE_3_OUT:
+				break;
+			case STAGE_CHEST:
+				break;
+			case STAGE_MIDBOSS:
+				break;
+			case JAKE_BRIDGE_IN:
+				break;
+			case JAKE_BRIDGE_OUT:
+				break;
+			case JAKE_CLIMB_1:
+				break;
+			case JAKE_CLIMB_2:
+				break;
+			case RECTCOLLISION_END:
+				break;
+			default:
+				break;
+			}
+		}
+	}
 }
