@@ -17,7 +17,7 @@ HRESULT nymphStage::init(void)
 	_stageFinn->init(2, 0, 0, 8, WINSIZEX / 4, WINSIZEY * 3 / 4, true);
 
 	_mi1 = new enemy;
-	_mi1->init(1, WINSIZEX / 4, WINSIZEY * 3 / 4);
+	_mi1->init(1, WINSIZEX / 4, WINSIZEY * 3 / 4, _stageFinn);
 
 	return S_OK;
 }
@@ -35,8 +35,7 @@ void nymphStage::update(void)
 	_stageFinn->update();
 	pixelCollision();
 
-	_mi1->update(_mi1->getType());
-
+	_mi1->update();
 }
 
 void nymphStage::render(void)
@@ -50,6 +49,7 @@ void nymphStage::render(void)
 	_stageFinn->render();
 
 	_mi1->render();
+
 }
 
 void nymphStage::pixelCollision(void)
