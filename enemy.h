@@ -1,5 +1,6 @@
 #pragma once
 #include "gameNode.h"
+#include "stagePlayer.h"
 
 #define MINION1SPEED 2.5f
 #define RNDNUMMAX 50
@@ -8,8 +9,6 @@
 
 enum MINIONDIRECTION
 {
-	DIRECTION_RIGHT_STOP,
-	DIRECTION_LEFT_STOP,
 	DIRECTION_RIGHT_MOVE,
 	DIRECTION_LEFT_MOVE,
 	DIRECTION_RIGHT_ATTACK,
@@ -20,48 +19,42 @@ enum MINIONDIRECTION
 	DIRECTION_LEFT_DIE,
 };
 
+class stagePlayer;
+
 class enemy : public gameNode
 {
 private:
 	MINIONDIRECTION	_direction;
 
-	//Åä³¢
-	image*		_minion;
-	RECT		_rc;
+	stagePlayer*	_sp;
+	image*			_image;
+	animation*		_minionAni;
+	RECT			_rc;
 
-	bool		_isTurn;
-
-	//°ø¿ë
-	animation*	_minionAni;
-	int			_count;
-	int			_maxCount;
-
-	int			_type;
-
-	float		_time;
-	float		_x, _y;
+	bool			_isTurn;
+	int				_count;
+	int				_maxCount;
+	int				_type;
+	float			_time;
+	float			_x, _y;
 
 
 public:
-	HRESULT init(int type, float x, float y);
+	HRESULT init(int type ,float x, float y, stagePlayer* z);
 	void release();
-	void update(int type);
+	void update();
 	void render();
 
-	static void rightMove1(void* obj);
-	static void leftMove1(void* obj);
-	static void rightAttack1(void* obj);
-	static void leftAttack1(void* obj);
-	static void rightHit1(void* obj);
-	static void leftHit1(void* obj);
+	static void rightAttack(void* obj);
+	static void leftAttack(void* obj);
+	static void rightHit(void* obj);
+	static void leftHit(void* obj);
 
-	//Åä³¢
-	void minion1Init();
-	void minion1Move();
+	void initAni1();
+	void initAni2();
+	void initAniMove1();
+	void initAniMove2();
 
-	//Áö··ÀÌ
-	void minion2Init();
-	void minion2Move();
 
 	MINIONDIRECTION getDirection(void) { return _direction; }
 	void setDirection(MINIONDIRECTION direction) { _direction = direction; }
@@ -69,19 +62,15 @@ public:
 	animation* getMinionAni(void) { return _minionAni; }
 	void setMinionAni(animation* ani) { _minionAni = ani; }
 
-	int getType(void) { return _type; }
+	//get & set
+	int getType() { return _type; }
 	void setX(float x) { _x = x; }
 	void setY(float y) { _y = y; }
 	float getX(void) { return _x; }
 	float getY(void) { return _y; }
 	RECT getRect(void) { return _rc; }
-
 	int getState() { return (int)_direction; }
-
-	void jumpSet(float y) { _time = -1.5f; _y = y; }
-	void turn();
 
 	enemy();
 	~enemy();
 };
-

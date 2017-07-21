@@ -20,7 +20,7 @@ HRESULT nymphStage::init(void)
 	_sceneEffect->init();
 
 	_mi1 = new enemy;
-	_mi1->init(1, WINSIZEX / 4, WINSIZEY * 3 / 4);
+	_mi1->init(1, WINSIZEX / 4, WINSIZEY * 3 / 4, _stageFinn);
 
 	return S_OK;
 }
@@ -39,6 +39,9 @@ void nymphStage::update(void)
 	_stageFinn->update();
 	pixelCollision();
 
+<<<<<<< HEAD
+	_mi1->update();
+=======
 	_mi1->update(_mi1->getType());
 
 	//¾ÀÀüÈ¯
@@ -52,6 +55,7 @@ void nymphStage::update(void)
 		SCENEMANAGER->changeScene("STAGE1");
 	}
 
+>>>>>>> cef6a41a3ed79343dc2de7ae9b5fc91b7862a79f
 }
 
 void nymphStage::render(void)
@@ -65,6 +69,7 @@ void nymphStage::render(void)
 	_stageFinn->render();
 
 	_mi1->render();
+
 }
 
 void nymphStage::pixelCollision(void)

@@ -1,6 +1,6 @@
 #pragma once
 #include "gameNode.h"
-#define JUMPPOWER 7
+#define JUMPPOWER 8
 #define GRAVITY 0.2
 #define MOVESPEED 5
 #define INTRODISTANCE 100
