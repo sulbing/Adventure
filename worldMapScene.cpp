@@ -19,6 +19,9 @@ HRESULT worldMapScene::init(void)
 	//Áý ¾Õ ÁÂÇ¥
 	_x = 1395;
 	_y = 820;
+	
+	//_x = _playerX[DATABASE->getWorldPosition];
+	//_y = _playerY[DATABASE->getWorldPosition];
 
 	_rc = RectMake(_x, _y, 30, 30);
 
@@ -321,6 +324,10 @@ void worldMapScene::rectCollision()
 				//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
 				if (!_sceneEffect->getChangeScene())
 				{
+					if (i == STAGE_NYMPH_1) DATABASE->setWorldPosition(STAGE_NYMPH_1);
+					if (i == STAGE_NYMPH_2) DATABASE->setWorldPosition(STAGE_NYMPH_2);
+					if (i == STAGE_HOUSE) DATABASE->setWorldPosition(STAGE_HOUSE);
+
 					SCENEMANAGER->changeScene("SCENE_SAVE_POINT");
 				}
 			}

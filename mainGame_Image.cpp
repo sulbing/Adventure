@@ -34,5 +34,5 @@ void mainGame::addImage()
 
 	//¿¡³Ê¹Ì
 	IMAGEMANAGER->addFrameImage("minion1", "Image/minion1.bmp", 535, 568, 5, 8, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("minion2", "Image/minion2.bmp", 886, 886, 10, 10, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("minion2", "Image/minion2.bmp", 890, 890, 10, 10, true, RGB(255, 0, 255));
 }

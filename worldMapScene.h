@@ -15,25 +15,25 @@ enum DIRECTION
 	DIRECTION_RIGHT_BOTTOM
 };
 
-enum RECTCOLLISION
-{
-	STAGE_NYMPH_1,
-	STAGE_NYMPH_2,
-	STAGE_HOUSE,
-	STAGE_1_IN,
-	STAGE_1_OUT,
-	STAGE_2_IN,
-	STAGE_2_OUT,
-	STAGE_3_IN,
-	STAGE_3_OUT,
-	STAGE_CHEST,
-	STAGE_MIDBOSS,
-	JAKE_BRIDGE_IN,
-	JAKE_BRIDGE_OUT,
-	JAKE_CLIMB_1,
-	JAKE_CLIMB_2,
-	RECTCOLLISION_END
-};
+//enum RECTCOLLISION
+//{
+//	STAGE_NYMPH_1,
+//	STAGE_NYMPH_2,
+//	STAGE_HOUSE,
+//	STAGE_1_IN,
+//	STAGE_1_OUT,
+//	STAGE_2_IN,
+//	STAGE_2_OUT,
+//	STAGE_3_IN,
+//	STAGE_3_OUT,
+//	STAGE_CHEST,
+//	STAGE_MIDBOSS,
+//	JAKE_BRIDGE_IN,
+//	JAKE_BRIDGE_OUT,
+//	JAKE_CLIMB_1,
+//	JAKE_CLIMB_2,
+//	RECTCOLLISION_END
+//};
 
 class worldMapScene : public gameNode
 {
@@ -46,6 +46,11 @@ private:
 
 	int _x, _y;				//캐릭터 x, y
 	RECT _rc;				//캐릭터 RECT
+
+	float _playerX[RECTCOLLISION_END] = { 840, 10, 10, 10, 10, 10 };
+	float _playerY[RECTCOLLISION_END] = { 519, 10, 10, 10, 10, 10 };
+
+	//_playerX[STAGE_NYMPH_1], _playerY[STAGE_NYMPH_1]
 
 	int _probeTop;
 	int _probeBottom;

@@ -11,6 +11,26 @@ struct tagSaveData
 	int _status_bonus;
 };
 
+enum RECTCOLLISION
+{
+	STAGE_NYMPH_1,
+	STAGE_NYMPH_2,
+	STAGE_HOUSE,
+	STAGE_1_IN,
+	STAGE_1_OUT,
+	STAGE_2_IN,
+	STAGE_2_OUT,
+	STAGE_3_IN,
+	STAGE_3_OUT,
+	STAGE_CHEST,
+	STAGE_MIDBOSS,
+	JAKE_BRIDGE_IN,
+	JAKE_BRIDGE_OUT,
+	JAKE_CLIMB_1,
+	JAKE_CLIMB_2,
+	RECTCOLLISION_END
+};
+
 class database : public singletonBase<database>
 {
 private :
@@ -26,6 +46,8 @@ private :
 	tagSaveData _saveData;
 	bool _isLoadInventory;
 	bool _isLoadStatus;
+
+	RECTCOLLISION _worldPosition;
 
 public:
 	HRESULT init(void);
@@ -65,6 +87,9 @@ public:
 	bool getLoadInven(void) { return _isLoadInventory; }
 	void setLoadStatus(bool A) { _isLoadStatus = A; }
 	bool getLoadStatus(void) { return _isLoadStatus; }
+
+	void setWorldPosition(RECTCOLLISION worldPosition) { _worldPosition = worldPosition; }
+	RECTCOLLISION getWorldPosition() { return _worldPosition; }
 
 	database();
 	~database();
