@@ -26,6 +26,12 @@ void mainGame::addImage()
 	//인벤토리씬, 아이템
 	IMAGEMANAGER->addImage("INVENTORY", "Image/INVENTORY.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ITEM", "Image/ITEM.bmp", 192, 384, 3, 6, true, RGB(255, 0, 255));
+
+	//스테이터스 씬
+	IMAGEMANAGER->addImage("STATUS", "Image/STATUS.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("STAR", "Image/STAR.bmp", 68, 36, 2, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("PLUS", "Image/PLUS.bmp", 34, 36, true, RGB(255, 0, 255));
+
 	//에너미
 	IMAGEMANAGER->addFrameImage("minion1", "Image/minion1.bmp", 535, 568, 5, 8, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("minion2", "Image/minion2.bmp", 886, 886, 10, 10, true, RGB(255, 0, 255));

@@ -25,17 +25,16 @@ HRESULT mainGame::init(void)
 	gameNode::init(true);
 
 	addImage();
-
-	_inventoryScene = new inventoryScene;
-	_inventoryScene->init();
+	DATABASE->init();
 
 	SCENEMANAGER->addScene("SCENE_OPENEING", new openingScene);
 	SCENEMANAGER->addScene("SCENE_WORLDMAP", new worldMapScene);
 	SCENEMANAGER->addScene("SCENE_SAVE_POINT", new nymphStage);
-	SCENEMANAGER->addScene("SCENE_INVENTORY", _inventoryScene);
+	SCENEMANAGER->addScene("SCENE_INVENTORY", new inventoryScene);
+	SCENEMANAGER->addScene("SCENE_STATUS", new statusScene);
 	SCENEMANAGER->addScene("STAGE1", new stage1);
 
-	SCENEMANAGER->changeScene("SCENE_OPENEING");
+	SCENEMANAGER->changeScene("SCENE_STATUS");
 
 	return S_OK;
 }

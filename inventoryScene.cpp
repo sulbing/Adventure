@@ -22,18 +22,10 @@ HRESULT inventoryScene::init()
 		}
 	}
 
-	int size = _vItem.size();
-
-	if (DATABASE->getaddVector().size() != 0)
-	{
-		for (int i = 0; i < DATABASE->getaddVector().size(); i++)
-		{
-			addItem((ITEMLIST)DATABASE->getaddVector()[i], _itemSlot[size + i].x, _itemSlot[size + i].y);
-		}
-		DATABASE->clearaddVector();
-	}
-
 	_drag = false;
+
+	_itemTemp = new item;
+	_itemTemp->init(ITEMLIST_END, 0,0);
 
 	return S_OK;
 }
@@ -45,6 +37,18 @@ void inventoryScene::release()
 
 void inventoryScene::update()	 
 {
+	if (DATABASE->getaddVector().size() != 0)
+	{
+		for (int i = 0; i < DATABASE->getaddVector().size(); i++)
+		{
+			addItem((ITEMLIST)DATABASE->getaddVector()[i], _itemSlot[_vItem.size() + i].x, _itemSlot[_vItem.size() + i].y);
+		}
+		DATABASE->clearaddVector();
+	}
+
+	_itemTemp->setCenterXY(_ptMouse.x, _ptMouse.y);
+	_itemTemp->update();
+
 	for (int i = 0; i < _vItem.size(); i++)
 	{
 		_vItem[i]->update();
@@ -58,19 +62,16 @@ void inventoryScene::update()
 			if (PtInRect(&_vItem[i]->getRect(), _ptMouse) && !_drag)
 			{
 				_drag = true;
-				_itemTemp = _vItem[i];
+				_itemTemp->changeItem((ITEMLIST)_vItem[i]->getNum());
 				_vItem.erase(_vItem.begin() + i);
 				break;
 			}
 		}
 	}
-	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON) && _drag)
-	{
-		_itemTemp->setCenterXY(_ptMouse.x, _ptMouse.y);
-	}
 	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON) && _drag)
 	{
 		itemMix();
+		_itemTemp->changeItem(ITEMLIST_END);
 		_drag = false;
 	}
 	
@@ -78,6 +79,9 @@ void inventoryScene::update()
 	{
 		_vItem[i]->setXY(_itemSlot[i].x, _itemSlot[i].y);
 	}
+
+	loadItem();
+	
 }
 
 void inventoryScene::render()	 
@@ -114,27 +118,55 @@ void inventoryScene::useItem(void)
 
 void inventoryScene::itemMix(void)
 {
-	RECT rcTemp;
-
-	for (int i = 0; i < _vItem.size(); i++)
+	int count = 0;
+	for (_viItem = _vItem.begin(); _viItem != _vItem.end(); ++_viItem)
 	{
-		if (PtInRect(&_vItem[i]->getRect(), _ptMouse))
+		count++;
+		if (PtInRect(&(*_viItem)->getRect(), _ptMouse))
 		{
-			if (_vItem[i]->getNum() == 3 && _itemTemp->getNum() == 6) { _vItem[i]->changeItem(12); break; }
-			if (_vItem[i]->getNum() == 4 && _itemTemp->getNum() == 7) { _vItem[i]->changeItem(13); break; }
-			if (_vItem[i]->getNum() == 5 && _itemTemp->getNum() == 8) { _vItem[i]->changeItem(14); break; }
+			if ((*_viItem)->getNum() == 3 && _itemTemp->getNum() == 6) { (*_viItem)->changeItem(12); _itemTemp->changeItem(ITEMLIST_END); break; }
+			else if ((*_viItem)->getNum() == 3 && _itemTemp->getNum() == 7) { (*_viItem)->changeItem(9); _itemTemp->changeItem(ITEMLIST_END); break; }
+			else if ((*_viItem)->getNum() == 3 && _itemTemp->getNum() == 8) { (*_viItem)->changeItem(9); _itemTemp->changeItem(ITEMLIST_END); break; }
 
-			if (_vItem[i]->getNum() == 3 && ((_itemTemp->getNum() == 7) || (_itemTemp->getNum() == 8))) { _vItem[i]->changeItem(9); break; }
-			if (_vItem[i]->getNum() == 4 && ((_itemTemp->getNum() == 6) || (_itemTemp->getNum() == 8))) { _vItem[i]->changeItem(10); break; }
-			if (_vItem[i]->getNum() == 5 && ((_itemTemp->getNum() == 6) || (_itemTemp->getNum() == 7))) { _vItem[i]->changeItem(11); break; }
+			else if ((*_viItem)->getNum() == 4 && _itemTemp->getNum() == 6) { (*_viItem)->changeItem(10); _itemTemp->changeItem(ITEMLIST_END); break; }
+			else if ((*_viItem)->getNum() == 4 && _itemTemp->getNum() == 8) { (*_viItem)->changeItem(10); _itemTemp->changeItem(ITEMLIST_END); break; }
+			else if ((*_viItem)->getNum() == 4 && _itemTemp->getNum() == 7) { (*_viItem)->changeItem(13); _itemTemp->changeItem(ITEMLIST_END); break; }
 
-			if (_vItem[i]->getNum() == 6 && _itemTemp->getNum() == 3) { _vItem[i]->changeItem(12); break; }
-			if (_vItem[i]->getNum() == 7 && _itemTemp->getNum() == 4) { _vItem[i]->changeItem(13); break; }
-			if (_vItem[i]->getNum() == 8 && _itemTemp->getNum() == 5) { _vItem[i]->changeItem(14); break; }
+			else if ((*_viItem)->getNum() == 5 && _itemTemp->getNum() == 8) { (*_viItem)->changeItem(14); _itemTemp->changeItem(ITEMLIST_END); break; }
+			else if ((*_viItem)->getNum() == 5 && _itemTemp->getNum() == 7) { (*_viItem)->changeItem(11); _itemTemp->changeItem(ITEMLIST_END); break; }
+			else if ((*_viItem)->getNum() == 5 && _itemTemp->getNum() == 6) { (*_viItem)->changeItem(11); _itemTemp->changeItem(ITEMLIST_END); break; }
+																										  
+			else if ((*_viItem)->getNum() == 6 && _itemTemp->getNum() == 3) { (*_viItem)->changeItem(12); _itemTemp->changeItem(ITEMLIST_END); break; }
+			else if ((*_viItem)->getNum() == 6 && _itemTemp->getNum() == 4) { (*_viItem)->changeItem(10); _itemTemp->changeItem(ITEMLIST_END); break; }
+			else if ((*_viItem)->getNum() == 6 && _itemTemp->getNum() == 5) { (*_viItem)->changeItem(11); _itemTemp->changeItem(ITEMLIST_END); break; }
 
-			if (_vItem[i]->getNum() == 6 && ((_itemTemp->getNum() == 4) || (_itemTemp->getNum() == 5))) { _vItem[i]->changeItem(9); break;	  }
-			if (_vItem[i]->getNum() == 7 && ((_itemTemp->getNum() == 3) || (_itemTemp->getNum() == 5))) { _vItem[i]->changeItem(10); break;  }
-			if (_vItem[i]->getNum() == 8 && ((_itemTemp->getNum() == 3) || (_itemTemp->getNum() == 4))) { _vItem[i]->changeItem(11); break;  }
+			else if ((*_viItem)->getNum() == 7 && _itemTemp->getNum() == 4) { (*_viItem)->changeItem(13); _itemTemp->changeItem(ITEMLIST_END);  break; }
+			else if ((*_viItem)->getNum() == 7 && _itemTemp->getNum() == 3) { (*_viItem)->changeItem(9);  _itemTemp->changeItem(ITEMLIST_END); break; }
+			else if ((*_viItem)->getNum() == 7 && _itemTemp->getNum() == 5) { (*_viItem)->changeItem(11); _itemTemp->changeItem(ITEMLIST_END);  break; }
+
+			else if ((*_viItem)->getNum() == 8 && _itemTemp->getNum() == 5) { (*_viItem)->changeItem(14); _itemTemp->changeItem(ITEMLIST_END);  break; }
+			else if ((*_viItem)->getNum() == 8 && _itemTemp->getNum() == 3) { (*_viItem)->changeItem(9);  _itemTemp->changeItem(ITEMLIST_END); break; }
+			else if ((*_viItem)->getNum() == 8 && _itemTemp->getNum() == 4) { (*_viItem)->changeItem(10); _itemTemp->changeItem(ITEMLIST_END);  break; }
+			else
+			{
+				addItem((ITEMLIST)_itemTemp->getNum(), _itemSlot[_vItem.size()].x, _itemSlot[_vItem.size()].y);
+				_itemTemp->changeItem(ITEMLIST_END);
+				break;
+			}
+		}
+		if (count == _vItem.size()) { addItem((ITEMLIST)_itemTemp->getNum(), _itemSlot[_vItem.size()].x, _itemSlot[_vItem.size()].y); _itemTemp->changeItem(ITEMLIST_END); break; }
+	}
+}
+
+void inventoryScene::loadItem(void)
+{
+	if (DATABASE->getLoadInven())
+	{
+		DATABASE->setLoadInven(false);
+		_vItem.clear();
+		for (int i = 0; i < DATABASE->getItemlist().size(); i++)
+		{
+			addItem((ITEMLIST)DATABASE->getItemlist()[i], _itemSlot[i].x, _itemSlot[i].y);
 		}
 	}
 }
