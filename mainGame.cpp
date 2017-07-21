@@ -34,7 +34,7 @@ HRESULT mainGame::init(void)
 	SCENEMANAGER->addScene("SCENE_STATUS", new statusScene);
 	SCENEMANAGER->addScene("STAGE1", new stage1);
 
-	SCENEMANAGER->changeScene("SCENE_STATUS");
+	SCENEMANAGER->changeScene("SCENE_OPENEING");
 
 	return S_OK;
 }

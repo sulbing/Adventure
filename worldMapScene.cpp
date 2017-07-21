@@ -312,26 +312,29 @@ void worldMapScene::rectCollision()
 		RECT temp;
 		if (IntersectRect(&temp, &_rc, &(_eventRC[i])))
 		{
-			_isEvent = true;
-
 			switch (i)
 			{
 			case STAGE_NYMPH_1:	case STAGE_NYMPH_2:	case STAGE_HOUSE:
 			{
-				if (!_sceneEffect->isFadeIN() && KEYMANAGER->isOnceKeyDown(VK_RETURN))
-				{
-					_sceneEffect->setFadeOUT(true);
-					_isEvent = false;
-				}
+				_sceneEffect->setFadeOUT(true);
+
 				//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
-				if (!_sceneEffect->getChangeScene() && !_sceneEffect->isFadeOUT())
+				if (!_sceneEffect->getChangeScene())
 				{
 					SCENEMANAGER->changeScene("SCENE_SAVE_POINT");
 				}
-
 			}
 				break;
 			case STAGE_1_IN:
+			{
+				_sceneEffect->setFadeOUT(true);
+
+				//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
+				if (!_sceneEffect->getChangeScene())
+				{
+					SCENEMANAGER->changeScene("STAGE1");
+				}
+			}
 				break;
 			case STAGE_1_OUT:
 				break;
