@@ -25,6 +25,8 @@ public:
 
 	void starOn(void);
 
+	void changeScene();
+
 	statusScene();
 	~statusScene();
 };

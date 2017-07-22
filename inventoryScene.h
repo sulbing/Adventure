@@ -20,6 +20,8 @@ public:
 	void addItem(ITEMLIST itemlist, float x, float y);
 	void useItem(void);
 
+	void changeScene();
+
 	void itemMix(void);
 
 	void loadItem(void);
