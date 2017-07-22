@@ -12,7 +12,7 @@ stagePlayer::~stagePlayer()
 HRESULT stagePlayer::init(int hearts, int attack, int speed, int currentHP, float x, float y, bool isRight)
 {
 	//기본정보
-	_maxHP = 4 * (hearts + 2);
+	_maxHP = 4 * (hearts + 1);
 	_currentHP = currentHP;
 	if (_currentHP > _maxHP)
 	{
@@ -252,6 +252,18 @@ void stagePlayer::keyControl()
 		
 	}
 
+	//w를 눌렀을때
+	if (KEYMANAGER->isOnceKeyDown('W'))
+	{
+		_state = DEAD;
+	}
+
+
+	//스킬1을 썻을때 (하바네로)
+	if (_isSkill1Fire)
+	{
+		//skillFire();
+	}
 }
 void stagePlayer::stateControl()
 {
@@ -423,6 +435,19 @@ void stagePlayer::stateControl()
 			}
 		}
 
+	}
+
+	if (_state == DEAD)
+	{
+		aniInput("stageLeftDead", "stageRightDead");
+		if (!_playerMotion->isPlay())
+		{
+			if (!deadBool)
+			{
+				_playerMotion->start();
+				deadBool = true;
+			}
+		}
 	}
 	
 	if (_state == FINNATTACK1)
@@ -822,6 +847,12 @@ void stagePlayer::animaitionInit()
 
 	int leftHit[] = { 118,117,116,115 };
 	KEYANIMANAGER->addArrayFrameAnimation("stageLeftHit", "스테이지기본모션", leftHit, 4, 15, false);
+
+	int rightDead[] = { 46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66 };
+	KEYANIMANAGER->addArrayFrameAnimation("stageRightDead", "스테이지기본모션", rightDead, 21, 15, false);
+
+	int leftDead[] = { 113,112,111,110,129,128,127,126,125,124,123,122,121,120,139,138,137,136,135,134,133 };
+	KEYANIMANAGER->addArrayFrameAnimation("stageLeftDead", "스테이지기본모션", leftDead, 21, 15, false);
 
 	int rightFinnAttack1[] = { 0,1,2 };
 	KEYANIMANAGER->addArrayFrameAnimation("stageRightFinnAttack1", "스테이지공격모션", rightFinnAttack1, 3, 15, false);
