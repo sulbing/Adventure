@@ -1,19 +1,28 @@
 #pragma once
 #include "gameNode.h"
+#define FJDISTANCE 50
 
 class worldPlayer : public gameNode
 {
 	
 
 private:
-	RECT _rc;
+	RECT _finnRC;
+	RECT _jakeRC;
 	bool _haveBridgeSkill;
 	bool _haveClimbSkill;
 
 
 	//ÁÂÇ¥
-	float _X, _y;
+	float _x, _y;
+	float _speedX, _speedY;
+	float _jakeX, _jakeY;
+	float _jakeAngle;
+
 	
+	void keyControl();
+	void basicMove();
+
 public:
 
 	virtual HRESULT init(void);
