@@ -9,9 +9,10 @@ class nymphStage : public gameNode
 private:
 	image*			_nymph;
 	animation*		 _nymphAni;
-
+	RECT			_leftDoor, _rightDoor;
+	BOOL			_isChange;
 	stagePlayer*	_stageFinn;
-	enemy*			_mi1;
+	//enemy*			_mi1;
 	sceneEffect* _sceneEffect;
 
 public:
@@ -20,6 +21,7 @@ public:
 	void update(void);
 	void render(void);
 	void pixelCollision(void);
+	void stageDoor(void);
 
 	nymphStage();
 	~nymphStage();

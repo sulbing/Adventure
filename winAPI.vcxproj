@@ -143,6 +143,7 @@
   <ItemGroup>
     <ClInclude Include="animation.h" />
     <ClInclude Include="button.h" />
+    <ClInclude Include="cheststage.h" />
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="database.h" />
     <ClInclude Include="effect.h" />
@@ -167,6 +168,8 @@
     <ClInclude Include="singletonBase.h" />
     <ClInclude Include="soundManager.h" />
     <ClInclude Include="stage1.h" />
+    <ClInclude Include="stage2.h" />
+    <ClInclude Include="stage3.h" />
     <ClInclude Include="stagePlayer.h" />
     <ClInclude Include="statusScene.h" />
     <ClInclude Include="stdafx.h" />
@@ -180,6 +183,7 @@
   <ItemGroup>
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="button.cpp" />
+    <ClCompile Include="cheststage.cpp" />
     <ClCompile Include="database.cpp" />
     <ClCompile Include="effect.cpp" />
     <ClCompile Include="effectManager.cpp" />
@@ -202,6 +206,8 @@
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="soundManager.cpp" />
     <ClCompile Include="stage1.cpp" />
+    <ClCompile Include="stage2.cpp" />
+    <ClCompile Include="stage3.cpp" />
     <ClCompile Include="stagePlayer.cpp" />
     <ClCompile Include="statusScene.cpp" />
     <ClCompile Include="stdafx.cpp">

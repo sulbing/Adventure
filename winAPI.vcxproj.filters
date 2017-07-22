@@ -177,6 +177,15 @@
     <ClInclude Include="minimapScene.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="cheststage.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="stage2.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="stage3.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -276,6 +285,15 @@
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
     <ClCompile Include="minimapScene.cpp">
+      <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="cheststage.cpp">
+      <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="stage2.cpp">
+      <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="stage3.cpp">
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
   </ItemGroup>

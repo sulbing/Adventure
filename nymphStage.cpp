@@ -12,6 +12,8 @@ HRESULT nymphStage::init(void)
 	_nymphAni->setFPS(1);
 	_nymphAni->start();
 
+	_leftDoor = RectMake(0, WINSIZEY / 2, 10, 400);
+	_rightDoor = RectMake(790, WINSIZEY / 2, 10, 400);
 
 	_stageFinn = new stagePlayer;
 	_stageFinn->init(2, 0, 0, 8, WINSIZEX / 4, WINSIZEY * 3 / 4, true);
@@ -19,8 +21,10 @@ HRESULT nymphStage::init(void)
 	_sceneEffect = new sceneEffect;
 	_sceneEffect->init();
 
-	_mi1 = new enemy;
-	_mi1->init(1, WINSIZEX / 4, WINSIZEY * 3 / 4, _stageFinn);
+	_isChange = false;
+
+	//_mi1 = new enemy;
+	//_mi1->init(1, WINSIZEX / 4, WINSIZEY * 3 / 4);
 
 	return S_OK;
 }
@@ -36,13 +40,10 @@ void nymphStage::update(void)
 	_nymphAni->frameUpdate(TIMEMANAGER->getElapsedTime() * 8);
 
 	//ÇÉ ¾÷µ¥ÀÌÆ®
-	_stageFinn->update();
+	if (!_isChange) _stageFinn->update();
 	pixelCollision();
 
-//<<<<<<< HEAD
-	_mi1->update();
-//=======
-	_mi1->update();
+	//_mi1->update(_mi1->getType());
 
 	//¾ÀÀüÈ¯
 	if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
@@ -55,26 +56,27 @@ void nymphStage::update(void)
 		SCENEMANAGER->changeScene("STAGE1");
 	}
 
-//>>>>>>> cef6a41a3ed79343dc2de7ae9b5fc91b7862a79f
+	stageDoor();
 }
 
 void nymphStage::render(void)
 {
 	IMAGEMANAGER->findImage("savePointCollision")->render(getMemDC(), 0, 0);
 	IMAGEMANAGER->findImage("savePoint")->render(getMemDC(), 0, 0, 0, 0, WINSIZEX, WINSIZEY);
-	_nymph->aniRender(getMemDC(), 400, WINSIZEY - 208, _nymphAni);
+	_nymph->aniRender(getMemDC(), 300, WINSIZEY - 208, _nymphAni);
 
 
 	//ÇÉ ·£´õ
 	_stageFinn->render();
 
-	_mi1->render();
+	//_mi1->render();
 
+	_sceneEffect->render();
 }
 
 void nymphStage::pixelCollision(void)
 {
-	if (_stageFinn->getState() == JUMP || _stageFinn->getState() == HIT)
+	if (_stageFinn->getState() == JUMP || _stageFinn->getState() == HIT || _stageFinn->getState() == JUMPATTACK)
 	{
 		if (_stageFinn->getSpeedY() >= 0)
 		{
@@ -110,6 +112,38 @@ void nymphStage::pixelCollision(void)
 			_stageFinn->setState(JUMP);
 		}
 
+	}
+}
+
+void nymphStage::stageDoor(void)
+{
+
+	RECT temp;
+
+	if (IntersectRect(&temp, &_leftDoor, &_stageFinn->getBodyRC()))
+	{
+		_isChange = true;
+		_sceneEffect->setFadeOUT(true);
+
+		//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
+		if (!_sceneEffect->getChangeScene())
+		{
+			SCENEMANAGER->changeScene("SCENE_WORLDMAP");
+		}
+		_stageFinn->setSpeedX(0);
+	}
+
+	else if (IntersectRect(&temp, &_rightDoor, &_stageFinn->getBodyRC()))
+	{
+		_isChange = true;
+		_sceneEffect->setFadeOUT(true);
+
+		//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
+		if (!_sceneEffect->getChangeScene())
+		{
+			SCENEMANAGER->changeScene("SCENE_WORLDMAP");
+		}
+		_stageFinn->setSpeedX(0);
 	}
 }
 
