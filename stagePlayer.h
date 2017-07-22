@@ -24,6 +24,31 @@ enum PLAYERSTATE
 	STATEEND
 };
 
+//스킬관련
+struct TAGSKILL
+{
+	int _damage;
+	RECT _hitBox;
+	bool _isFire;
+	float _skillWidth;
+	float _skillHeight;
+	float _skillX, _skillY;
+};
+
+enum SKILLNAME
+{
+	DEFALUT,
+	ATTACK1,
+	ATTACK2,
+	ATTACK3,
+	LATTACK,
+	JATTACK,
+	CATTACK,
+	TATTACK,
+	BEEATTACK,
+	FIREATTACK,
+	SKILLEND
+};
 class stagePlayer : public gameNode
 {
 private:
@@ -39,15 +64,13 @@ private:
 	bool _isRight;
 	bool _isLookUp;
 	bool _isHit;
+	bool _isAttack;
 	PLAYERSTATE _state;
 
 	image* _basicImage;
+	image* _attackImage;
 
 	animation* _playerMotion;
-
-	//카메라 좌표 추가
-	int _camX, _camY;
-	
 
 	//스테이터스
 	int _status_hearts;
@@ -69,9 +92,11 @@ private:
 	void keyControl();
 	void stateControl();
 	void basicMove();
+	void skillUpdate();
 
 	//초기화에 들어갈 함수
 	void animaitionInit();
+	void skillInit();
 
 	//애니메이션관련 함수
 	void aniInput(std::string leftKey, std::string rightKey);
@@ -84,6 +109,22 @@ private:
 	int crouchInt = 0;
 	int hitInt = 0;
 	int hitCount = 0;
+	bool finnAttack1Bool = false;
+	bool finnAttack2Bool = false;
+	bool finnAttack3Bool = false;
+	bool jumpAttackBool = false;
+	bool crouchAttackBool = false;
+	bool tackleBool = false;
+	bool jakeAttackBool = false;
+	int jakeAttackInt = 0;
+	bool tackleKnockBackBool = false;
+
+	//스킬관련 변수
+	TAGSKILL _skill[SKILLEND];
+	void skillFire(SKILLNAME skillName, int x, int y, bool isRight);
+
+	//카메라 좌표 추가
+	int _camX, _camY;
 
 
 public:
@@ -130,8 +171,10 @@ public:
 	void setGravity(float gravity) { _gravity = gravity; }
 	void setState(PLAYERSTATE state) { _state = state; }
 	void setCamX(int x) { _camX = x; }
-	//카메라 x값 받아오기
 	
+
+	//태클넉백함수
+	void tackleKnockBack() { tackleKnockBackBool = true; }
 
 	stagePlayer();
 	~stagePlayer();
