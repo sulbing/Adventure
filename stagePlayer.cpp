@@ -94,9 +94,9 @@ void stagePlayer::render(void)
 		{
 			if (_isAttack)
 			{
-				_attackImage->aniRender(getMemDC(), _x - _attackImage->getFrameWidth()   / 2 - _camX, _y - _attackImage->getFrameHeight() / 2, _playerMotion);
+				_attackImage->aniRender(getMemDC(), _x - _attackImage->getFrameWidth()   / 2 - _camX, _y - _attackImage->getFrameHeight() / 2 - 8, _playerMotion);
 			}
-			else _basicImage->aniRender(getMemDC(), _x - _basicImage->getFrameWidth() / 2 - _camX, _y - _basicImage->getFrameHeight() / 2, _playerMotion);
+			else _basicImage->aniRender(getMemDC(), _x - _basicImage->getFrameWidth() / 2 - _camX, _y - _basicImage->getFrameHeight() / 2 - 8, _playerMotion);
 		}
 		
 	}
@@ -104,9 +104,9 @@ void stagePlayer::render(void)
 	{
 		if (_isAttack)
 		{
-			_attackImage->aniRender(getMemDC(), _x - _attackImage->getFrameWidth() / 2 - _camX, _y - _attackImage->getFrameHeight() / 2, _playerMotion);
+			_attackImage->aniRender(getMemDC(), _x - _attackImage->getFrameWidth() / 2 - _camX, _y - _attackImage->getFrameHeight() / 2 - 8, _playerMotion);
 		}
-		else _basicImage->aniRender(getMemDC(), _x - _basicImage->getFrameWidth() / 2 - _camX, _y - _basicImage->getFrameHeight() / 2, _playerMotion);
+		else _basicImage->aniRender(getMemDC(), _x - _basicImage->getFrameWidth() / 2 - _camX, _y - _basicImage->getFrameHeight() / 2 - 8, _playerMotion);
 	}
 }
 	
