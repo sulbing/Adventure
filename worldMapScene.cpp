@@ -17,12 +17,7 @@ HRESULT worldMapScene::init(void)
 	_mapSizeHeight = _background->getHeight();
 
 	//Áý ¾Õ ÁÂÇ¥
-	_x = 1395;
-	_y = 820;
 	
-	//_x = _playerX[DATABASE->getWorldPosition];
-	//_y = _playerY[DATABASE->getWorldPosition];
-
 	_rc = RectMake(_x, _y, 30, 30);
 
 	_eventRC[STAGE_NYMPH_1] = RectMake(771, 292, 40, 25);
@@ -202,7 +197,7 @@ void worldMapScene::render(void)
 
 	_sceneEffect->render();
 
-	DATABASE->setWolrdstate(_rc.left, _rc.top);
+	DATABASE->setWolrdstate(_x, _y);
 
 	if (KEYMANAGER->isOnceKeyDown('1')) SCENEMANAGER->changeScene("SCENE_MINIMAP");
 

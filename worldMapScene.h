@@ -44,7 +44,8 @@ private:
 	int _mapSizeWidth;
 	int _mapSizeHeight;
 
-	int _x, _y;				//캐릭터 x, y
+	int _x = 1395;
+	int _y = 820;				//캐릭터 x, y
 	RECT _rc;				//캐릭터 RECT
 
 	float _playerX[RECTCOLLISION_END] = { 840, 10, 10, 10, 10, 10 };
