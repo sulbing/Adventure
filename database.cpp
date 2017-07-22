@@ -4,6 +4,7 @@
 
 
 database::database()
+	: _worldPosition(STAGE_HOUSE)
 {
 }
 
@@ -17,8 +18,6 @@ HRESULT database::init(void)
 	_isLoadInventory = false;
 	_isLoadStatus = false;
 	_status_bonus = 0;
-	_WorldX = 0;
-	_WorldY = 0;
 
 	return S_OK;
 }
