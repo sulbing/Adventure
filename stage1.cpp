@@ -188,12 +188,15 @@ void stage1::stageDoor(void)
 		//씬 전환 끝나면 씬 체인지
 		if (!_sceneEffect->getChangeScene())
 		{
+			//월드 포지션
+			DATABASE->setWorldPosition(STAGE_1_LEFT);
+
 			SCENEMANAGER->changeScene("SCENE_WORLDMAP");
 		}
 		_stageFinn->setSpeedX(0);
 	}
 
-	else if (IntersectRect(&temp, &_rightDoor, &_stageFinn->getBodyRC()))
+	if (IntersectRect(&temp, &_rightDoor, &_stageFinn->getBodyRC()))
 	{
 		_isChange = true;
 		_sceneEffect->setFadeOUT(true);
@@ -201,6 +204,9 @@ void stage1::stageDoor(void)
 		//씬 전환 끝나면 씬 체인지
 		if (!_sceneEffect->getChangeScene())
 		{
+			//월드 포지션
+			DATABASE->setWorldPosition(STAGE_1_RIGHT);
+
 			SCENEMANAGER->changeScene("SCENE_WORLDMAP");
 		}
 		_stageFinn->setSpeedX(0);

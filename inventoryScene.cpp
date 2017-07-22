@@ -27,6 +27,7 @@ HRESULT inventoryScene::init()
 	_itemTemp = new item;
 	_itemTemp->init(ITEMLIST_END, 0,0);
 
+
 	return S_OK;
 }
 
@@ -67,6 +68,7 @@ void inventoryScene::update()
 				break;
 			}
 		}
+		changeScene();
 	}
 	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON) && _drag)
 	{
@@ -81,6 +83,7 @@ void inventoryScene::update()
 	}
 
 	loadItem();
+	
 	
 }
 
@@ -167,6 +170,39 @@ void inventoryScene::loadItem(void)
 		for (int i = 0; i < DATABASE->getItemlist().size(); i++)
 		{
 			addItem((ITEMLIST)DATABASE->getItemlist()[i], _itemSlot[i].x, _itemSlot[i].y);
+		}
+	}
+}
+
+void inventoryScene::changeScene(void)
+{
+	RECT _rcSelect[4];
+	for (int i = 0; i < 4; i++)
+	{
+		_rcSelect[i] = RectMake(717, 43 + 108 * i, 83, 100);
+	}
+	for (int i = 0; i < 4; i++)
+	{
+		if (PtInRect(&_rcSelect[i], _ptMouse))
+		{
+			switch (i)
+			{
+			case 0:
+			{
+				SCENEMANAGER->changeScene("SCENE_STATUS");
+			}
+				break;
+			case 2: 
+			{
+				SCENEMANAGER->changeScene("SCENE_MINIMAP");
+			}
+				break;
+			case 3:
+			{
+				SCENEMANAGER->changeScene("");
+			}
+				break;
+			}
 		}
 	}
 }

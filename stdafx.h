@@ -23,6 +23,7 @@
 #include "txtData.h"
 #include "database.h"
 
+
 using namespace std;
 using namespace THETA_UTIL;
 
@@ -48,6 +49,7 @@ using namespace THETA_UTIL;
 #define KEYANIMANAGER keyAniManager::getSingleton()
 #define TXTDATA txtData::getSingleton()
 #define DATABASE database::getSingleton()
+
 
 //==============================
 // ## 매크로함수 ## 17.04.26 ##

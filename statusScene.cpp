@@ -47,18 +47,25 @@ void statusScene::release()
 
 void statusScene::update()
 {
-	if (DATABASE->getStatusBonus() != 0 && KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
-		for (int i = 12; i < 15; i++)
+		changeScene();
+		if (DATABASE->getStatusBonus() != 0 )
 		{
-			if (PtInRect(&_Slot[i].rcSlot, _ptMouse))
+			for (int i = 12; i < 15; i++)
 			{
-				DATABASE->useBonus(i);
+				if (PtInRect(&_Slot[i].rcSlot, _ptMouse))
+				{
+					DATABASE->useBonus(i);
+				}
 			}
 		}
 	}
+	
 
 	starOn();
+
+	
 }
 
 void statusScene::render()
@@ -112,5 +119,30 @@ void statusScene::starOn(void)
 	{
 		if (i - 8 < S) _Slot[i].On = true;
 		else _Slot[i].On = false;
+	}
+}
+
+void statusScene::changeScene(void)
+{
+	RECT _rcSelect[4];
+	for (int i = 0; i < 4; i++)
+	{
+		_rcSelect[i] = RectMake(717, 43 + 108 * i, 83, 100);
+	}
+
+	for (int i = 0; i < 4; i++)
+	{
+		if (PtInRect(&_rcSelect[i], _ptMouse))
+		{
+			switch (i)
+			{
+			case 1: SCENEMANAGER->changeScene("SCENE_INVENTORY");
+				break;
+			case 2: SCENEMANAGER->changeScene("SCENE_MINIMAP");
+				break;
+			case 3: SCENEMANAGER->changeScene("");
+				break;
+			}
+		}
 	}
 }

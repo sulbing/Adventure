@@ -13,21 +13,21 @@ struct tagSaveData
 
 enum RECTCOLLISION
 {
-	STAGE_NYMPH_1,
-	STAGE_NYMPH_2,
-	STAGE_HOUSE,
-	STAGE_1_IN,
-	STAGE_1_OUT,
-	STAGE_2_IN,
-	STAGE_2_OUT,
-	STAGE_3_IN,
-	STAGE_3_OUT,
-	STAGE_CHEST,
-	STAGE_MIDBOSS,
-	JAKE_BRIDGE_IN,
-	JAKE_BRIDGE_OUT,
-	JAKE_CLIMB_1,
-	JAKE_CLIMB_2,
+	STAGE_NYMPH_1,		//왼쪽 연못
+	STAGE_NYMPH_2,		//오른쪽 연못
+	STAGE_HOUSE,		//집 앞
+	STAGE_1_LEFT,		//왼쪽 계단 아래
+	STAGE_1_RIGHT,		//왼쪽 계단 위
+	STAGE_2_LEFT,		//오른쪽 아래 계단 아래
+	STAGE_2_RIGHT,		//오른쪽 아래 계단 위
+	STAGE_3_LEFT,		//오른쪽 위 계단 아래
+	STAGE_3_RIGHT,		//오른쪽 위 계단 위
+	STAGE_CHEST,		//왼쪽 숲
+	STAGE_MIDBOSS,		//오른쪽 아래 숲
+	JAKE_BRIDGE_IN,		//다리 위
+	JAKE_BRIDGE_OUT,	//다리 아래
+	JAKE_CLIMB_1,		//아래 올라가기
+	JAKE_CLIMB_2,		//위 올라가기
 	RECTCOLLISION_END
 };
 

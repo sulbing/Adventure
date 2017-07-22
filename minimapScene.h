@@ -15,6 +15,8 @@ public:
 	void update();
 	void render();
 
+	void changeScene();
+
 	minimapScene();
 	~minimapScene();
 };

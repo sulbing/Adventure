@@ -19,6 +19,7 @@ enum PLAYERSTATE
 	JAKEATTACK,
 	JUMPATTACK,
 	HIT,
+	DEAD,
 	INTRO,
 	OUTRO,
 	STATEEND
@@ -38,15 +39,15 @@ struct TAGSKILL
 enum SKILLNAME
 {
 	DEFALUT,
-	ATTACK1,
-	ATTACK2,
-	ATTACK3,
-	LATTACK,
-	JATTACK,
-	CATTACK,
-	TATTACK,
-	BEEATTACK,
-	FIREATTACK,
+	ATTACK1, //1타공격
+	ATTACK2, //2타공격
+	ATTACK3, //3타공격
+	LATTACK, // 긴공격 - 제이크 공격
+	JATTACK, // 점프공격
+	CATTACK, // 앉아공격
+	TATTACK, // 태클
+	BEEATTACK, // 벌 공격
+	FIREATTACK, // 하바네로 공격
 	SKILLEND
 };
 class stagePlayer : public gameNode
@@ -118,6 +119,7 @@ private:
 	bool jakeAttackBool = false;
 	int jakeAttackInt = 0;
 	bool tackleKnockBackBool = false;
+	bool deadBool = false;
 
 	//스킬관련 변수
 	TAGSKILL _skill[SKILLEND];
@@ -154,6 +156,7 @@ public:
 	int getState() { return _state; }
 	bool getIsRight() { return _isRight; }
 	bool getIsHit() { return _isHit; }
+	RECT getSkillHitBox(SKILLNAME skillName) { return _skill[skillName]._hitBox; }
 
 	//세터
 	void setCurrentHP(int HP) { _currentHP = HP; }
