@@ -53,7 +53,7 @@ void nymphStage::update(void)
 	//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
 	if (!_sceneEffect->getChangeScene() && !_sceneEffect->isFadeOUT())
 	{
-		SCENEMANAGER->changeScene("STAGE1");
+		SCENEMANAGER->changeScene("CHEST_STAGE");
 	}
 
 	stageDoor();
@@ -130,7 +130,6 @@ void nymphStage::stageDoor(void)
 		{
 			SCENEMANAGER->changeScene("SCENE_WORLDMAP");
 		}
-		_stageFinn->setSpeedX(0);
 	}
 
 	else if (IntersectRect(&temp, &_rightDoor, &_stageFinn->getBodyRC()))
