@@ -32,6 +32,7 @@ HRESULT mainGame::init(void)
 	SCENEMANAGER->addScene("SCENE_SAVE_POINT", new nymphStage);
 	SCENEMANAGER->addScene("SCENE_INVENTORY", new inventoryScene);
 	SCENEMANAGER->addScene("SCENE_STATUS", new statusScene);
+	SCENEMANAGER->addScene("SCENE_MINIMAP", new minimapScene);
 	SCENEMANAGER->addScene("STAGE1", new stage1);
 
 	SCENEMANAGER->changeScene("SCENE_OPENEING");

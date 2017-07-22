@@ -39,10 +39,10 @@ void nymphStage::update(void)
 	_stageFinn->update();
 	pixelCollision();
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 	_mi1->update();
-=======
-	_mi1->update(_mi1->getType());
+//=======
+	_mi1->update();
 
 	//¾ÀÀüÈ¯
 	if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
@@ -55,7 +55,7 @@ void nymphStage::update(void)
 		SCENEMANAGER->changeScene("STAGE1");
 	}
 
->>>>>>> cef6a41a3ed79343dc2de7ae9b5fc91b7862a79f
+//>>>>>>> cef6a41a3ed79343dc2de7ae9b5fc91b7862a79f
 }
 
 void nymphStage::render(void)

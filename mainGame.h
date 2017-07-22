@@ -6,6 +6,7 @@
 #include "inventoryScene.h"
 #include "statusScene.h"
 #include "stage1.h"
+#include "minimapScene.h"
 
 
 class mainGame : public gameNode

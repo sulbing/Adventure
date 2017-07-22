@@ -57,6 +57,8 @@ void statusScene::update()
 			}
 		}
 	}
+
+	starOn();
 }
 
 void statusScene::render()
@@ -85,5 +87,30 @@ void statusScene::render()
 		{
 			_plus->render(getMemDC(), _Slot[i].starSlot.x, _Slot[i].starSlot.y);
 		}
+	}
+}
+
+void statusScene::starOn(void)
+{
+	int H = DATABASE->getStatusHearts() - 2;
+	int A = DATABASE->getStatusAttack() - 1;
+	int S = DATABASE->getStatusSpeed() - 1;
+
+	for (int i = 0; i < 4; i++)
+	{
+		if (i < H) _Slot[i].On = true;
+		else _Slot[i].On = false;
+	}
+
+	for (int i = 4; i < 8; i++)
+	{
+		if (i - 4 < A) _Slot[i].On = true;
+		else _Slot[i].On = false;
+	}
+
+	for (int i = 8; i < 12; i++)
+	{
+		if (i - 8 < S) _Slot[i].On = true;
+		else _Slot[i].On = false;
 	}
 }

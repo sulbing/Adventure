@@ -157,6 +157,7 @@
     <ClInclude Include="keyManager.h" />
     <ClInclude Include="loading.h" />
     <ClInclude Include="mainGame.h" />
+    <ClInclude Include="minimapScene.h" />
     <ClInclude Include="nymphStage.h" />
     <ClInclude Include="openingScene.h" />
     <ClInclude Include="progressBar.h" />
@@ -193,6 +194,7 @@
     <ClCompile Include="loading.cpp" />
     <ClCompile Include="mainGame.cpp" />
     <ClCompile Include="mainGame_Image.cpp" />
+    <ClCompile Include="minimapScene.cpp" />
     <ClCompile Include="nymphStage.cpp" />
     <ClCompile Include="openingScene.cpp" />
     <ClCompile Include="progressBar.cpp" />

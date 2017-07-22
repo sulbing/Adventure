@@ -23,6 +23,7 @@ public:
 	void update();
 	void render();
 
+	void starOn(void);
 
 	statusScene();
 	~statusScene();

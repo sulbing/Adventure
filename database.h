@@ -64,6 +64,7 @@ public:
 	int getStatusSpeed() { return _status_speed; }
 	int getStatusBonus() { return _status_bonus; }
 	int getStatusCureentHP(void) { return _currentHP; }
+	POINT getWorldstate(void) { return PointMake(_WorldX, _WorldY); }
 
 	void setstatus(int hearts, int attack, int speed, int bonus, int currentHP);
 	void useBonus(int Num);

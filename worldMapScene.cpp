@@ -202,6 +202,10 @@ void worldMapScene::render(void)
 
 	_sceneEffect->render();
 
+	DATABASE->setWolrdstate(_rc.left, _rc.top);
+
+	if (KEYMANAGER->isOnceKeyDown('1')) SCENEMANAGER->changeScene("SCENE_MINIMAP");
+
 }
 
 DIRECTION worldMapScene::getDirection(int x, int y)
