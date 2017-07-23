@@ -26,6 +26,8 @@ HRESULT nymphStage::init(void)
 
 	_isChange = false;
 
+	_test = new worldPlayer;
+	_test->init();
 	//_mi1 = new enemy;
 	//_mi1->init(1, WINSIZEX / 4, WINSIZEY * 3 / 4);
 
@@ -41,6 +43,8 @@ void nymphStage::update(void)
 	_sceneEffect->update();
 
 	_nymphAni->frameUpdate(TIMEMANAGER->getElapsedTime() * 8);
+
+	_test->update();
 
 	//ÇÉ ¾÷µ¥ÀÌÆ®
 	if (!_isChange) _stageFinn->update();
@@ -77,6 +81,8 @@ void nymphStage::render(void)
 	_UI->render();
 
 	_sceneEffect->render();
+
+	_test->render();
 }
 
 void nymphStage::pixelCollision(void)
