@@ -180,6 +180,7 @@
     <ClInclude Include="UI.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="worldMapScene.h" />
+    <ClInclude Include="worldPlayer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="animation.cpp" />
@@ -224,6 +225,7 @@
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="winMain.cpp" />
     <ClCompile Include="worldMapScene.cpp" />
+    <ClCompile Include="worldPlayer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
