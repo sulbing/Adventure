@@ -12,7 +12,7 @@ private:
 	RECT			_leftDoor, _rightDoor;
 	BOOL			_isChange;
 	stagePlayer*	_stageFinn;
-	//enemy*			_mi1;
+	enemy*			_mi1;
 	sceneEffect* _sceneEffect;
 
 public:

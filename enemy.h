@@ -6,6 +6,7 @@
 #define RNDNUMMAX 50
 #define RNDNUMLOW 10
 #define GRAVITY 5
+#define HITPUSH 5
 
 enum MINIONDIRECTION
 {
@@ -52,8 +53,10 @@ public:
 
 	void initAni1();
 	void initAni2();
+	void initAni3();
 	void initAniMove1();
 	void initAniMove2();
+	void initAniMove3();
 
 
 	MINIONDIRECTION getDirection(void) { return _direction; }
