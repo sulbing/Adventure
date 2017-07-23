@@ -26,15 +26,13 @@ HRESULT nymphStage::init(void)
 
 	_isChange = false;
 
-<<<<<<< HEAD
 	_mi1 = new enemy;
 	_mi1->init(2, WINSIZEX / 6, WINSIZEY * 3 / 4, _stageFinn);
-=======
+
 	_test = new worldPlayer;
 	_test->init();
 	//_mi1 = new enemy;
 	//_mi1->init(1, WINSIZEX / 4, WINSIZEY * 3 / 4);
->>>>>>> 1a8c1eec54656cd9711aaae3d52e299082f62328
 
 	return S_OK;
 }
@@ -82,12 +80,8 @@ void nymphStage::render(void)
 	//ÇÉ ·£´õ
 	_stageFinn->render();
 
-<<<<<<< HEAD
 	_mi1->render();
-=======
-	//_mi1->render();
 	_UI->render();
->>>>>>> 1a8c1eec54656cd9711aaae3d52e299082f62328
 
 	_sceneEffect->render();
 
