@@ -194,9 +194,9 @@ void stage3::stageDoor(void)
 		//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
 		if (!_sceneEffect->getChangeScene())
 		{
+			DATABASE->setWorldPosition(STAGE_3_LEFT);
 			SCENEMANAGER->changeScene("SCENE_WORLDMAP");
 		}
-		_stageFinn->setSpeedX(0);
 	}
 
 	else if (IntersectRect(&temp, &_rightDoor, &_stageFinn->getBodyRC()))
@@ -207,9 +207,9 @@ void stage3::stageDoor(void)
 		//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
 		if (!_sceneEffect->getChangeScene())
 		{
+			DATABASE->setWorldPosition(STAGE_3_RIGHT);
 			SCENEMANAGER->changeScene("SCENE_WORLDMAP");
 		}
-		_stageFinn->setSpeedX(0);
 	}
 }
 
