@@ -120,10 +120,12 @@ private:
 	int jakeAttackInt = 0;
 	bool tackleKnockBackBool = false;
 	bool deadBool = false;
+	bool beeBool = false;
 
 	//스킬관련 변수
 	TAGSKILL _skill[SKILLEND];
 	void skillFire(SKILLNAME skillName, int x, int y, bool isRight);
+	float theta = 0;
 
 	//카메라 좌표 추가
 	int _camX, _camY;

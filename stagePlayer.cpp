@@ -257,12 +257,31 @@ void stagePlayer::keyControl()
 	{
 		_state = DEAD;
 	}
+	
+	if (KEYMANAGER->isOnceKeyDown('O'))
+	{
+		_isSkill2Fire = true;
+	}
 
 
 	//스킬1을 썻을때 (하바네로)
 	if (_isSkill1Fire)
 	{
 		//skillFire();
+	}
+
+	//스킬2를 썻을때 (벌)
+	if (_isSkill2Fire)
+	{
+		if (!beeBool)
+		{
+			skillFire(BEEATTACK, _x, _y, _isRight);
+			beeBool = true;
+		}
+		
+		
+		_skill[BEEATTACK]._skillY += 3 * cosf(theta);
+		theta += 0.1f;
 	}
 }
 void stagePlayer::stateControl()
@@ -1007,6 +1026,14 @@ void stagePlayer :: skillFire(SKILLNAME skillName, int x, int y, bool isRight)
 		_skill[skillName]._skillWidth = 0;
 		_skill[skillName]._skillHeight = 20;
 		jakeAttackInt = 0;
+	}
+
+	else if (skillName == BEEATTACK)
+	{
+		_skill[skillName]._skillX = x;
+		_skill[skillName]._skillY = y - 60;
+		_skill[skillName]._skillWidth = 20;
+		_skill[skillName]._skillHeight = 20;
 	}
 }
 

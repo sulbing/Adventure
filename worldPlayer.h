@@ -10,6 +10,20 @@ enum WORLDFINNSTATE
 	WORLDEND
 };
 
+enum WORLDDIRECTION
+{
+	DIRECTIONSTART,
+	TOP,
+	TOPRIGHT,
+	RIGHT,
+	BOTTOMRIGHT,
+	BOTTOM,
+	BOTTOMLEFT,
+	LEFT,
+	TOPLEFT,
+	DIRECTIONEND
+};
+
 class worldPlayer : public gameNode
 {
 	
@@ -21,6 +35,8 @@ private:
 	bool _haveBridgeSkill;
 	bool _haveClimbSkill;
 	WORLDFINNSTATE _state;
+	WORLDDIRECTION _finnDirection;
+	WORLDDIRECTION _jakeDirection;
 
 	int _bridgeProcInt = 0;
 
@@ -39,6 +55,28 @@ private:
 	void basicMove();
 	
 	void bridgeMove();
+
+	void isDirection();
+
+	void animationInit();
+
+	//불값
+	bool _isBridgeOpening = false;
+	bool bridgeBool = false;
+
+
+
+
+	//이미지 관련
+	image* _finnBasic;
+	image* _jakeBasic;
+	image* _jakeBridge;
+
+	animation* _finnMotion;
+	animation* _jakeMotion;
+
+	//불값
+	
 
 public:
 

@@ -3,6 +3,8 @@
 #include"stagePlayer.h"
 #include"enemy.h"
 #include "sceneEffect.h"
+#include "worldPlayer.h"
+
 
 class nymphStage : public gameNode
 {
@@ -14,6 +16,8 @@ private:
 	stagePlayer*	_stageFinn;
 	//enemy*			_mi1;
 	sceneEffect* _sceneEffect;
+
+	worldPlayer* _test;
 
 public:
 	HRESULT init(void);
