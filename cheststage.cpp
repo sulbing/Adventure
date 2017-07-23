@@ -50,11 +50,6 @@ void cheststage::update(void)
 			eatItem();
 		}
 	}
-<<<<<<< HEAD
-	if (_chestOpen) _item->update();
-=======
-	
->>>>>>> 30fb1d82c54ee48429edcf1bb5654109ee1af862
 	_UI->update();
 }
 
@@ -78,11 +73,6 @@ void cheststage::render(void)
 	
 	_sceneEffect->render();
 	if (_chestOpen) if(_item) _item->render(_item->getX(), _item->getY());
-<<<<<<< HEAD
-	if (_chestOpen) _item->render(WINSIZEX / 2, WINSIZEY - 88);
-=======
->>>>>>> 30fb1d82c54ee48429edcf1bb5654109ee1af862
-
 	_UI->render();
 }
 
