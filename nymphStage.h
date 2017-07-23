@@ -3,6 +3,7 @@
 #include"stagePlayer.h"
 #include"enemy.h"
 #include "sceneEffect.h"
+#include "UI.h"
 
 class nymphStage : public gameNode
 {

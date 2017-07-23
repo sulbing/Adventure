@@ -2,6 +2,7 @@
 #include"gameNode.h"
 #include"stagePlayer.h"
 #include"sceneEffect.h"
+#include "UI.h"
 
 class stage2 : public gameNode
 {
