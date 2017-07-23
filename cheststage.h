@@ -8,6 +8,7 @@ class cheststage : public gameNode
 {
 private:
 	stagePlayer* _stageFinn;
+	UI* _UI;
 	RECT _leftDoor, _rightDoor;
 
 	RECT _chestRc;

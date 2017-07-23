@@ -7,6 +7,7 @@
 class stage2 : public gameNode
 {
 private:
+	UI* _UI;
 	stagePlayer* _stageFinn;
 	BOOL _isTurn = false;
 	int _camX, _camY;

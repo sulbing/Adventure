@@ -8,6 +8,7 @@
 class nymphStage : public gameNode
 {
 private:
+	UI*				_UI;
 	image*			_nymph;
 	animation*		 _nymphAni;
 	RECT			_leftDoor, _rightDoor;

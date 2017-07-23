@@ -4,6 +4,9 @@
 
 HRESULT stage2::init(void)
 {
+	_UI = new UI;
+	_UI->init();
+
 	_leftDoor = RectMake(0, WINSIZEY / 2, 10, 400);
 	_rightDoor = RectMake(6640, WINSIZEY / 2, 10, 400);
 
@@ -37,6 +40,7 @@ void stage2::update(void)
 	pixelCollision();
 	stageDoor();
 	camMove();
+	_UI->update();
 }
 
 void stage2::render(void)
@@ -50,6 +54,7 @@ void stage2::render(void)
 	//ÇÉ ·£´õ
 	_stageFinn->render();
 
+	_UI->render();
 	_sceneEffect->render();
 }
 

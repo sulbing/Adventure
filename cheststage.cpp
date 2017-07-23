@@ -4,6 +4,8 @@
 
 HRESULT cheststage::init(void)
 {
+	_UI = new UI;
+	_UI->init();
 
 	_leftDoor = RectMake(0, WINSIZEY / 2, 10, 400);
 	_rightDoor = RectMake(790, WINSIZEY / 2, 10, 400);
@@ -35,6 +37,8 @@ void cheststage::update(void)
 	pixelCollision();
 	
 	stageDoor();
+	
+	_UI->update();
 }
 
 void cheststage::render(void)
@@ -54,6 +58,8 @@ void cheststage::render(void)
 	_stageFinn->render();
 	
 	_sceneEffect->render();
+
+	_UI->render();
 }
 
 void cheststage::pixelCollision(void)
