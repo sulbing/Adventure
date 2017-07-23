@@ -1,6 +1,6 @@
 #pragma once
 #include "gameNode.h"
-#define FJDISTANCE 50
+#define FJDISTANCE 40
 
 enum WORLDFINNSTATE
 {
@@ -44,6 +44,7 @@ private:
 	float _x, _y;
 	float _speedX, _speedY;
 	float _jakeX, _jakeY;
+	float _jakeRenderX, _jakeRenderY;
 	float _jakeSpeedX, _jakeSpeedY;
 	float _jakeAngle;
 

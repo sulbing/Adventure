@@ -12,8 +12,12 @@ worldPlayer::~worldPlayer()
 HRESULT worldPlayer::init()
 {
 	_state = WORLDIDLE;
-	_x = 100;
-	_y = 100;
+	//_x = 1417;
+	//_y = 857;
+	//_jakeX = 1407;
+	//_jakeY = 847;
+	_jakeRenderX = WINSIZEX / 2;
+	_jakeRenderY = WINSIZEY / 2 - 10;
 	_jakeSpeedX = 0;
 	_jakeSpeedY = 0;
 	
@@ -48,7 +52,6 @@ void worldPlayer:: update(void)
 
 	if (_state != WORLDBRIDGE)
 	{
-		bridgeMove();
 		_isBridgeState = false;
 	}
 
@@ -66,21 +69,21 @@ void worldPlayer:: update(void)
 void worldPlayer:: render(void)
 {
 	Rectangle(getMemDC(), _finnRC.left, _finnRC.top, _finnRC.right, _finnRC.bottom);
-	//Rectangle(getMemDC(), _jakeRC.left, _jakeRC.top, _jakeRC.right, _jakeRC.bottom);
+	Rectangle(getMemDC(), _jakeRC.left, _jakeRC.top, _jakeRC.right, _jakeRC.bottom);
 	
 	if (!_isBridgeOpening)
 	{
-		_jakeBasic->aniRender(getMemDC(), _jakeX - _jakeBasic->getFrameWidth() / 2, _jakeY - _jakeBasic->getFrameHeight() / 2, _jakeMotion);
+		_jakeBasic->aniRender(getMemDC(), _jakeRenderX - _jakeBasic->getFrameWidth() / 2, _jakeRenderY - _jakeBasic->getFrameHeight() / 2, _jakeMotion);
 	}
 
-	else if (_isBridgeOpening)
+	if (_isBridgeOpening)
 	{
-		_jakeBridge->aniRender(getMemDC(), _jakeX - _jakeBridge->getFrameWidth() / 2, _jakeY - _jakeBridge->getFrameHeight() / 2, _jakeMotion);
+		_jakeBridge->aniRender(getMemDC(), _jakeRenderX - _jakeBridge->getFrameWidth() / 2, _jakeRenderY - _jakeBridge->getFrameHeight() / 2, _jakeMotion);
 	}
 	
-	_finnBasic->aniRender(getMemDC(), _x - _finnBasic->getFrameWidth() / 2 , _y - _finnBasic->getFrameHeight() / 2 , _finnMotion);
+	_finnBasic->aniRender(getMemDC(), WINSIZEX / 2 - _finnBasic->getFrameWidth() / 2, WINSIZEY / 2 - _finnBasic->getFrameHeight() / 2, _finnMotion);
 	
-
+	
 }
 
 void worldPlayer::keyControl(void)
@@ -125,6 +128,8 @@ void worldPlayer::basicMove(void)
 	_y += _speedY;
 	_jakeX += _jakeSpeedX;
 	_jakeY += _jakeSpeedY;
+	_jakeRenderX = WINSIZEX / 2 + (_jakeX - _x);
+	_jakeRenderY = WINSIZEY / 2 + (_jakeY - _y);
 
 
 
@@ -133,7 +138,6 @@ void worldPlayer::basicMove(void)
 		_jakeAngle = getAngle(_jakeX, _jakeY, _x, _y);
 		_jakeX = _x - (cosf(_jakeAngle) * (FJDISTANCE));
 		_jakeY = _y - (-sinf(_jakeAngle) * (FJDISTANCE));
-
 	}
 
 	if (_speedX != 0 || _speedY != 0)
@@ -171,6 +175,9 @@ void worldPlayer::bridgeMove()
 	_jakeY += _jakeSpeedY;
 	_x += _speedX;
 	_y += _speedY;
+	_jakeRenderX = WINSIZEX / 2 + (_jakeX - _x);
+	_jakeRenderY = WINSIZEY / 2 + (_jakeY - _y);
+
 
 	_finnRC = RectMakeCenter(_x, _y, 50, 50);
 	_jakeRC = RectMakeCenter(_jakeX, _jakeY, 50, 50);

@@ -2,6 +2,7 @@
 #include "gameNode.h"
 #include "sceneEffect.h"
 #include "UI.h"
+#include "worldPlayer.h"
 
 enum DIRECTION
 {
@@ -21,6 +22,7 @@ class worldMapScene : public gameNode
 private:
 	sceneEffect* _sceneEffect;
 	UI* _UI;
+	worldPlayer* _worldPlayer;
 
 	image* _background;
 	int _mapSizeWidth;

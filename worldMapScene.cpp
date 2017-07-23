@@ -8,6 +8,9 @@ worldMapScene::~worldMapScene() {}
 
 HRESULT worldMapScene::init(void)
 {
+	_worldPlayer = new worldPlayer;
+	_worldPlayer->init();
+	
 	_UI = new UI;
 	_UI->init();
 
@@ -20,10 +23,10 @@ HRESULT worldMapScene::init(void)
 	_mapSizeHeight = _background->getHeight();
 
 	//Áý ¾Õ ÁÂÇ¥
-	_x = _playerX[DATABASE->getWorldPosition()];
-	_y = _playerY[DATABASE->getWorldPosition()];
+	_worldPlayer->setWorldFinnX(_playerX[DATABASE->getWorldPosition()]);
+	_worldPlayer->setWorldFinnY(_playerY[DATABASE->getWorldPosition()]);
 
-	_rc = RectMakeCenter(_x, _y, 30, 30);
+	_rc = _worldPlayer->getWorldFinnRect();
 
 	_eventRC[STAGE_NYMPH_1] = RectMake(771, 292, 40, 25);
 	_eventRC[STAGE_NYMPH_2] = RectMake(1988, 868, 40 ,25);
@@ -52,15 +55,17 @@ void worldMapScene::release(void)
 void worldMapScene::update(void)
 {
 	_sceneEffect->update();
+	_worldPlayer->update();
 
-	if (KEYMANAGER->isStayKeyDown(VK_LEFT)) _x -= 3;
-	if (KEYMANAGER->isStayKeyDown(VK_RIGHT)) _x += 3;
-	if (KEYMANAGER->isStayKeyDown(VK_UP)) _y -= 3;
-	if (KEYMANAGER->isStayKeyDown(VK_DOWN)) _y += 3;
+	_x = _worldPlayer->getWorldFinnX();
+	_y = _worldPlayer->getWorldFinnY();
 
-	_rc = RectMakeCenter(_x, _y, 30, 30);
+	_rc = _worldPlayer->getWorldFinnRect();
 
-	pixelCollision();
+	if (!_worldPlayer->getIsBridgeState())
+	{
+		pixelCollision();
+	}
 	rectCollision();
 
 	_UI->update();
@@ -190,6 +195,7 @@ void worldMapScene::render(void)
 	
 	Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
 
+	_worldPlayer->render();
 
 	_UI->render();
 
@@ -243,7 +249,7 @@ void worldMapScene::pixelCollision()
 
 		if ((r == 0 && g == 0 && b == 255))
 		{
-			_y = (i + 3) + (_rc.bottom - _rc.top) / 2;
+			_worldPlayer->setWorldFinnY((i + 3) + (_rc.bottom - _rc.top) / 2);
 			break;
 		}
 	}
@@ -260,7 +266,7 @@ void worldMapScene::pixelCollision()
 
 		if ((r == 0 && g == 0 && b == 255))
 		{
-			_y = i - 3 - (_rc.bottom - _rc.top) / 2;
+			_worldPlayer->setWorldFinnY(i - 3 - (_rc.bottom - _rc.top) / 2);
 			break;
 		}
 	}
@@ -276,7 +282,7 @@ void worldMapScene::pixelCollision()
 
 		if ((r == 0 && g == 0 && b == 255))
 		{
-			_x = i + 3 + (_rc.right - _rc.left) / 2;
+			_worldPlayer->setWorldFinnX(i + 3 + (_rc.right - _rc.left) / 2);
 			break;
 		}
 	}
@@ -292,7 +298,7 @@ void worldMapScene::pixelCollision()
 
 		if ((r == 0 && g == 0 && b == 255))
 		{
-			_x = i - 3 - (_rc.right - _rc.left) / 2;
+			_worldPlayer->setWorldFinnX(i - 3 - (_rc.right - _rc.left) / 2);
 			break;
 		}
 	}
@@ -336,13 +342,18 @@ void worldMapScene::rectCollision()
 				break;
 			case STAGE_1_RIGHT:
 			{
-				_sceneEffect->setFadeOUT(true);
-				DATABASE->setWorldPosition(STAGE_1_RIGHT);
-				//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
-				if (!_sceneEffect->getChangeScene())
+
+				if (!_worldPlayer->getIsBridgeState())
 				{
-					SCENEMANAGER->changeScene("STAGE1");
+					_worldPlayer->setBridge(_eventRC[STAGE_1_RIGHT].left, _eventRC[STAGE_1_RIGHT].bottom, _eventRC[STAGE_1_LEFT].left, _eventRC[STAGE_1_LEFT].bottom);
 				}
+				//_sceneEffect->setFadeOUT(true);
+				//DATABASE->setWorldPosition(STAGE_1_RIGHT);
+				////¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
+				//if (!_sceneEffect->getChangeScene())
+				//{
+				//	SCENEMANAGER->changeScene("STAGE1");
+				//}
 			}
 				break;
 			case STAGE_2_LEFT:
@@ -409,8 +420,21 @@ void worldMapScene::rectCollision()
 			case STAGE_MIDBOSS:
 				break;
 			case JAKE_BRIDGE_IN:
+			{
+
+				if (!_worldPlayer->getIsBridgeState())
+				{
+					_worldPlayer->setBridge(_eventRC[JAKE_BRIDGE_IN].left + 10, _eventRC[JAKE_BRIDGE_IN].bottom + 10, _eventRC[JAKE_BRIDGE_OUT].left + 10, _eventRC[JAKE_BRIDGE_OUT].bottom + 10);
+				}
+			}
 				break;
 			case JAKE_BRIDGE_OUT:
+			{
+				//if (!_worldPlayer->getIsBridgeState())
+				//{
+				//	_worldPlayer->setBridge(_eventRC[JAKE_BRIDGE_OUT].left, _eventRC[JAKE_BRIDGE_OUT].bottom, _eventRC[JAKE_BRIDGE_IN].left, _eventRC[JAKE_BRIDGE_IN].bottom);
+				//}
+			}
 				break;
 			case JAKE_CLIMB_1:
 				break;
