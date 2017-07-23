@@ -31,6 +31,12 @@ void mainGame::addImage()
 	IMAGEMANAGER->addImage("STAGE3", "Image/STAGE1_GROUND.bmp", 6379, 480, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("STAGE3_PIXEL_COLLISION", "Image/STAGE1_GROUND_PIXEL_COLLISION.bmp", 6379, 480, true, RGB(255, 0, 255));
 
+	//체스트스테이지
+	IMAGEMANAGER->addImage("CHEST_STAGE_BACKGROUND", "Image/CHESTSTAGE_BACKGROUND.bmp", 1150, 480, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("CHEST_STAGE_PIXEL_COLLISION", "Image/CHESTSTAGE_PIXEL_COLLISION.bmp", 1150, 480, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("CHEST_IDLE", "Image/CHEST_IDLE.bmp", 58, 56, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("CHEST_OPEN", "Image/CHEST_OPEN.bmp", 58, 56, true, RGB(255, 0, 255));
+
 	//인벤토리씬, 아이템
 	IMAGEMANAGER->addImage("INVENTORY", "Image/INVENTORY.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ITEM", "Image/ITEM.bmp", 192, 384, 3, 6, true, RGB(255, 0, 255));
@@ -47,4 +53,13 @@ void mainGame::addImage()
 	//미니맵
 	IMAGEMANAGER->addImage("MINIMAP", "Image/MINIMAP.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("MINIMAP_FINN", "Image/MINIMAP_FINN.bmp", 20, 20, true, RGB(255, 0, 255));
+
+	//UI
+	IMAGEMANAGER->addFrameImage("UI_HEART", "Image/UI_HEART.bmp", 200, 46, 5, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("UI_HEART_END", "Image/UI_HEART_END.bmp", 25, 46, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("UI_HEART_0", "Image/UI_HEART_0.bmp", 40, 46, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("UI_HEART_1", "Image/UI_HEART_1.bmp", 40, 46, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("UI_HEART_2", "Image/UI_HEART_2.bmp", 40, 46, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("UI_HEART_3", "Image/UI_HEART_3.bmp", 40, 46, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("UI_HEART_4", "Image/UI_HEART_4.bmp", 40, 46, true, RGB(255, 0, 255));
 }

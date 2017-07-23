@@ -38,7 +38,7 @@ struct TAGSKILL
 
 enum SKILLNAME
 {
-	DEFALUT,
+	DEFAULT,
 	ATTACK1, //1타공격
 	ATTACK2, //2타공격
 	ATTACK3, //3타공격
@@ -158,7 +158,7 @@ public:
 	int getState() { return _state; }
 	bool getIsRight() { return _isRight; }
 	bool getIsHit() { return _isHit; }
-	RECT getSkillHitBox(SKILLNAME skillName) { return _skill[skillName]._hitBox; }
+	RECT getSkillHitBox(int skillName) { return _skill[skillName]._hitBox; }
 
 	//세터
 	void setCurrentHP(int HP) { _currentHP = HP; }

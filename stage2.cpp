@@ -4,6 +4,9 @@
 
 HRESULT stage2::init(void)
 {
+	_UI = new UI;
+	_UI->init();
+
 	_leftDoor = RectMake(0, WINSIZEY / 2, 10, 400);
 	_rightDoor = RectMake(6640, WINSIZEY / 2, 10, 400);
 
@@ -37,6 +40,7 @@ void stage2::update(void)
 	pixelCollision();
 	stageDoor();
 	camMove();
+	_UI->update();
 }
 
 void stage2::render(void)
@@ -50,6 +54,7 @@ void stage2::render(void)
 	//ÇÉ ·£´õ
 	_stageFinn->render();
 
+	_UI->render();
 	_sceneEffect->render();
 }
 
@@ -211,38 +216,38 @@ void stage2::camMove(void)
 {
 	if (_stageFinn->getIsRight() == true)
 	{
-		if (_camX >= 0 && _camX < 6650 - WINSIZEX)
+		if (_camX >= 0 && _camX < 6370 - WINSIZEX)
 		{
-			if (_stageFinn->getX() + _stageFinn->getWidth() / 2 == 6650)
+			if (_stageFinn->getX() + _stageFinn->getWidth() / 2 == 6370)
 			{
 				_stageFinn->setSpeedX(0);
 			}
-			if (_camX == 6650 - WINSIZEX);
+			if (_camX == 6370 - WINSIZEX);
 			else if (_stageFinn->getX() > WINSIZEX / 3)
 			{
-				if (_stageFinn->getX() - _camX > WINSIZEX / 3 + 4)
+				if (_stageFinn->getX() - _camX > WINSIZEX / 3 + 7)
 				{
-					_camX += (_stageFinn->getSpeedX() + 1) * 2 ;
+					_camX += _stageFinn->getSpeedX() * 2 + 3;
 				}
 				else _camX = _stageFinn->getX() - WINSIZEX / 3 + 6;
 				_stageFinn->setCamX(_camX);
 			}
 		}
 
-		if (_camX > 6650 - WINSIZEX) _camX = 6650 - WINSIZEX;
+		if (_camX > 6370 - WINSIZEX) _camX = 6370 - WINSIZEX;
 	}
 
 	else if (_stageFinn->getIsRight() == false)
 	{
-		if (_camX > 0 && _camX <= 6657 - WINSIZEX)
+		if (_camX > 0 && _camX <= 6379 - WINSIZEX)
 		{
 			if (_stageFinn->getX() - _stageFinn->getWidth() / 2 == 0) _stageFinn->setSpeedX(0);
 			if (_camX == 0);
-			else if (_stageFinn->getX() < 6657 - WINSIZEX / 3)
+			else if (_stageFinn->getX() < 6379 - WINSIZEX / 3)
 			{
-				if (_stageFinn->getX() - _camX < WINSIZEX / 3 * 2 - 4)
+				if (_stageFinn->getX() - _camX < WINSIZEX / 3 * 2 - 7)
 				{
-					_camX += (_stageFinn->getSpeedX() - 1) * 2 ;
+					_camX += _stageFinn->getSpeedX() * 2 - 3;
 				}
 				else _camX = _stageFinn->getX() - WINSIZEX / 3 * 2 - 5;
 				_stageFinn->setCamX(_camX);

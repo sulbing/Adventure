@@ -31,11 +31,11 @@ using namespace THETA_UTIL;
 // ## 디파인문 ## 17.04.26 ##
 //==============================
 
-#define WINNAME (LPTSTR)(TEXT("Theta API"))	//윈도우 창 이름
-#define WINSTARTX 500						//윈도우 시작좌표X
-#define WINSTARTY 200						//윈도우 시작좌표Y
-#define WINSIZEX 800						//윈도우 가로크기
-#define WINSIZEY 480						//윈도우 세로크기
+#define WINNAME (LPTSTR)(TEXT("Adventure Time"))	//윈도우 창 이름
+#define WINSTARTX 500								//윈도우 시작좌표X
+#define WINSTARTY 200								//윈도우 시작좌표Y
+#define WINSIZEX 800								//윈도우 가로크기
+#define WINSIZEY 480								//윈도우 세로크기
 #define WINSTYLE WS_CAPTION | WS_SYSMENU
 
 //싱글톤화 시킨 클래스 디파인화

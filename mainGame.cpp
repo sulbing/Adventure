@@ -27,6 +27,8 @@ HRESULT mainGame::init(void)
 	addImage();
 	DATABASE->init();
 
+	DATABASE->setstatus(2, 1, 1, 1, 5);
+
 	SCENEMANAGER->addScene("SCENE_OPENEING", new openingScene);
 	SCENEMANAGER->addScene("SCENE_WORLDMAP", new worldMapScene);
 	SCENEMANAGER->addScene("SCENE_SAVE_POINT", new nymphStage);
@@ -34,6 +36,9 @@ HRESULT mainGame::init(void)
 	SCENEMANAGER->addScene("SCENE_STATUS", new statusScene);
 	SCENEMANAGER->addScene("SCENE_MINIMAP", new minimapScene);
 	SCENEMANAGER->addScene("STAGE1", new stage1);
+	SCENEMANAGER->addScene("STAGE2", new stage2);
+	SCENEMANAGER->addScene("STAGE3", new stage3);
+	SCENEMANAGER->addScene("CHEST_STAGE", new cheststage);
 
 	SCENEMANAGER->changeScene("SCENE_OPENEING");
 

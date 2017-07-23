@@ -8,6 +8,9 @@ worldMapScene::~worldMapScene() {}
 
 HRESULT worldMapScene::init(void)
 {
+	_UI = new UI;
+	_UI->init();
+
 	//ÆäÀÌµå ÀÎ/¾Æ¿ô
 	_sceneEffect = new sceneEffect;
 	_sceneEffect->init();
@@ -17,25 +20,26 @@ HRESULT worldMapScene::init(void)
 	_mapSizeHeight = _background->getHeight();
 
 	//Áý ¾Õ ÁÂÇ¥
-	_rc = RectMake(_x, _y, 30, 30);
+	_x = _playerX[DATABASE->getWorldPosition()];
+	_y = _playerY[DATABASE->getWorldPosition()];
+
+	_rc = RectMakeCenter(_x, _y, 30, 30);
 
 	_eventRC[STAGE_NYMPH_1] = RectMake(771, 292, 40, 25);
 	_eventRC[STAGE_NYMPH_2] = RectMake(1988, 868, 40 ,25);
 	_eventRC[STAGE_HOUSE] = RectMake(1385, 717, 60, 100);
-	_eventRC[STAGE_1_IN] = RectMake(841, 481, 30, 30);
-	_eventRC[STAGE_1_OUT] = RectMake(809, 352, 30, 30);
-	_eventRC[STAGE_2_IN] = RectMake(2126, 1694, 30, 30);
-	_eventRC[STAGE_2_OUT] = RectMake(2204, 1542, 30, 30);
-	_eventRC[STAGE_3_IN] = RectMake(2215, 768, 30, 30);
-	_eventRC[STAGE_3_OUT] = RectMake(2184, 608, 30, 30);
+	_eventRC[STAGE_1_LEFT] = RectMake(841, 481, 30, 30);
+	_eventRC[STAGE_1_RIGHT] = RectMake(809, 352, 30, 30);
+	_eventRC[STAGE_2_LEFT] = RectMake(2126, 1694, 30, 30);
+	_eventRC[STAGE_2_RIGHT] = RectMake(2204, 1542, 30, 30);
+	_eventRC[STAGE_3_LEFT] = RectMake(2215, 768, 30, 30);
+	_eventRC[STAGE_3_RIGHT] = RectMake(2184, 608, 30, 30);
 	_eventRC[STAGE_CHEST] = RectMake(1067, 323, 50, 50);
 	_eventRC[STAGE_MIDBOSS] = RectMake(2286, 1418, 30, 30);
 	_eventRC[JAKE_BRIDGE_IN] = RectMake(1801, 1492, 30, 30);
 	_eventRC[JAKE_BRIDGE_OUT] = RectMake(1801, 1582, 30, 30);
 	_eventRC[JAKE_CLIMB_1] = RectMake(2226, 483, 80, 20);
 	_eventRC[JAKE_CLIMB_2] = RectMake(2361, 291, 60, 20);
-
-	_isEvent = false;
 	
 	return S_OK;
 }
@@ -54,22 +58,12 @@ void worldMapScene::update(void)
 	if (KEYMANAGER->isStayKeyDown(VK_UP)) _y -= 3;
 	if (KEYMANAGER->isStayKeyDown(VK_DOWN)) _y += 3;
 
-	//if (!_sceneEffect->isFadeIN() && KEYMANAGER->isOnceKeyDown(VK_RETURN))
-	//{
-	//	_sceneEffect->setFadeOUT(true);
-	//}
-	////¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
-	//if (!_sceneEffect->getChangeScene() && !_sceneEffect->isFadeOUT())
-	//{
-	//	SCENEMANAGER->changeScene("SCENE_SAVE_POINT");
-	//}
-
-	_rc = RectMake(_x, _y, 30, 30);
+	_rc = RectMakeCenter(_x, _y, 30, 30);
 
 	pixelCollision();
 	rectCollision();
 
-	DATABASE->setWolrdstate(_x, _y);
+	_UI->update();
 }
 
 void worldMapScene::render(void)
@@ -192,14 +186,14 @@ void worldMapScene::render(void)
 
 	IMAGEMANAGER->findImage("WORLDMAP_PIXEL_COLLISION")->render(getMemDC(), 0, 0);
 
-	RectangleMake(getMemDC(), WINSIZEX / 2, WINSIZEY / 2, 30, 30);
+	RectangleMakeCenter(getMemDC(), WINSIZEX / 2, WINSIZEY / 2, 30, 30);
 	
 	Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
 
+
+	_UI->render();
+
 	_sceneEffect->render();
-
-
-
 }
 
 DIRECTION worldMapScene::getDirection(int x, int y)
@@ -249,7 +243,7 @@ void worldMapScene::pixelCollision()
 
 		if ((r == 0 && g == 0 && b == 255))
 		{
-			_y = i + 3;
+			_y = (i + 3) + (_rc.bottom - _rc.top) / 2;
 			break;
 		}
 	}
@@ -266,7 +260,7 @@ void worldMapScene::pixelCollision()
 
 		if ((r == 0 && g == 0 && b == 255))
 		{
-			_y = i - (_rc.bottom - _rc.top) - 3;
+			_y = i - 3 - (_rc.bottom - _rc.top) / 2;
 			break;
 		}
 	}
@@ -282,7 +276,7 @@ void worldMapScene::pixelCollision()
 
 		if ((r == 0 && g == 0 && b == 255))
 		{
-			_x = i + 3;
+			_x = i + 3 + (_rc.right - _rc.left) / 2;
 			break;
 		}
 	}
@@ -298,11 +292,10 @@ void worldMapScene::pixelCollision()
 
 		if ((r == 0 && g == 0 && b == 255))
 		{
-			_x = i - (_rc.right - _rc.left) - 3;
+			_x = i - 3 - (_rc.right - _rc.left) / 2;
 			break;
 		}
 	}
-
 }
 
 
@@ -330,10 +323,10 @@ void worldMapScene::rectCollision()
 				}
 			}
 				break;
-			case STAGE_1_IN:
+			case STAGE_1_LEFT:
 			{
 				_sceneEffect->setFadeOUT(true);
-
+				DATABASE->setWorldPosition(STAGE_1_LEFT);
 				//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
 				if (!_sceneEffect->getChangeScene())
 				{
@@ -341,17 +334,77 @@ void worldMapScene::rectCollision()
 				}
 			}
 				break;
-			case STAGE_1_OUT:
+			case STAGE_1_RIGHT:
+			{
+				_sceneEffect->setFadeOUT(true);
+				DATABASE->setWorldPosition(STAGE_1_RIGHT);
+				//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
+				if (!_sceneEffect->getChangeScene())
+				{
+					SCENEMANAGER->changeScene("STAGE1");
+				}
+			}
 				break;
-			case STAGE_2_IN:
+			case STAGE_2_LEFT:
+			{
+				_sceneEffect->setFadeOUT(true);
+				DATABASE->setWorldPosition(STAGE_2_LEFT);
+				//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
+				if (!_sceneEffect->getChangeScene())
+				{
+					SCENEMANAGER->changeScene("STAGE2");
+				}
+			}
 				break;
-			case STAGE_2_OUT:
+			case STAGE_2_RIGHT:
+			{
+				_sceneEffect->setFadeOUT(true);
+				DATABASE->setWorldPosition(STAGE_2_RIGHT);
+				//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
+				if (!_sceneEffect->getChangeScene())
+				{
+					SCENEMANAGER->changeScene("STAGE2");
+				}
+			}
 				break;
-			case STAGE_3_IN:
+			case STAGE_3_LEFT:
+			{
+				{
+					_sceneEffect->setFadeOUT(true);
+					DATABASE->setWorldPosition(STAGE_3_LEFT);
+					//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
+					if (!_sceneEffect->getChangeScene())
+					{
+						SCENEMANAGER->changeScene("STAGE3");
+					}
+				}
+			}
 				break;
-			case STAGE_3_OUT:
+			case STAGE_3_RIGHT:
+			{
+				{
+					_sceneEffect->setFadeOUT(true);
+					DATABASE->setWorldPosition(STAGE_3_RIGHT);
+					//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
+					if (!_sceneEffect->getChangeScene())
+					{
+						SCENEMANAGER->changeScene("STAGE3");
+					}
+				}
+			}
 				break;
 			case STAGE_CHEST:
+			{
+				{
+					_sceneEffect->setFadeOUT(true);
+					DATABASE->setWorldPosition(STAGE_CHEST);
+					//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
+					if (!_sceneEffect->getChangeScene())
+					{
+						SCENEMANAGER->changeScene("CHEST_STAGE");
+					}
+				}
+			}
 				break;
 			case STAGE_MIDBOSS:
 				break;

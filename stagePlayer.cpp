@@ -12,6 +12,7 @@ stagePlayer::~stagePlayer()
 HRESULT stagePlayer::init(int hearts, int attack, int speed, int currentHP, float x, float y, bool isRight)
 {
 	//기본정보
+	//하트 + 2 입니당
 	_maxHP = 4 * (hearts + 1);
 	_currentHP = currentHP;
 	if (_currentHP > _maxHP)
@@ -77,7 +78,7 @@ void stagePlayer::render(void)
 	Rectangle(getMemDC(), _bodyRC.left, _bodyRC.top, _bodyRC.right, _bodyRC.bottom);
 
 	//스킬렉트 랜더
-	for (int i = DEFALUT; i < SKILLEND; i++)
+	for (int i = DEFAULT; i < SKILLEND; i++)
 	{
 		if (_skill[i]._isFire == true)
 		{
@@ -94,7 +95,7 @@ void stagePlayer::render(void)
 		{
 			if (_isAttack)
 			{
-				_attackImage->aniRender(getMemDC(), _x - _attackImage->getFrameWidth()   / 2 - _camX, _y - _attackImage->getFrameHeight() / 2 - 8, _playerMotion);
+				_attackImage->aniRender(getMemDC(), _x - _attackImage->getFrameWidth() / 2 - _camX, _y - _attackImage->getFrameHeight() / 2 - 8, _playerMotion);
 			}
 			else _basicImage->aniRender(getMemDC(), _x - _basicImage->getFrameWidth() / 2 - _camX, _y - _basicImage->getFrameHeight() / 2 - 8, _playerMotion);
 		}
@@ -778,7 +779,7 @@ void stagePlayer::basicMove()
 	_y += _speedY * moveTime;
 
 	//스킬도 따라 움직여야지
-	for (int i = DEFALUT; i < SKILLEND; i++)
+	for (int i = DEFAULT; i < SKILLEND; i++)
 	{
 		if (!_skill[i]._isFire) continue;
 		_skill[i]._skillX += _speedX * moveTime;
@@ -817,7 +818,7 @@ void stagePlayer::skillUpdate()
 	_skill[BEEATTACK]._damage = 10;
 	_skill[FIREATTACK]._damage = 5;
 
-	for (int i = DEFALUT; i < SKILLEND; i++)
+	for (int i = DEFAULT; i < SKILLEND; i++)
 	{
 		_skill[i]._hitBox = RectMakeCenter(_skill[i]._skillX, _skill[i]._skillY, _skill[i]._skillWidth, _skill[i]._skillHeight);
 	}
@@ -949,7 +950,7 @@ void stagePlayer::skillInit()
 	_skill[BEEATTACK]._damage = 10;
 	_skill[FIREATTACK]._damage = 5;*/
 
-	for (int i = DEFALUT; i < SKILLEND; i++)
+	for (int i = DEFAULT; i < SKILLEND; i++)
 	{
 		_skill[i]._skillX = 0;
 		_skill[i]._skillY = 0;

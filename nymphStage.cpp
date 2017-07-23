@@ -4,6 +4,9 @@
 
 HRESULT nymphStage::init(void)
 {
+	_UI = new UI;
+	_UI->init();
+
 	_nymph = IMAGEMANAGER->findImage("nymph");
 
 	_nymphAni = new animation;
@@ -57,10 +60,11 @@ void nymphStage::update(void)
 	//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
 	if (!_sceneEffect->getChangeScene() && !_sceneEffect->isFadeOUT())
 	{
-		SCENEMANAGER->changeScene("STAGE1");
+		SCENEMANAGER->changeScene("CHEST_STAGE");
 	}
 
 	stageDoor();
+	_UI->update();
 }
 
 void nymphStage::render(void)
@@ -74,6 +78,7 @@ void nymphStage::render(void)
 	_stageFinn->render();
 
 	//_mi1->render();
+	_UI->render();
 
 	_sceneEffect->render();
 
@@ -136,7 +141,6 @@ void nymphStage::stageDoor(void)
 		{
 			SCENEMANAGER->changeScene("SCENE_WORLDMAP");
 		}
-		_stageFinn->setSpeedX(0);
 	}
 
 	else if (IntersectRect(&temp, &_rightDoor, &_stageFinn->getBodyRC()))

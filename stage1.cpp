@@ -4,17 +4,31 @@
 
 HRESULT stage1::init(void)
 {
+	_UI = new UI;
+	_UI->init();
+
 	_leftDoor = RectMake(0, WINSIZEY / 2, 10, 400);
 	_rightDoor = RectMake(6360, WINSIZEY / 2, 10, 400);
 
 	_sceneEffect = new sceneEffect;
 	_sceneEffect->init();
-
-
 	_stageFinn = new stagePlayer;
-	_stageFinn->init(2, 0, 0, 8, WINSIZEX / 4, WINSIZEY - 100, true);
 
-	_camX = _camY = 0;
+	if (DATABASE->getWorldPosition() == STAGE_1_LEFT)
+	{
+		_stageFinn->init(2, 0, 0, 8, WINSIZEX / 4, WINSIZEY - 100, true);
+
+		_camX = 0;
+	}
+	else if (DATABASE->getWorldPosition() == STAGE_1_RIGHT)
+	{
+		_stageFinn->init(2, 0, 0, 8, 6200, WINSIZEY - 138, false);
+
+		_camX = 6370 - WINSIZEX;
+		_stageFinn->setCamX(_camX);
+	}
+
+	_camY = 0;
 
 	_isChange = false;
 
@@ -37,6 +51,7 @@ void stage1::update(void)
 	pixelCollision();
 	stageDoor();
 	camMove();
+	_UI->update();
 }
 
 void stage1::render(void)
@@ -49,6 +64,8 @@ void stage1::render(void)
 
 	//핀 랜더
 	_stageFinn->render();
+
+	_UI->render();
 
 	_sceneEffect->render();
 }
@@ -188,12 +205,15 @@ void stage1::stageDoor(void)
 		//씬 전환 끝나면 씬 체인지
 		if (!_sceneEffect->getChangeScene())
 		{
+			//월드 포지션
+			DATABASE->setWorldPosition(STAGE_1_LEFT);
+
 			SCENEMANAGER->changeScene("SCENE_WORLDMAP");
 		}
 		_stageFinn->setSpeedX(0);
 	}
 
-	else if (IntersectRect(&temp, &_rightDoor, &_stageFinn->getBodyRC()))
+	if (IntersectRect(&temp, &_rightDoor, &_stageFinn->getBodyRC()))
 	{
 		_isChange = true;
 		_sceneEffect->setFadeOUT(true);
@@ -201,6 +221,9 @@ void stage1::stageDoor(void)
 		//씬 전환 끝나면 씬 체인지
 		if (!_sceneEffect->getChangeScene())
 		{
+			//월드 포지션
+			DATABASE->setWorldPosition(STAGE_1_RIGHT);
+
 			SCENEMANAGER->changeScene("SCENE_WORLDMAP");
 		}
 		_stageFinn->setSpeedX(0);
@@ -220,9 +243,9 @@ void stage1::camMove(void)
 			if (_camX == 6370 - WINSIZEX);
 			else if (_stageFinn->getX() > WINSIZEX / 3)
 			{
-				if (_stageFinn->getX() - _camX > WINSIZEX / 3 + 4)
+				if (_stageFinn->getX() - _camX > WINSIZEX / 3 + 7)
 				{
-					_camX += (_stageFinn->getSpeedX() + 1) * 2;
+					_camX += _stageFinn->getSpeedX() * 2 + 3;
 				}
 				else _camX = _stageFinn->getX() - WINSIZEX / 3 + 6;
 				_stageFinn->setCamX(_camX);
@@ -240,9 +263,9 @@ void stage1::camMove(void)
 			if (_camX == 0);
 			else if (_stageFinn->getX() < 6379 - WINSIZEX / 3)
 			{
-				if (_stageFinn->getX() - _camX < WINSIZEX / 3 * 2 - 4)
+				if (_stageFinn->getX() - _camX < WINSIZEX / 3 * 2 - 7)
 				{
-					_camX += (_stageFinn->getSpeedX() - 1) * 2;
+					_camX += _stageFinn->getSpeedX() * 2 - 3;
 				}
 				else _camX = _stageFinn->getX() - WINSIZEX / 3 * 2 - 5;
 				_stageFinn->setCamX(_camX);
