@@ -3,9 +3,12 @@
 #include "stagePlayer.h"
 #include "sceneEffect.h"
 #include "item.h"
+<<<<<<< HEAD
 #include"gameNode.h"
 #include"stagePlayer.h"
 #include"sceneEffect.h"
+=======
+>>>>>>> af3c4e9e9a084b85c2a1d74cb05de85cdd2811fb
 #include "UI.h"
 
 class cheststage : public gameNode

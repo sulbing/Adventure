@@ -189,6 +189,9 @@
     <ClInclude Include="UI.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="worldPlayer.h">
+      <Filter>MainGame\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -301,6 +304,9 @@
     </ClCompile>
     <ClCompile Include="UI.cpp">
       <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="worldPlayer.cpp">
+      <Filter>MainGame\Player</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

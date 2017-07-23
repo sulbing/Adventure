@@ -82,7 +82,6 @@ gameNode* sceneManager::addScene(string sceneName, gameNode* scene)
 	_mSceneList.insert(make_pair(sceneName, scene));
 
 	return scene;
-
 }
 
 

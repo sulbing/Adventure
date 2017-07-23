@@ -26,6 +26,11 @@ HRESULT nymphStage::init(void)
 
 	_isChange = false;
 
+	_mi1 = new enemy;
+	_mi1->init(2, WINSIZEX / 6, WINSIZEY * 3 / 4, _stageFinn);
+
+	_test = new worldPlayer;
+	_test->init();
 	//_mi1 = new enemy;
 	//_mi1->init(1, WINSIZEX / 4, WINSIZEY * 3 / 4);
 
@@ -42,11 +47,13 @@ void nymphStage::update(void)
 
 	_nymphAni->frameUpdate(TIMEMANAGER->getElapsedTime() * 8);
 
+	_test->update();
+
 	//ÇÉ ¾÷µ¥ÀÌÆ®
 	if (!_isChange) _stageFinn->update();
 	pixelCollision();
 
-	//_mi1->update(_mi1->getType());
+	_mi1->update();
 
 	//¾ÀÀüÈ¯
 	if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
@@ -73,10 +80,12 @@ void nymphStage::render(void)
 	//ÇÉ ·£´õ
 	_stageFinn->render();
 
-	//_mi1->render();
+	_mi1->render();
 	_UI->render();
 
 	_sceneEffect->render();
+
+	_test->render();
 }
 
 void nymphStage::pixelCollision(void)
