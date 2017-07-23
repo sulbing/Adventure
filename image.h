@@ -114,6 +114,7 @@ public:
 	void alphaFrameRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, BYTE alpha);
 
 	void aniRender(HDC hdc, int destX, int destY, animation* ani);
+	void alphaAniRender(HDC hdc, int destX, int destY, animation* ani, BYTE alpha);
 
 	//DC영역의 메모리 접근자
 	inline HDC getMemDC(void) { return _imageInfo->hMemDC; }

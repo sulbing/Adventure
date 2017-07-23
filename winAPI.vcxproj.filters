@@ -61,11 +61,11 @@
     <Filter Include="MainGame\Item">
       <UniqueIdentifier>{57dff9c6-9ab9-4337-bd04-d0710d3023ca}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainGame\database">
-      <UniqueIdentifier>{66acfdc0-4bdd-45c5-a6ec-2c325a886a72}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MainGame\Enemy">
       <UniqueIdentifier>{812aa9ea-2d8a-43fb-aeae-2b16650aa748}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\database">
+      <UniqueIdentifier>{66acfdc0-4bdd-45c5-a6ec-2c325a886a72}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -186,6 +186,9 @@
     <ClInclude Include="stage3.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -294,6 +297,9 @@
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
     <ClCompile Include="stage3.cpp">
+      <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
   </ItemGroup>

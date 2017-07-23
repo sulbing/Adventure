@@ -4,17 +4,31 @@
 
 HRESULT stage1::init(void)
 {
+	_UI = new UI;
+	_UI->init();
+
 	_leftDoor = RectMake(0, WINSIZEY / 2, 10, 400);
 	_rightDoor = RectMake(6360, WINSIZEY / 2, 10, 400);
 
 	_sceneEffect = new sceneEffect;
 	_sceneEffect->init();
-
-
 	_stageFinn = new stagePlayer;
-	_stageFinn->init(2, 0, 0, 8, WINSIZEX / 4, WINSIZEY - 100, true);
 
-	_camX = _camY = 0;
+	if (DATABASE->getWorldPosition() == STAGE_1_LEFT)
+	{
+		_stageFinn->init(2, 0, 0, 8, WINSIZEX / 4, WINSIZEY - 100, true);
+
+		_camX = 0;
+	}
+	else if (DATABASE->getWorldPosition() == STAGE_1_RIGHT)
+	{
+		_stageFinn->init(2, 0, 0, 8, 6200, WINSIZEY - 138, false);
+
+		_camX = 6370 - WINSIZEX;
+		_stageFinn->setCamX(_camX);
+	}
+
+	_camY = 0;
 
 	_isChange = false;
 
@@ -37,6 +51,7 @@ void stage1::update(void)
 	pixelCollision();
 	stageDoor();
 	camMove();
+	_UI->update();
 }
 
 void stage1::render(void)
@@ -49,6 +64,8 @@ void stage1::render(void)
 
 	//ÇÉ ·£´õ
 	_stageFinn->render();
+
+	_UI->render();
 
 	_sceneEffect->render();
 }

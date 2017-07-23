@@ -9,7 +9,7 @@ POINT		_ptMouse;		//마우스 좌표 받을 POINT 변수
 
 //=============================================================================
 
-LPTSTR _lpszClass = TEXT("Theta API");	//윈도우 창 텍스트
+LPTSTR _lpszClass = TEXT("Adventure Time");	//윈도우 창 텍스트
 
 //함수 전방선언 == 함수의 프로토타입 선언
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);

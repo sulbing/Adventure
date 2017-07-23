@@ -8,6 +8,9 @@ worldMapScene::~worldMapScene() {}
 
 HRESULT worldMapScene::init(void)
 {
+	_UI = new UI;
+	_UI->init();
+
 	//ÆäÀÌµå ÀÎ/¾Æ¿ô
 	_sceneEffect = new sceneEffect;
 	_sceneEffect->init();
@@ -59,6 +62,8 @@ void worldMapScene::update(void)
 
 	pixelCollision();
 	rectCollision();
+
+	_UI->update();
 }
 
 void worldMapScene::render(void)
@@ -185,10 +190,10 @@ void worldMapScene::render(void)
 	
 	Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
 
+
+	_UI->render();
+
 	_sceneEffect->render();
-
-
-
 }
 
 DIRECTION worldMapScene::getDirection(int x, int y)
@@ -321,7 +326,7 @@ void worldMapScene::rectCollision()
 			case STAGE_1_LEFT:
 			{
 				_sceneEffect->setFadeOUT(true);
-
+				DATABASE->setWorldPosition(STAGE_1_LEFT);
 				//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
 				if (!_sceneEffect->getChangeScene())
 				{
@@ -330,16 +335,76 @@ void worldMapScene::rectCollision()
 			}
 				break;
 			case STAGE_1_RIGHT:
+			{
+				_sceneEffect->setFadeOUT(true);
+				DATABASE->setWorldPosition(STAGE_1_RIGHT);
+				//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
+				if (!_sceneEffect->getChangeScene())
+				{
+					SCENEMANAGER->changeScene("STAGE1");
+				}
+			}
 				break;
 			case STAGE_2_LEFT:
+			{
+				_sceneEffect->setFadeOUT(true);
+				DATABASE->setWorldPosition(STAGE_2_LEFT);
+				//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
+				if (!_sceneEffect->getChangeScene())
+				{
+					SCENEMANAGER->changeScene("STAGE2");
+				}
+			}
 				break;
 			case STAGE_2_RIGHT:
+			{
+				_sceneEffect->setFadeOUT(true);
+				DATABASE->setWorldPosition(STAGE_2_RIGHT);
+				//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
+				if (!_sceneEffect->getChangeScene())
+				{
+					SCENEMANAGER->changeScene("STAGE2");
+				}
+			}
 				break;
 			case STAGE_3_LEFT:
+			{
+				{
+					_sceneEffect->setFadeOUT(true);
+					DATABASE->setWorldPosition(STAGE_3_LEFT);
+					//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
+					if (!_sceneEffect->getChangeScene())
+					{
+						SCENEMANAGER->changeScene("STAGE3");
+					}
+				}
+			}
 				break;
 			case STAGE_3_RIGHT:
+			{
+				{
+					_sceneEffect->setFadeOUT(true);
+					DATABASE->setWorldPosition(STAGE_3_RIGHT);
+					//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
+					if (!_sceneEffect->getChangeScene())
+					{
+						SCENEMANAGER->changeScene("STAGE3");
+					}
+				}
+			}
 				break;
 			case STAGE_CHEST:
+			{
+				{
+					_sceneEffect->setFadeOUT(true);
+					DATABASE->setWorldPosition(STAGE_CHEST);
+					//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
+					if (!_sceneEffect->getChangeScene())
+					{
+						SCENEMANAGER->changeScene("CHEST_STAGE");
+					}
+				}
+			}
 				break;
 			case STAGE_MIDBOSS:
 				break;

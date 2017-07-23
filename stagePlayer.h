@@ -38,7 +38,7 @@ struct TAGSKILL
 
 enum SKILLNAME
 {
-	DEFALUT,
+	DEFAULT,
 	ATTACK1, //1타공격
 	ATTACK2, //2타공격
 	ATTACK3, //3타공격
@@ -120,10 +120,12 @@ private:
 	int jakeAttackInt = 0;
 	bool tackleKnockBackBool = false;
 	bool deadBool = false;
+	bool beeBool = false;
 
 	//스킬관련 변수
 	TAGSKILL _skill[SKILLEND];
 	void skillFire(SKILLNAME skillName, int x, int y, bool isRight);
+	float theta = 0;
 
 	//카메라 좌표 추가
 	int _camX, _camY;
@@ -156,7 +158,7 @@ public:
 	int getState() { return _state; }
 	bool getIsRight() { return _isRight; }
 	bool getIsHit() { return _isHit; }
-	RECT getSkillHitBox(SKILLNAME skillName) { return _skill[skillName]._hitBox; }
+	RECT getSkillHitBox(int skillName) { return _skill[skillName]._hitBox; }
 
 	//세터
 	void setCurrentHP(int HP) { _currentHP = HP; }
