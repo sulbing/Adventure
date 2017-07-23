@@ -64,6 +64,8 @@ private:
 	bool _isBridgeOpening = false;
 	bool bridgeBool = false;
 
+	bool _isBridgeState = false;
+
 
 
 
@@ -86,6 +88,18 @@ public:
 	virtual void render(void);
 
 	void setBridge(int startX, int startY, int EndX, int EndY);
+
+
+	//게터
+	float getWorldFinnX(void) { return _x; }
+	float getWorldFinnY(void) { return _y; }
+	RECT getWorldFinnRect(void) { return _finnRC; }
+	bool getIsBridgeState(void) { return _isBridgeState; }
+
+	//세터
+	void setWorldFinnX(float x) { _x = x; }
+	void setWorldFinnY(float y) { _y = y; }
+
 
 	worldPlayer();
 	~worldPlayer();

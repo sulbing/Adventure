@@ -122,6 +122,8 @@ private:
 	bool deadBool = false;
 	bool beeBool = false;
 
+	int fireInt = 0;
+
 	//스킬관련 변수
 	TAGSKILL _skill[SKILLEND];
 	void skillFire(SKILLNAME skillName, int x, int y, bool isRight);

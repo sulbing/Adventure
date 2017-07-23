@@ -22,6 +22,8 @@ HRESULT worldPlayer::init()
 
 	animationInit();
 
+	_finnRC = RectMakeCenter(_x, _y, 40, 40);
+
 	return S_OK;
 }
 
@@ -41,20 +43,29 @@ void worldPlayer:: update(void)
 	if (_state == WORLDBRIDGE)
 	{
 		bridgeMove();
+		_isBridgeState = true;
 	}
+
+	if (_state != WORLDBRIDGE)
+	{
+		bridgeMove();
+		_isBridgeState = false;
+	}
+
+
+	_finnRC = RectMakeCenter(_x, _y, 30, 40);
 
 	if (KEYMANAGER->isOnceKeyDown('A'))
 	{
-		setBridge(WINSIZEX / 2, WINSIZEY/2 + 170 , WINSIZEX / 2, WINSIZEY/ 2 );
+		setBridge(WINSIZEX / 2, WINSIZEY / 2, WINSIZEX / 2, WINSIZEY / 2 + 160);
 	}
-
 	isDirection();
 	KEYANIMANAGER->update();
 }
 
 void worldPlayer:: render(void)
 {
-	//Rectangle(getMemDC(), _finnRC.left, _finnRC.top, _finnRC.right, _finnRC.bottom);
+	Rectangle(getMemDC(), _finnRC.left, _finnRC.top, _finnRC.right, _finnRC.bottom);
 	//Rectangle(getMemDC(), _jakeRC.left, _jakeRC.top, _jakeRC.right, _jakeRC.bottom);
 	
 	if (!_isBridgeOpening)
@@ -137,14 +148,13 @@ void worldPlayer::basicMove(void)
 	}
 	
 	
-	_finnRC = RectMakeCenter(_x, _y, 50, 50);
+	_finnRC = RectMakeCenter(_x, _y, 30, 40);
 	_jakeRC = RectMakeCenter(_jakeX, _jakeY, 50, 50);
 
 }
 
 void worldPlayer::setBridge(int startX, int startY, int EndX, int EndY)
 {
-	
 	_state = WORLDBRIDGE;
 	_bridgeStartX = startX;
 	_bridgeStartY = startY;
@@ -510,21 +520,21 @@ void worldPlayer :: isDirection (void)
 			if (_jakeSpeedY > 1)
 			{
 				_jakeDirection = BOTTOMRIGHT;
-				_jakeMotion = KEYANIMANAGER->findAnimation("worldFinnBottomRightMove");
+				_jakeMotion = KEYANIMANAGER->findAnimation("worldJakeBottomRightMove");
 				if (!_jakeMotion->isPlay())_jakeMotion->start();
 
 			}
 			else if (_jakeSpeedY < -1)
 			{
 				_jakeDirection = TOPRIGHT;
-				_jakeMotion = KEYANIMANAGER->findAnimation("worldFinnTopRightMove");
+				_jakeMotion = KEYANIMANAGER->findAnimation("worldJakeTopRightMove");
 				if (!_jakeMotion->isPlay())_jakeMotion->start();
 			}
 
 			else if (_jakeSpeedY <= 1 && _jakeSpeedY >= -1)
 			{
 				_jakeDirection = RIGHT;
-				_jakeMotion = KEYANIMANAGER->findAnimation("worldFinnRightMove");
+				_jakeMotion = KEYANIMANAGER->findAnimation("worldJakeRightMove");
 				if (!_jakeMotion->isPlay())_jakeMotion->start();
 			}
 		}
@@ -534,19 +544,19 @@ void worldPlayer :: isDirection (void)
 			if (_jakeSpeedY > 1)
 			{
 				_jakeDirection = BOTTOMLEFT;
-				_jakeMotion = KEYANIMANAGER->findAnimation("worldFinnBottomLeftMove");
+				_jakeMotion = KEYANIMANAGER->findAnimation("worldJakeBottomLeftMove");
 				if (!_jakeMotion->isPlay())_jakeMotion->start();
 			}
 			else if (_jakeSpeedY < -1)
 			{
 				_jakeDirection = TOPLEFT;
-				_jakeMotion = KEYANIMANAGER->findAnimation("worldFinnTopLeftMove");
+				_jakeMotion = KEYANIMANAGER->findAnimation("worldJakeTopLeftMove");
 				if (!_jakeMotion->isPlay())_jakeMotion->start();
 			}
 			else if (_jakeSpeedY <= 1 && _jakeSpeedY >= -1)
 			{
 				_jakeDirection = LEFT;
-				_jakeMotion = KEYANIMANAGER->findAnimation("worldFinnLeftMove");
+				_jakeMotion = KEYANIMANAGER->findAnimation("worldJakeLeftMove");
 				if (!_jakeMotion->isPlay())_jakeMotion->start();
 			}
 		}
@@ -555,48 +565,48 @@ void worldPlayer :: isDirection (void)
 		if (_jakeSpeedY > 1)
 		{
 		_jakeDirection = BOTTOM;
-		_jakeMotion = KEYANIMANAGER->findAnimation("worldFinnBottomMove");
+		_jakeMotion = KEYANIMANAGER->findAnimation("worldJakeBottomMove");
 		if (!_jakeMotion->isPlay())_jakeMotion->start();
 		}
 		else if (_jakeSpeedY < -1)
 		{
 		_jakeDirection = TOP;
-		_jakeMotion = KEYANIMANAGER->findAnimation("worldFinnTopMove");
+		_jakeMotion = KEYANIMANAGER->findAnimation("worldJakeTopMove");
 		if (!_jakeMotion->isPlay())_jakeMotion->start();
 		}
 		else if (_jakeSpeedY <= 1 && _jakeSpeedY >= -1)
 		{
 		if (_jakeDirection == TOP)
 		{
-		_jakeMotion = KEYANIMANAGER->findAnimation("worldFinnTop");
+		_jakeMotion = KEYANIMANAGER->findAnimation("worldJakeTop");
 		}
 		else if (_jakeDirection == TOPRIGHT)
 		{
-		_jakeMotion = KEYANIMANAGER->findAnimation("worldFinnTopRight");
+		_jakeMotion = KEYANIMANAGER->findAnimation("worldJakeTopRight");
 		}
 		else if (_jakeDirection == RIGHT)
 		{
-		_jakeMotion = KEYANIMANAGER->findAnimation("worldFinnRight");
+		_jakeMotion = KEYANIMANAGER->findAnimation("worldJakeRight");
 		}
 		else if (_jakeDirection == BOTTOMRIGHT)
 		{
-		_jakeMotion = KEYANIMANAGER->findAnimation("worldFinnBottomRight");
+		_jakeMotion = KEYANIMANAGER->findAnimation("worldJakeBottomRight");
 		}
 		else if (_jakeDirection == BOTTOM)
 		{
-		_jakeMotion = KEYANIMANAGER->findAnimation("worldFinnBottom");
+		_jakeMotion = KEYANIMANAGER->findAnimation("worldJakeBottom");
 		}
 		else if (_jakeDirection == BOTTOMLEFT)
 		{
-		_jakeMotion = KEYANIMANAGER->findAnimation("worldFinnBottomLeft");
+		_jakeMotion = KEYANIMANAGER->findAnimation("worldJakeBottomLeft");
 		}
 		else if (_jakeDirection == LEFT)
 		{
-		_jakeMotion = KEYANIMANAGER->findAnimation("worldFinnLeft");
+		_jakeMotion = KEYANIMANAGER->findAnimation("worldJakeLeft");
 		}
 		else if (_jakeDirection == TOPLEFT)
 		{
-		_jakeMotion = KEYANIMANAGER->findAnimation("worldFinnTopLeft");
+		_jakeMotion = KEYANIMANAGER->findAnimation("worldJakeTopLeft");
 		}
 
 		}
@@ -670,7 +680,7 @@ void worldPlayer::animationInit()
 	int bottomLeftMove[] = { 64,65,66,67,68,69 };
 	int bottomLeftMoveJake[] = { 66,67,68,69,70,71 };
 	KEYANIMANAGER->addArrayFrameAnimation("worldFinnBottomLeftMove", "巧海捞流", bottomLeftMove, 6, 8, true);
-	KEYANIMANAGER->addArrayFrameAnimation("worldJakeBottomLeftMove", "力捞农海捞流", bottomLeftMove, 6, 8, true);
+	KEYANIMANAGER->addArrayFrameAnimation("worldJakeBottomLeftMove", "力捞农海捞流", bottomLeftMoveJake, 6, 8, true);
 
 	int leftMove[] = { 56,57,58,59,60,61 };
 	int leftMoveJake[] = { 58,59,60,61,62,63 };
@@ -678,7 +688,7 @@ void worldPlayer::animationInit()
 	KEYANIMANAGER->addArrayFrameAnimation("worldJakeLeftMove", "力捞农海捞流", leftMoveJake, 6, 8, true);
 
 	int topLeftMove[] = { 48,49,50,51,52,53 };
-	int topLeftMoveJake[] = { 50,51,52,53,54,55,56 };
+	int topLeftMoveJake[] = { 50,51,52,53,54,55 };
 	KEYANIMANAGER->addArrayFrameAnimation("worldFinnTopLeftMove", "巧海捞流", topLeftMove, 6, 8, true);
 	KEYANIMANAGER->addArrayFrameAnimation("worldJakeTopLeftMove", "力捞农海捞流", topLeftMoveJake, 6, 8, true);
 	

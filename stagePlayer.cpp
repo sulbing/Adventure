@@ -268,7 +268,11 @@ void stagePlayer::keyControl()
 	//스킬1을 썻을때 (하바네로)
 	if (_isSkill1Fire)
 	{
-		//skillFire();
+		if (fireInt == 0)
+		{
+			skillFire(FIREATTACK, _x, _y, _isRight);
+			fireInt++;
+		}
 	}
 
 	//스킬2를 썻을때 (벌)
@@ -280,7 +284,7 @@ void stagePlayer::keyControl()
 			beeBool = true;
 		}
 		
-		
+		_skill[BEEATTACK]._skillX += 12 * sinf(theta + PI);
 		_skill[BEEATTACK]._skillY += 3 * cosf(theta);
 		theta += 0.1f;
 	}
@@ -1035,6 +1039,14 @@ void stagePlayer :: skillFire(SKILLNAME skillName, int x, int y, bool isRight)
 		_skill[skillName]._skillY = y - 60;
 		_skill[skillName]._skillWidth = 20;
 		_skill[skillName]._skillHeight = 20;
+	}
+
+	else if (skillName == FIREATTACK)
+	{
+		_skill[skillName]._skillX = x + 40;
+		_skill[skillName]._skillY = _bodyRC.top + 20;
+		_skill[skillName]._skillWidth = 24;
+		_skill[skillName]._skillHeight = 24;
 	}
 }
 
