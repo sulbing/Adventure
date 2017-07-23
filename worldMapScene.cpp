@@ -8,6 +8,9 @@ worldMapScene::~worldMapScene() {}
 
 HRESULT worldMapScene::init(void)
 {
+	_UI = new UI;
+	_UI->init();
+
 	//페이드 인/아웃
 	_sceneEffect = new sceneEffect;
 	_sceneEffect->init();
@@ -59,6 +62,8 @@ void worldMapScene::update(void)
 
 	pixelCollision();
 	rectCollision();
+
+	_UI->update();
 }
 
 void worldMapScene::render(void)
@@ -185,10 +190,10 @@ void worldMapScene::render(void)
 	
 	Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
 
+
+	_UI->render();
+
 	_sceneEffect->render();
-
-
-
 }
 
 DIRECTION worldMapScene::getDirection(int x, int y)

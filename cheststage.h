@@ -1,14 +1,22 @@
 #pragma once
+<<<<<<< HEAD
 #include "gameNode.h"
 #include "stagePlayer.h"
 #include "sceneEffect.h"
 #include "item.h"
 
+=======
+#include"gameNode.h"
+#include"stagePlayer.h"
+#include"sceneEffect.h"
+#include "UI.h"
+>>>>>>> 9ec2cb822d8dff8dc27141c0a21711d338485501
 
 class cheststage : public gameNode
 {
 private:
 	stagePlayer* _stageFinn;
+	UI* _UI;
 	RECT _leftDoor, _rightDoor;
 
 	RECT _chestRc;

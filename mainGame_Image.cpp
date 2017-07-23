@@ -53,4 +53,13 @@ void mainGame::addImage()
 	//¹Ì´Ï¸Ê
 	IMAGEMANAGER->addImage("MINIMAP", "Image/MINIMAP.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("MINIMAP_FINN", "Image/MINIMAP_FINN.bmp", 20, 20, true, RGB(255, 0, 255));
+
+	//UI
+	IMAGEMANAGER->addFrameImage("UI_HEART", "Image/UI_HEART.bmp", 200, 46, 5, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("UI_HEART_END", "Image/UI_HEART_END.bmp", 25, 46, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("UI_HEART_0", "Image/UI_HEART_0.bmp", 40, 46, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("UI_HEART_1", "Image/UI_HEART_1.bmp", 40, 46, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("UI_HEART_2", "Image/UI_HEART_2.bmp", 40, 46, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("UI_HEART_3", "Image/UI_HEART_3.bmp", 40, 46, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("UI_HEART_4", "Image/UI_HEART_4.bmp", 40, 46, true, RGB(255, 0, 255));
 }

@@ -3,10 +3,12 @@
 #include"stagePlayer.h"
 #include"enemy.h"
 #include "sceneEffect.h"
+#include "UI.h"
 
 class nymphStage : public gameNode
 {
 private:
+	UI*				_UI;
 	image*			_nymph;
 	animation*		 _nymphAni;
 	RECT			_leftDoor, _rightDoor;

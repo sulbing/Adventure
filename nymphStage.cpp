@@ -4,6 +4,9 @@
 
 HRESULT nymphStage::init(void)
 {
+	_UI = new UI;
+	_UI->init();
+
 	_nymph = IMAGEMANAGER->findImage("nymph");
 
 	_nymphAni = new animation;
@@ -57,6 +60,7 @@ void nymphStage::update(void)
 	}
 
 	stageDoor();
+	_UI->update();
 }
 
 void nymphStage::render(void)
@@ -70,6 +74,7 @@ void nymphStage::render(void)
 	_stageFinn->render();
 
 	//_mi1->render();
+	_UI->render();
 
 	_sceneEffect->render();
 }
