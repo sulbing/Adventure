@@ -15,11 +15,13 @@ HRESULT cheststage::init(void)
 
 	_sceneEffect = new sceneEffect;
 	_sceneEffect->init();
-
-	_item = new item;
-	int i = RND->getFromIntTo(0, 2);
-	_item->init((ITEMLIST)i, WINSIZEX / 2, WINSIZEY - 88);
-
+	if (!_chestOpen)
+	{
+		_item = new item;
+		_itemNum = RND->getFromIntTo(0, 2);
+		_item->setXY(WINSIZEX / 2, WINSIZEY - 100);
+		_item->init((ITEMLIST)_itemNum, _item->getX(), _item->getY());
+	}
 	_isChange = false;
 
 	_chestRc = RectMakeCenter(WINSIZEX / 2, WINSIZEY - 88, 58, 56);
@@ -40,12 +42,15 @@ void cheststage::update(void)
 	if (!_isChange) _stageFinn->update();
 	pixelCollision();
 	stageDoor();
-<<<<<<< HEAD
-	if (_chestOpen) _item->update();
-=======
-	
+	if (_chestOpen)
+	{
+		if (_item)
+		{
+			_item->update();
+			eatItem();
+		}
+	}
 	_UI->update();
->>>>>>> 9ec2cb822d8dff8dc27141c0a21711d338485501
 }
 
 void cheststage::render(void)
@@ -63,14 +68,13 @@ void cheststage::render(void)
 
 	//ÇÉ ·£´õ
 	_stageFinn->render();
+
+	_stageFinn->setCamX(0);
 	
 	_sceneEffect->render();
-<<<<<<< HEAD
-	if (_chestOpen) _item->render(WINSIZEX / 2, WINSIZEY - 88);
-=======
+	if (_chestOpen) if(_item) _item->render(_item->getX(), _item->getY());
 
 	_UI->render();
->>>>>>> 9ec2cb822d8dff8dc27141c0a21711d338485501
 }
 
 void cheststage::pixelCollision(void)
@@ -154,6 +158,18 @@ void cheststage::chestOpen(void)
 		{
 			_chestOpen = true;
 		}
+	}
+}
+
+void cheststage::eatItem(void)
+{
+	RECT temp;
+
+	if (IntersectRect(&temp, &_stageFinn->getBodyRC(), &_item->getRect()))
+	{
+		_stageFinn->setState(HIT);
+		DATABASE->pushbackaddVector(_itemNum);
+		SAFE_DELETE(_item);
 	}
 }
 
