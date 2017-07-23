@@ -40,12 +40,10 @@ void cheststage::update(void)
 	if (!_isChange) _stageFinn->update();
 	pixelCollision();
 	stageDoor();
-<<<<<<< HEAD
+
 	if (_chestOpen) _item->update();
-=======
 	
 	_UI->update();
->>>>>>> 9ec2cb822d8dff8dc27141c0a21711d338485501
 }
 
 void cheststage::render(void)
@@ -65,12 +63,9 @@ void cheststage::render(void)
 	_stageFinn->render();
 	
 	_sceneEffect->render();
-<<<<<<< HEAD
 	if (_chestOpen) _item->render(WINSIZEX / 2, WINSIZEY - 88);
-=======
 
 	_UI->render();
->>>>>>> 9ec2cb822d8dff8dc27141c0a21711d338485501
 }
 
 void cheststage::pixelCollision(void)
