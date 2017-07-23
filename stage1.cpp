@@ -9,12 +9,23 @@ HRESULT stage1::init(void)
 
 	_sceneEffect = new sceneEffect;
 	_sceneEffect->init();
-
-
 	_stageFinn = new stagePlayer;
-	_stageFinn->init(2, 0, 0, 8, WINSIZEX / 4, WINSIZEY - 100, true);
 
-	_camX = _camY = 0;
+	if (DATABASE->getWorldPosition() == STAGE_1_LEFT)
+	{
+		_stageFinn->init(2, 0, 0, 8, WINSIZEX / 4, WINSIZEY - 100, true);
+
+		_camX = 0;
+	}
+	else if (DATABASE->getWorldPosition() == STAGE_1_RIGHT)
+	{
+		_stageFinn->init(2, 0, 0, 8, 6200, WINSIZEY - 138, false);
+
+		_camX = 6370 - WINSIZEX;
+		_stageFinn->setCamX(_camX);
+	}
+
+	_camY = 0;
 
 	_isChange = false;
 

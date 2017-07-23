@@ -1,7 +1,8 @@
 #pragma once
-#include"gameNode.h"
-#include"stagePlayer.h"
-#include"sceneEffect.h"
+#include "gameNode.h"
+#include "stagePlayer.h"
+#include "sceneEffect.h"
+#include "item.h"
 
 
 class cheststage : public gameNode
@@ -12,6 +13,7 @@ private:
 
 	RECT _chestRc;
 	sceneEffect* _sceneEffect;
+	item* _item;
 
 	BOOL _chestOpen = false;
 	BOOL _isChange = false;
@@ -24,6 +26,7 @@ public:
 	void pixelCollision(void);
 	void stageDoor(void);
 	void chestOpen(void);
+	void itemOut(void);
 
 	cheststage();
 	~cheststage();

@@ -14,6 +14,10 @@ HRESULT cheststage::init(void)
 	_sceneEffect = new sceneEffect;
 	_sceneEffect->init();
 
+	_item = new item;
+	int i = RND->getFromIntTo(0, 2);
+	_item->init((ITEMLIST)i, WINSIZEX / 2, WINSIZEY - 88);
+
 	_isChange = false;
 
 	_chestRc = RectMakeCenter(WINSIZEX / 2, WINSIZEY - 88, 58, 56);
@@ -33,8 +37,8 @@ void cheststage::update(void)
 	//ÇÉ ¾÷µ¥ÀÌÆ®
 	if (!_isChange) _stageFinn->update();
 	pixelCollision();
-	
 	stageDoor();
+	if (_chestOpen) _item->update();
 }
 
 void cheststage::render(void)
@@ -54,6 +58,7 @@ void cheststage::render(void)
 	_stageFinn->render();
 	
 	_sceneEffect->render();
+	if (_chestOpen) _item->render(WINSIZEX / 2, WINSIZEY - 88);
 }
 
 void cheststage::pixelCollision(void)
@@ -131,9 +136,12 @@ void cheststage::stageDoor(void)
 void cheststage::chestOpen(void)
 {
 	RECT temp;
-	if (IntersectRect(&temp, &_stageFinn->getBodyRC(), &_chestRc))
+	for (int i = DEFAULT; i < SKILLEND; i++)
 	{
-		_chestOpen = true;
+		if (IntersectRect(&temp, &_stageFinn->getSkillHitBox(i), &_chestRc))
+		{
+			_chestOpen = true;
+		}
 	}
 }
 
