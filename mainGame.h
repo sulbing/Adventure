@@ -6,6 +6,9 @@
 #include "inventoryScene.h"
 #include "statusScene.h"
 #include "stage1.h"
+#include "stage2.h"
+#include "stage3.h"
+#include "cheststage.h"
 #include "minimapScene.h"
 
 

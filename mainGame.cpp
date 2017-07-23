@@ -36,6 +36,9 @@ HRESULT mainGame::init(void)
 	SCENEMANAGER->addScene("SCENE_STATUS", new statusScene);
 	SCENEMANAGER->addScene("SCENE_MINIMAP", new minimapScene);
 	SCENEMANAGER->addScene("STAGE1", new stage1);
+	SCENEMANAGER->addScene("STAGE2", new stage2);
+	SCENEMANAGER->addScene("STAGE3", new stage3);
+	SCENEMANAGER->addScene("CHEST_STAGE", new cheststage);
 
 	SCENEMANAGER->changeScene("SCENE_OPENEING");
 

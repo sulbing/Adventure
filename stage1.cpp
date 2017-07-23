@@ -226,9 +226,9 @@ void stage1::camMove(void)
 			if (_camX == 6370 - WINSIZEX);
 			else if (_stageFinn->getX() > WINSIZEX / 3)
 			{
-				if (_stageFinn->getX() - _camX > WINSIZEX / 3 + 4)
+				if (_stageFinn->getX() - _camX > WINSIZEX / 3 + 7)
 				{
-					_camX += (_stageFinn->getSpeedX() + 1) * 2;
+					_camX += _stageFinn->getSpeedX() * 2 + 3;
 				}
 				else _camX = _stageFinn->getX() - WINSIZEX / 3 + 6;
 				_stageFinn->setCamX(_camX);
@@ -246,9 +246,9 @@ void stage1::camMove(void)
 			if (_camX == 0);
 			else if (_stageFinn->getX() < 6379 - WINSIZEX / 3)
 			{
-				if (_stageFinn->getX() - _camX < WINSIZEX / 3 * 2 - 4)
+				if (_stageFinn->getX() - _camX < WINSIZEX / 3 * 2 - 7)
 				{
-					_camX += (_stageFinn->getSpeedX() - 1) * 2;
+					_camX += _stageFinn->getSpeedX() * 2 - 3;
 				}
 				else _camX = _stageFinn->getX() - WINSIZEX / 3 * 2 - 5;
 				_stageFinn->setCamX(_camX);
