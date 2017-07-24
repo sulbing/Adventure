@@ -72,7 +72,7 @@ void worldPlayer:: update(void)
 
 
 	_finnRC = RectMakeCenter(_x, _y, 30, 20);
-	
+	DATABASE->setWolrdstate(_x, _y);
 	isDirection();
 
 
@@ -219,7 +219,7 @@ void worldPlayer::bridgeMove()
 	_y += _speedY;
 	_jakeRenderX = WINSIZEX / 2 + (_jakeX - _x);
 	_jakeRenderY = WINSIZEY / 2 + (_jakeY - _y);
-
+	
 
 	_finnRC = RectMakeCenter(_x, _y, 50, 50);
 	_jakeRC = RectMakeCenter(_jakeX, _jakeY, 50, 50);

@@ -355,6 +355,8 @@ void stage2::eatItem(void)
 
 void stage2::addEnemy()
 {
+	_vLittleWorm.clear();
+
 	littleWorm* _littleWorm;
 	_littleWorm = new littleWorm;
 	_littleWorm->init(794, 356 - IMAGEMANAGER->findImage("liileWorm")->getFrameHeight() / 2 + 10, _stageFinn, 250);

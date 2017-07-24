@@ -27,8 +27,8 @@ void minimapScene::release()
 
 void minimapScene::update()	 
 {
-	_x = 135+DATABASE->getWorldstate().x / 5.756756 + 4 ;
-	_y = 81+DATABASE->getWorldstate().y / 5.756756 ;
+	_x = 135+DATABASE->getWorldstate().x / 6.297297 + 4 ;
+	_y = 81+DATABASE->getWorldstate().y / 6.297297 - 4 ;
 
 	_rc = RectMakeCenter(_x, _y, _face->getWidth(), _face->getHeight());
 

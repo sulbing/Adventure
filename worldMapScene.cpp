@@ -316,12 +316,11 @@ void worldMapScene::rectCollision()
 		RECT temp;
 		if (IntersectRect(&temp, &_rc, &(_eventRC[i])))
 		{
-			SOUNDMANAGER->stop("월드");
-
 			switch (i)
 			{
 			case STAGE_NYMPH_1:	case STAGE_NYMPH_2:	case STAGE_HOUSE:
 			{
+				SOUNDMANAGER->stop("월드");
 				_isChange = true;
 				_sceneEffect->setFadeOUT(true);
 
@@ -338,6 +337,7 @@ void worldMapScene::rectCollision()
 				break;
 			case STAGE_1_LEFT:
 			{
+				SOUNDMANAGER->stop("월드");
 				_isChange = true;
 
 				_sceneEffect->setFadeOUT(true);
@@ -351,6 +351,7 @@ void worldMapScene::rectCollision()
 				break;
 			case STAGE_1_RIGHT:
 			{
+				SOUNDMANAGER->stop("월드");
 				_isChange = true;
 
 				_sceneEffect->setFadeOUT(true);
@@ -364,6 +365,7 @@ void worldMapScene::rectCollision()
 				break;
 			case STAGE_2_LEFT:
 			{
+				SOUNDMANAGER->stop("월드");
 				_isChange = true;
 
 				_sceneEffect->setFadeOUT(true);
@@ -377,6 +379,7 @@ void worldMapScene::rectCollision()
 				break;
 			case STAGE_2_RIGHT:
 			{
+				SOUNDMANAGER->stop("월드");
 				_isChange = true;
 
 				_sceneEffect->setFadeOUT(true);
@@ -391,6 +394,7 @@ void worldMapScene::rectCollision()
 			case STAGE_3_LEFT:
 			{
 				{
+					SOUNDMANAGER->stop("월드");
 					_isChange = true;
 
 					_sceneEffect->setFadeOUT(true);
@@ -406,6 +410,7 @@ void worldMapScene::rectCollision()
 			case STAGE_3_RIGHT:
 			{
 				{
+					SOUNDMANAGER->stop("월드");
 					_isChange = true;
 
 					_sceneEffect->setFadeOUT(true);
@@ -421,6 +426,7 @@ void worldMapScene::rectCollision()
 			case STAGE_CHEST:
 			{
 				{
+					SOUNDMANAGER->stop("월드");
 					_isChange = true;
 
 					_sceneEffect->setFadeOUT(true);
