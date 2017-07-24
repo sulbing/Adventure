@@ -29,7 +29,7 @@ HRESULT nymphStage::init(void)
 	_isChange = false;
 
 	_mi1 = new enemy;
-	_mi1->init(2, WINSIZEX / 6, WINSIZEY * 3 / 4, _stageFinn);
+	_mi1->init(2, WINSIZEX /2 , WINSIZEY * 3 / 4, _stageFinn);
 
 
 	return S_OK;

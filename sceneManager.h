@@ -4,6 +4,7 @@
 #include <map>
 
 class gameNode;
+class inventoryScene;
 
 class sceneManager : public singletonBase<sceneManager>
 {

@@ -1,6 +1,9 @@
 #pragma once
 #include "singletonBase.h"
 
+class inventoryScene;
+class statusScene;
+class minimapScene;
 class item;
 
 struct tagSaveData
@@ -46,6 +49,12 @@ private :
 	tagSaveData _saveData;
 	bool _isLoadInventory;
 	bool _isLoadStatus;
+	bool _isOninventory;
+	int _interfaceNum;
+
+	inventoryScene* _inven;
+	statusScene* _status;
+	minimapScene* _minimap;
 
 	RECTCOLLISION _worldPosition;
 
@@ -64,10 +73,12 @@ public:
 	int getStatusSpeed() { return _status_speed; }
 	int getStatusBonus() { return _status_bonus; }
 	int getStatusCureentHP(void) { return _currentHP; }
+	bool getInvenOn(void) { return _isOninventory; }
 	POINT getWorldstate(void) { return PointMake(_WorldX, _WorldY); }
 
 	void setstatus(int hearts, int attack, int speed, int bonus, int currentHP);
 	void useBonus(int Num);
+	void changeInven(void) { if (_isOninventory) _isOninventory = false; else _isOninventory = true; }
 
 	void pushbackaddVector(int A) { _vItemaddList.push_back(A); }
 	void pushbackuseVector(int A) { _vItemuseList.push_back(A); }
@@ -91,6 +102,10 @@ public:
 
 	void setWorldPosition(RECTCOLLISION worldPosition) { _worldPosition = worldPosition; }
 	RECTCOLLISION getWorldPosition() { return _worldPosition; }
+
+	gameNode* getInterface(void);
+
+	void changeNum(int Num) { _interfaceNum = Num; }
 
 	database();
 	~database();

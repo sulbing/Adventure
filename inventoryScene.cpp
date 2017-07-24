@@ -83,8 +83,12 @@ void inventoryScene::update()
 	}
 
 	loadItem();
-	
-	
+
+	//¾ÀÀüÈ¯
+	if (KEYMANAGER->isOnceKeyDown(VK_F10))
+	{
+		DATABASE->changeInven();
+	}
 }
 
 void inventoryScene::render()	 
@@ -96,6 +100,7 @@ void inventoryScene::render()
 	}
 
 	if (_drag) _itemTemp->render(_itemTemp->getX(), _itemTemp->getY());
+	
 }
 
 void inventoryScene::addItem(ITEMLIST itemlist, float x, float y)
@@ -185,23 +190,9 @@ void inventoryScene::changeScene(void)
 	{
 		if (PtInRect(&_rcSelect[i], _ptMouse))
 		{
-			switch (i)
+			if (i != 1 && i != 3)
 			{
-			case 0:
-			{
-				SCENEMANAGER->changeScene("SCENE_STATUS");
-			}
-				break;
-			case 2: 
-			{
-				SCENEMANAGER->changeScene("SCENE_MINIMAP");
-			}
-				break;
-			case 3:
-			{
-				SCENEMANAGER->changeScene("");
-			}
-				break;
+				DATABASE->changeNum(i);
 			}
 		}
 	}

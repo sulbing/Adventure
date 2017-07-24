@@ -56,14 +56,9 @@ void minimapScene::changeScene(void)
 		{
 			if (PtInRect(&_rcSelect[i], _ptMouse))
 			{
-				switch (i)
+				if (i != 2 && i != 3)
 				{
-				case 0: { SCENEMANAGER->changeScene("SCENE_STATUS"); }
-					break;
-				case 1: { SCENEMANAGER->changeScene("SCENE_INVENTORY"); }
-					break;
-				case 3: {  SCENEMANAGER->changeScene(""); }
-					break;
+					DATABASE->changeNum(i);
 				}
 			}
 		}

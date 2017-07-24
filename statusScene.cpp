@@ -99,9 +99,9 @@ void statusScene::render()
 
 void statusScene::starOn(void)
 {
-	int H = DATABASE->getStatusHearts() - 2;
-	int A = DATABASE->getStatusAttack() - 1;
-	int S = DATABASE->getStatusSpeed() - 1;
+	int H = DATABASE->getStatusHearts();
+	int A = DATABASE->getStatusAttack();
+	int S = DATABASE->getStatusSpeed();
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -134,14 +134,9 @@ void statusScene::changeScene(void)
 	{
 		if (PtInRect(&_rcSelect[i], _ptMouse))
 		{
-			switch (i)
+			if (i != 0 && i != 3)
 			{
-			case 1: SCENEMANAGER->changeScene("SCENE_INVENTORY");
-				break;
-			case 2: SCENEMANAGER->changeScene("SCENE_MINIMAP");
-				break;
-			case 3: SCENEMANAGER->changeScene("");
-				break;
+				DATABASE->changeNum(i);
 			}
 		}
 	}
