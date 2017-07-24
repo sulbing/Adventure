@@ -367,6 +367,22 @@ void stage1::addEnemy()
 	_littleWorm = new littleWorm;
 	_littleWorm->init(1600, 378 - IMAGEMANAGER->findImage("liileWorm")->getFrameHeight()/2 + 10, _stageFinn, 280);
 	_vLittleWorm.push_back(_littleWorm);
+
+	_littleWorm = new littleWorm;
+	_littleWorm->init(1977, 240 - IMAGEMANAGER->findImage("liileWorm")->getFrameHeight() / 2 + 10, _stageFinn, 250);
+	_vLittleWorm.push_back(_littleWorm);
+
+	_littleWorm = new littleWorm;
+	_littleWorm->init(3733, 346 - IMAGEMANAGER->findImage("liileWorm")->getFrameHeight() / 2 + 10, _stageFinn, 300);
+	_vLittleWorm.push_back(_littleWorm);
+
+	_littleWorm = new littleWorm;
+	_littleWorm->init(4717, 312 - IMAGEMANAGER->findImage("liileWorm")->getFrameHeight() / 2 + 10, _stageFinn, 250);
+	_vLittleWorm.push_back(_littleWorm);
+
+	_littleWorm = new littleWorm;
+	_littleWorm->init(5747, 380 - IMAGEMANAGER->findImage("liileWorm")->getFrameHeight() / 2 + 10, _stageFinn, 250);
+	_vLittleWorm.push_back(_littleWorm);
 }
 
 
