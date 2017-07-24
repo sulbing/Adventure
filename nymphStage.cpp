@@ -19,7 +19,7 @@ HRESULT nymphStage::init(void)
 	_rightDoor = RectMake(790, WINSIZEY / 2, 10, 400);
 
 	_stageFinn = new stagePlayer;
-	_stageFinn->init(2, 0, 0, 8, WINSIZEX / 4, WINSIZEY * 3 / 4, true);
+	_stageFinn->init(DATABASE->getStatusHearts(), DATABASE->getStatusAttack(), DATABASE->getStatusSpeed(), DATABASE->getStatusCureentHP(), WINSIZEX / 4, WINSIZEY * 3 / 4, true);
 
 	_stageFinn->setCamX(0);
 
@@ -55,12 +55,7 @@ void nymphStage::update(void)
 	//¾ÀÀüÈ¯
 	if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
 	{
-		_sceneEffect->setFadeOUT(true);
-	}
-	//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
-	if (!_sceneEffect->getChangeScene() && !_sceneEffect->isFadeOUT())
-	{
-		SCENEMANAGER->changeScene("CHEST_STAGE");
+		SCENEMANAGER->changeScene("SCENE_INVENTORY");
 	}
 	attackCollision();
 	stageDoor();
@@ -123,6 +118,8 @@ void nymphStage::pixelCollision(void)
 		}
 
 	}
+	if (_mi1->getX() < 0) _mi1->setX(0);
+	else if (_mi1->getX() > WINSIZEX) _mi1->setX(WINSIZEX);
 }
 
 void nymphStage::stageDoor(void)

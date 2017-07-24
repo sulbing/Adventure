@@ -15,9 +15,21 @@ HRESULT stage3::init(void)
 
 
 	_stageFinn = new stagePlayer;
-	_stageFinn->init(2, 0, 0, 8, WINSIZEX / 4, WINSIZEY - 100, true);
 
-	_camX = _camY = 0;
+	if (DATABASE->getWorldPosition() == STAGE_3_LEFT)
+	{
+		_stageFinn->init(DATABASE->getStatusHearts(), DATABASE->getStatusAttack(), DATABASE->getStatusSpeed(), DATABASE->getStatusCureentHP(), WINSIZEX / 4, WINSIZEY - 100, true);
+
+		_camX = 0;
+	}
+	else if (DATABASE->getWorldPosition() == STAGE_3_RIGHT)
+	{
+		_stageFinn->init(DATABASE->getStatusHearts(), DATABASE->getStatusAttack(), DATABASE->getStatusSpeed(), DATABASE->getStatusCureentHP(), 6200, WINSIZEY - 138, false);
+
+		_camX = 6370 - WINSIZEX;
+		_stageFinn->setCamX(_camX);
+	}
+	_camY = 0;
 
 	_isChange = false;
 	
@@ -101,7 +113,7 @@ void stage3::pixelCollision(void)
 	}
 
 	//¹Ù´Ú¿¡ ÂøÁö
-	if (_stageFinn->getState() == JUMP || _stageFinn->getState() == HIT || _stageFinn->getState() == JUMPATTACK)
+	if (_stageFinn->getState() == JUMP || _stageFinn->getState() == HIT || _stageFinn->getState() == JUMPATTACK || _stageFinn->getState() == DEAD)
 	{
 		if (_stageFinn->getSpeedY() >= 0)
 		{
@@ -116,8 +128,11 @@ void stage3::pixelCollision(void)
 				if ((r == 0 && g == 0 && b == 255) || (r == 255 && g == 0 && b == 0))
 				{
 					_stageFinn->setY(i - _stageFinn->getHeight() / 2);
-					if (KEYMANAGER->isStayKeyDown(VK_RIGHT) || KEYMANAGER->isStayKeyDown(VK_LEFT)) _stageFinn->setState(WALK);
-					else _stageFinn->setState(IDLE);
+					if (_stageFinn->getState() != DEAD)
+					{
+						if (KEYMANAGER->isStayKeyDown(VK_RIGHT) || KEYMANAGER->isStayKeyDown(VK_LEFT)) _stageFinn->setState(WALK);
+						else _stageFinn->setState(IDLE);
+					}
 					break;
 				}
 
@@ -180,6 +195,39 @@ void stage3::pixelCollision(void)
 			_stageFinn->setState(JUMP);
 		}
 	}
+
+
+	//¶³¾îÁö±â
+	if (_stageFinn->getState() == JUMP || _stageFinn->getState() == HIT || _stageFinn->getState() == JUMPATTACK || _stageFinn->getState() == DEAD)
+	{
+		if (_stageFinn->getSpeedY() >= 0)
+		{
+			COLORREF color = GetPixel(IMAGEMANAGER->findImage("STAGE3_PIXEL_COLLISION")->getMemDC(), _stageFinn->getX(), _stageFinn->getY());
+
+			int r = GetRValue(color);
+			int g = GetGValue(color);
+			int b = GetBValue(color);
+
+			if ((r == 255 && g == 255 && b == 0))
+			{
+				_stageFinn->setCurrentHP(_stageFinn->getCurrentHP() - 1);
+				if (DATABASE->getWorldPosition() == STAGE_3_LEFT)
+				{
+					_stageFinn->init(_stageFinn->getStatus_hearts(), _stageFinn->getStatus_attack(), _stageFinn->getStatus_speed(), _stageFinn->getCurrentHP(), WINSIZEX / 4, WINSIZEY - 100, true);
+
+					_camX = 0;
+				}
+				else if (DATABASE->getWorldPosition() == STAGE_3_RIGHT)
+				{
+					_stageFinn->init(_stageFinn->getStatus_hearts(), _stageFinn->getStatus_attack(), _stageFinn->getStatus_speed(), _stageFinn->getCurrentHP(), 6200, WINSIZEY - 138, false);
+
+					_camX = 6370 - WINSIZEX;
+					_stageFinn->setCamX(_camX);
+				}
+			}
+		}
+	}
+
 }
 
 void stage3::stageDoor(void)
@@ -195,6 +243,7 @@ void stage3::stageDoor(void)
 		if (!_sceneEffect->getChangeScene())
 		{
 			DATABASE->setWorldPosition(STAGE_3_LEFT);
+			DATABASE->setstatus(_stageFinn->getStatus_hearts(), _stageFinn->getStatus_attack(), _stageFinn->getStatus_speed(), DATABASE->getStatusBonus(), _stageFinn->getCurrentHP());
 			SCENEMANAGER->changeScene("SCENE_WORLDMAP");
 		}
 	}
@@ -208,6 +257,7 @@ void stage3::stageDoor(void)
 		if (!_sceneEffect->getChangeScene())
 		{
 			DATABASE->setWorldPosition(STAGE_3_RIGHT);
+			DATABASE->setstatus(_stageFinn->getStatus_hearts(), _stageFinn->getStatus_attack(), _stageFinn->getStatus_speed(), DATABASE->getStatusBonus(), _stageFinn->getCurrentHP());
 			SCENEMANAGER->changeScene("SCENE_WORLDMAP");
 		}
 	}

@@ -28,6 +28,7 @@ HRESULT database::init(void)
 	_minimap = new minimapScene;
 	_minimap->init();
 	_interfaceNum = 0;
+	setstatus(0, 0, 0, 0, 8);
 	return S_OK;
 }
 

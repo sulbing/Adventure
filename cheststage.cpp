@@ -7,6 +7,7 @@ HRESULT cheststage::init(void)
 	_UI = new UI;
 	_UI->init();
 
+
 	_leftDoor = RectMake(0, WINSIZEY / 2, 10, 400);
 	_rightDoor = RectMake(790, WINSIZEY / 2, 10, 400);
 

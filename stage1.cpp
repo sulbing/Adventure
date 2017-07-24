@@ -16,13 +16,13 @@ HRESULT stage1::init(void)
 
 	if (DATABASE->getWorldPosition() == STAGE_1_LEFT)
 	{
-		_stageFinn->init(2, 0, 0, 8, WINSIZEX / 4, WINSIZEY - 100, true);
+		_stageFinn->init(DATABASE->getStatusHearts(), DATABASE->getStatusAttack(), DATABASE->getStatusSpeed(), DATABASE->getStatusCureentHP(), WINSIZEX / 4, WINSIZEY - 100, true);
 
 		_camX = 0;
 	}
 	else if (DATABASE->getWorldPosition() == STAGE_1_RIGHT)
 	{
-		_stageFinn->init(2, 0, 0, 8, 6200, WINSIZEY - 138, false);
+		_stageFinn->init(DATABASE->getStatusHearts(), DATABASE->getStatusAttack(), DATABASE->getStatusSpeed(), DATABASE->getStatusCureentHP(), 6200, WINSIZEY - 138, false);
 
 		_camX = 6370 - WINSIZEX;
 		_stageFinn->setCamX(_camX);
@@ -112,7 +112,7 @@ void stage1::pixelCollision(void)
 	}
 
 	//바닥에 착지
-	if (_stageFinn->getState() == JUMP || _stageFinn->getState() == HIT || _stageFinn->getState() == JUMPATTACK)
+	if (_stageFinn->getState() == JUMP || _stageFinn->getState() == HIT || _stageFinn->getState() == JUMPATTACK || _stageFinn->getState() == DEAD)
 	{
 		if (_stageFinn->getSpeedY() >= 0)
 		{
@@ -127,8 +127,11 @@ void stage1::pixelCollision(void)
 				if ((r == 0 && g == 0 && b == 255) || (r == 255 && g == 0 && b == 0))
 				{
 					_stageFinn->setY(i - _stageFinn->getHeight() / 2);
-					if (KEYMANAGER->isStayKeyDown(VK_RIGHT) || KEYMANAGER->isStayKeyDown(VK_LEFT)) _stageFinn->setState(WALK);
-					else _stageFinn->setState(IDLE);
+					if (_stageFinn->getState() != DEAD)
+					{
+						if (KEYMANAGER->isStayKeyDown(VK_RIGHT) || KEYMANAGER->isStayKeyDown(VK_LEFT)) _stageFinn->setState(WALK);
+						else _stageFinn->setState(IDLE);
+					}
 					break;
 				}
 
@@ -146,21 +149,7 @@ void stage1::pixelCollision(void)
 			}
 		}
 	}
-
-	else if (_stageFinn->getState() == WALK || _stageFinn->getState() == IDLE)
-	{
-		COLORREF color = GetPixel(IMAGEMANAGER->findImage("STAGE1_PIXEL_COLLISION")->getMemDC(), _stageFinn->getX(), _stageFinn->getY() + _stageFinn->getHeight() / 2);
-
-		int r = GetRValue(color);
-		int g = GetGValue(color);
-		int b = GetBValue(color);
-
-		if (!(r == 0 && g == 0 && b == 255) && !(r == 255 && g == 0 && b == 0))
-		{
-			_stageFinn->setState(JUMP);
-		}
-	}
-
+	
 	//앉으면 빨간부분 통과
 	else if (_stageFinn->getState() == CROUCH)
 	{
@@ -191,6 +180,38 @@ void stage1::pixelCollision(void)
 			_stageFinn->setState(JUMP);
 		}
 	}
+
+
+	//떨어지기
+	if (_stageFinn->getState() == JUMP || _stageFinn->getState() == HIT || _stageFinn->getState() == JUMPATTACK || _stageFinn->getState() == DEAD)
+	{
+		if (_stageFinn->getSpeedY() >= 0)
+		{
+			COLORREF color = GetPixel(IMAGEMANAGER->findImage("STAGE1_PIXEL_COLLISION")->getMemDC(), _stageFinn->getX(), _stageFinn->getY());
+
+			int r = GetRValue(color);
+			int g = GetGValue(color);
+			int b = GetBValue(color);
+
+			if ((r == 255 && g == 255 && b == 0))
+			{
+				_stageFinn->setCurrentHP(_stageFinn->getCurrentHP() - 1);
+				if (DATABASE->getWorldPosition() == STAGE_1_LEFT)
+				{
+					_stageFinn->init(_stageFinn->getStatus_hearts(), _stageFinn->getStatus_attack(), _stageFinn->getStatus_speed(), _stageFinn->getCurrentHP(), WINSIZEX / 4, WINSIZEY - 100, true);
+
+					_camX = 0;
+				}
+				else if (DATABASE->getWorldPosition() == STAGE_1_RIGHT)
+				{
+					_stageFinn->init(_stageFinn->getStatus_hearts(), _stageFinn->getStatus_attack(), _stageFinn->getStatus_speed(), _stageFinn->getCurrentHP(), 6200, WINSIZEY - 138, false);
+
+					_camX = 6370 - WINSIZEX;
+					_stageFinn->setCamX(_camX);
+				}
+			}
+		}
+	}
 }
 
 void stage1::stageDoor(void)
@@ -207,7 +228,7 @@ void stage1::stageDoor(void)
 		{
 			//월드 포지션
 			DATABASE->setWorldPosition(STAGE_1_LEFT);
-
+			DATABASE->setstatus(_stageFinn->getStatus_hearts(), _stageFinn->getStatus_attack(), _stageFinn->getStatus_speed(), DATABASE->getStatusBonus(), _stageFinn->getCurrentHP());
 			SCENEMANAGER->changeScene("SCENE_WORLDMAP");
 		}
 		_stageFinn->setSpeedX(0);
@@ -223,7 +244,7 @@ void stage1::stageDoor(void)
 		{
 			//월드 포지션
 			DATABASE->setWorldPosition(STAGE_1_RIGHT);
-
+			DATABASE->setstatus(_stageFinn->getStatus_hearts(), _stageFinn->getStatus_attack(), _stageFinn->getStatus_speed(), DATABASE->getStatusBonus(), _stageFinn->getCurrentHP());
 			SCENEMANAGER->changeScene("SCENE_WORLDMAP");
 		}
 		_stageFinn->setSpeedX(0);
