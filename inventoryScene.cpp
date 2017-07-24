@@ -117,7 +117,16 @@ void inventoryScene::useItem(void)
 	{
 		if (PtInRect(&_vItem[i]->getRect(), _ptMouse))
 		{
-			DATABASE->pushbackuseVector(_vItem[i]->getNum());
+			switch (_vItem[i]->getNum())
+			{
+			case 0: case 1: case 2: DATABASE->effectOn(_vItem[i]->getNum());  break;
+			case 3: case 4: case 5: DATABASE->setStatusCurrentHP(DATABASE->getStatusCureentHP() + 1); break;
+			case 6: case 7: case 8: DATABASE->setStatusCurrentHP(DATABASE->getStatusCureentHP() + 3); break;
+			case 9: case 10: case 11: DATABASE->setStatusCurrentHP(DATABASE->getStatusCureentHP() + 5); break;
+			case 12: case 13: case 14: DATABASE->setStatusCurrentHP(DATABASE->getStatusCureentHP() + 7); break;
+			case 15: DATABASE->addBonus(); break;
+			}
+			DATABASE->imuseItem();
 			_vItem.erase(_vItem.begin() + i);
 			break;
 		}

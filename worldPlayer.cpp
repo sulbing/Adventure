@@ -71,6 +71,21 @@ void worldPlayer:: update(void)
 	_finnRC = RectMakeCenter(_x, _y, 30, 20);
 	
 	isDirection();
+
+
+	_maxHP = 8 + 4 * (DATABASE->getStatusHearts());
+	if (DATABASE->getuseItem())
+	{
+		_currentHP = DATABASE->getStatusCureentHP();
+		DATABASE->imuseItemend();
+	}
+	if (_currentHP >= _maxHP)
+	{
+		_maxHP = _currentHP;
+	}
+
+	DATABASE->setStatusCurrentHP(_currentHP);
+	
 }
 
 void worldPlayer:: render(void)

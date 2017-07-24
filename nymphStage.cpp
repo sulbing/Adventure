@@ -76,9 +76,11 @@ void nymphStage::render(void)
 
 	_UI->render();
 
+	_worm->render();
+
 	_sceneEffect->render();
 	
-	_worm->render();
+	
 }
 
 void nymphStage::pixelCollision(void)
