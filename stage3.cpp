@@ -31,6 +31,8 @@ HRESULT stage3::init(void)
 	}
 	_camY = 0;
 
+	addEnemy();
+
 	_isChange = false;
 
 	SOUNDMANAGER->play("스테이지", 0.3f);
@@ -45,6 +47,11 @@ void stage3::release(void)
 void stage3::update(void)
 {
 	_sceneEffect->update();
+
+	for (int i = 0; i < _vLittleWorm.size(); i++)
+	{
+		_vLittleWorm[i]->update();
+	}
 
 	for (_vistageItem = _vstageItem.begin(); _vistageItem != _vstageItem.end(); ++_vistageItem)
 	{
@@ -78,6 +85,11 @@ void stage3::render(void)
 	for (_vistageItem = _vstageItem.begin(); _vistageItem != _vstageItem.end(); ++_vistageItem)
 	{
 		(*_vistageItem)->render(_camX, true);
+	}
+
+	for (int i = 0; i < _vLittleWorm.size(); i++)
+	{
+		_vLittleWorm[i]->render();
 	}
 
 	//핀 랜더
@@ -360,6 +372,29 @@ void stage3::eatItem(void)
 	}
 }
 
+void stage3::addEnemy()
+{
+	littleWorm* _littleWorm;
+	_littleWorm = new littleWorm;
+	_littleWorm->init(918, 200 - IMAGEMANAGER->findImage("liileWorm")->getFrameHeight() / 2 + 10, _stageFinn, 250);
+	_vLittleWorm.push_back(_littleWorm);
+
+	_littleWorm = new littleWorm;
+	_littleWorm->init(1360, 342 - IMAGEMANAGER->findImage("liileWorm")->getFrameHeight() / 2 + 10, _stageFinn, 250);
+	_vLittleWorm.push_back(_littleWorm);
+
+	_littleWorm = new littleWorm;
+	_littleWorm->init(2630, 276 - IMAGEMANAGER->findImage("liileWorm")->getFrameHeight() / 2 + 10, _stageFinn, 250);
+	_vLittleWorm.push_back(_littleWorm);
+
+	_littleWorm = new littleWorm;
+	_littleWorm->init(3325, 417 - IMAGEMANAGER->findImage("liileWorm")->getFrameHeight() / 2 + 10, _stageFinn, 300);
+	_vLittleWorm.push_back(_littleWorm);
+
+	_littleWorm = new littleWorm;
+	_littleWorm->init(4963, 414 - IMAGEMANAGER->findImage("liileWorm")->getFrameHeight() / 2 + 10, _stageFinn, 250);
+	_vLittleWorm.push_back(_littleWorm);
+}
 
 stage3::stage3()
 {

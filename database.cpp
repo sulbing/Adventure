@@ -36,6 +36,7 @@ HRESULT database::init(void)
 	_saveData.status_bonus = 0;
 	_saveData.status_hearts = 0;
 	_saveData.status_speed = 0;
+	_saveData.worldPosition = STAGE_HOUSE;
 
 	for (int i = 0; i < 3; i++)
 	{
@@ -65,6 +66,7 @@ void database::saveData(void)
 	_saveData.status_speed = _status_speed;
 	_saveData.status_bonus = _status_bonus;
 	_saveData.currentHP = _currentHP;
+	_saveData.worldPosition = _worldPosition;
 
 	if (_saveData.vItemaddList.size() != 0) _saveData.vItemaddList.clear();
 	if (_vItemaddList.size() != 0) _saveData.vItemaddList = _vItemaddList;
@@ -80,6 +82,7 @@ void database::loadData(void)
 	_status_speed = _saveData.status_speed;
 	_status_bonus = _saveData.status_bonus;
 	_currentHP = _saveData.currentHP;
+	_worldPosition = _saveData.worldPosition;
 
 	if (_saveData.vItemaddList.size() != 0) _vItemaddList = _saveData.vItemaddList;
 	if (_saveData.vItemList.size() != 0) _vItemList = _saveData.vItemList;

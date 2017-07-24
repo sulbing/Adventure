@@ -4,12 +4,15 @@
 #include"sceneEffect.h"
 #include "item.h"
 #include "UI.h"
+#include "littleWorm.h"
 
 class stage2 : public gameNode
 {
 private:
 	typedef vector<item*> vstageItem;
 	typedef vector<item*>::iterator vistageItem;
+
+	std::vector<littleWorm*> _vLittleWorm;
 
 	vstageItem _vstageItem;
 	vistageItem _vistageItem;
@@ -34,6 +37,8 @@ public:
 
 	void setItem(void);
 	void eatItem(void);
+
+	void addEnemy();
 
 public:
 	stage2();

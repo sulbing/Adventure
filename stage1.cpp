@@ -363,6 +363,11 @@ void stage1::attackCollision(void)
 			if (IntersectRect(&temp, &_vLittleWorm[i]->getRect(),
 				&_stageFinn->getSkillHitBox(j)) && _stageFinn->getSkillIsFire(j)&& _vLittleWorm[i]->getState() != DIRECTION_HIT)
 			{
+				int k = RND->getInt(2);
+
+				if (k) SOUNDMANAGER->play("타격음1", 1.0f);
+				else SOUNDMANAGER->play("타격음2", 1.0f);
+
 				_vLittleWorm[i]->delHP(_stageFinn->getSkillDamage(j));
 				_vLittleWorm[i]->setHit();
 				if (_stageFinn->getState() == TACKLE)
@@ -393,15 +398,34 @@ void stage1::attackCollision(void)
 		if (IntersectRect(&temp, &_vLittleWorm[i]->getRect(),
 			&_stageFinn->getBodyRC()) && _stageFinn->getState() != DEAD && (_stageFinn->getIsHit() == false))
 		{
+			SOUNDMANAGER->play("맞았을때", 1.0f);
 			_stageFinn->setCurrentHP(_stageFinn->getCurrentHP() - 1);
 			_stageFinn->setState(HIT);
 		}
 	}
+	
+	if (_stageFinn->getIsDead())
+	{
+		SOUNDMANAGER->stop("스테이지");
 
+		_isChange = true;
+		_sceneEffect->setFadeOUT(true);
+
+		//씬 전환 끝나면 씬 체인지
+		if (!_sceneEffect->getChangeScene())
+		{
+			_vstageItem.clear();
+			DATABASE->loadData();
+			SCENEMANAGER->changeScene("SCENE_SAVE_POINT");
+		}
+		_stageFinn->setSpeedX(0);
+	}
 }
 
 void stage1::addEnemy()
 {
+	_vLittleWorm.clear();
+
 	littleWorm* _littleWorm;
 	_littleWorm = new littleWorm;
 	_littleWorm->init(844, 240 - IMAGEMANAGER->findImage("liileWorm")->getFrameHeight()/2 + 10, _stageFinn, 280);
@@ -409,6 +433,22 @@ void stage1::addEnemy()
 
 	_littleWorm = new littleWorm;
 	_littleWorm->init(1600, 378 - IMAGEMANAGER->findImage("liileWorm")->getFrameHeight()/2 + 10, _stageFinn, 280);
+	_vLittleWorm.push_back(_littleWorm);
+
+	_littleWorm = new littleWorm;
+	_littleWorm->init(1977, 240 - IMAGEMANAGER->findImage("liileWorm")->getFrameHeight() / 2 + 10, _stageFinn, 250);
+	_vLittleWorm.push_back(_littleWorm);
+
+	_littleWorm = new littleWorm;
+	_littleWorm->init(3733, 346 - IMAGEMANAGER->findImage("liileWorm")->getFrameHeight() / 2 + 10, _stageFinn, 300);
+	_vLittleWorm.push_back(_littleWorm);
+
+	_littleWorm = new littleWorm;
+	_littleWorm->init(4717, 312 - IMAGEMANAGER->findImage("liileWorm")->getFrameHeight() / 2 + 10, _stageFinn, 250);
+	_vLittleWorm.push_back(_littleWorm);
+
+	_littleWorm = new littleWorm;
+	_littleWorm->init(5747, 380 - IMAGEMANAGER->findImage("liileWorm")->getFrameHeight() / 2 + 10, _stageFinn, 250);
 	_vLittleWorm.push_back(_littleWorm);
 }
 
