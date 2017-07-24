@@ -80,9 +80,15 @@ void nymphStage::render(void)
 	_bw->render();
 	_UI->render();
 
+	_worm->render();
+
 	_sceneEffect->render();
 	
+<<<<<<< HEAD
 	//_worm->render();
+=======
+	
+>>>>>>> 94b7bc505ea344a8ca76ebecf4104863cbda78be
 }
 
 void nymphStage::pixelCollision(void)
