@@ -177,6 +177,8 @@ public:
 	bool getIsHit() { return _isHit; }
 	RECT getSkillHitBox(int skillName) { return _skill[skillName]._hitBox; }
 	int getSkillDamage(int skillName) { return _skill[skillName]._damage; }
+	bool getSkillIsFire(int skillName) { return _skill[skillName]._isFire; }
+	int getCamX() { return _camX; }
 
 	//ผผลอ
 	void setCurrentHP(int HP) { _currentHP = HP; }

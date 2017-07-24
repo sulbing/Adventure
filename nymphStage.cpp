@@ -27,11 +27,7 @@ HRESULT nymphStage::init(void)
 	_sceneEffect->init();
 
 	_isChange = false;
-
-	_mi1 = new enemy;
-	_mi1->init(2, WINSIZEX /2 , WINSIZEY * 3 / 4, _stageFinn);
-
-
+	
 	return S_OK;
 }
 
@@ -49,15 +45,7 @@ void nymphStage::update(void)
 	//ÇÉ ¾÷µ¥ÀÌÆ®
 	if (!_isChange) _stageFinn->update();
 	pixelCollision();
-
-	if (_mi1) _mi1->update();
-
-	//¾ÀÀüÈ¯
-	if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
-	{
-		SCENEMANAGER->changeScene("SCENE_INVENTORY");
-	}
-	attackCollision();
+	
 	stageDoor();
 	_UI->update();
 }
@@ -72,7 +60,6 @@ void nymphStage::render(void)
 	//ÇÉ ·£´õ
 	_stageFinn->render();
 
-	if (_mi1) _mi1->render();
 	_UI->render();
 
 	_sceneEffect->render();
@@ -118,8 +105,6 @@ void nymphStage::pixelCollision(void)
 		}
 
 	}
-	if (_mi1->getX() < 0) _mi1->setX(0);
-	else if (_mi1->getX() > WINSIZEX) _mi1->setX(WINSIZEX);
 }
 
 void nymphStage::stageDoor(void)
@@ -149,41 +134,8 @@ void nymphStage::stageDoor(void)
 		{
 			SCENEMANAGER->changeScene("SCENE_WORLDMAP");
 		}
-		_stageFinn->setSpeedX(0);
 	}
 }
-
-void nymphStage::attackCollision(void)
-{
-
-	RECT temp;
-	for (int i = DEFAULT; i < SKILLEND; i++)
-	{
-		
-		if (IntersectRect(&temp, &_stageFinn->getSkillHitBox(i), &_mi1->getRect()))
-		{
-			if (_stageFinn->getX() < _mi1->getX())
-			{
-				_mi1->setDirection(DIRECTION_LEFT_HIT);
-			}
-			if (_stageFinn->getX() > _mi1->getX())
-			{
-				_mi1->setDirection(DIRECTION_RIGHT_HIT);
-			}
-		}	
-	}
-
-	if (IntersectRect(&temp, &_stageFinn->getBodyRC(), &_mi1->getRect()))
-	{
-		if (_stageFinn->getIsHit() == false)
-		{
-			_stageFinn->setState(HIT);
-			_stageFinn->setCurrentHP(_stageFinn->getCurrentHP() - 1);
-		}
-	}
-
-}
-
 
 nymphStage::nymphStage()
 {

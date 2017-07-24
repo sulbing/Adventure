@@ -91,9 +91,7 @@ void enemy::update()
 	default:
 		break;
 	}
-
-	KEYANIMANAGER->update();
-
+	
 	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
 }
 void enemy::render()

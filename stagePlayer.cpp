@@ -69,23 +69,22 @@ void stagePlayer::update(void)
 	keyControl();
 	basicMove();
 	skillUpdate();
-	KEYANIMANAGER->update();
 	statusControl();
 }
 
 void stagePlayer::render(void)
 {
 	//플레이어 몸통 랜더
-	Rectangle(getMemDC(), _bodyRC.left - _camX, _bodyRC.top, _bodyRC.right - _camX, _bodyRC.bottom);
+	//Rectangle(getMemDC(), _bodyRC.left - _camX, _bodyRC.top, _bodyRC.right - _camX, _bodyRC.bottom);
 
 	//스킬렉트 랜더
-	for (int i = DEFAULT; i < SKILLEND; i++)
+	/*for (int i = DEFAULT; i < SKILLEND; i++)
 	{
 		if (_skill[i]._isFire == true)
 		{
 			Rectangle(getMemDC(), _skill[i]._hitBox.left - _camX, _skill[i]._hitBox.top, _skill[i]._hitBox.right - _camX, _skill[i]._hitBox.bottom);
 		}
-	}
+	}*/
 
 
 
@@ -211,22 +210,22 @@ void stagePlayer::keyControl()
 
 	//f를 눌렀을때
 
-	if (KEYMANAGER->isOnceKeyDown('F'))
+	/*if (KEYMANAGER->isOnceKeyDown('F'))
 	{
 		init(2, 0, 0, 8, 0, WINSIZEY * 3 / 4, true);
-	}
+	}*/
 
 	//r을 눌렀을때
-	if (KEYMANAGER->isOnceKeyDown('R'))
+	/*if (KEYMANAGER->isOnceKeyDown('R'))
 	{
 		_state = HIT;
-	}
+	}*/
 
 	//q를 눌렀을때
-	if (KEYMANAGER->isOnceKeyDown('Q'))
+	/*if (KEYMANAGER->isOnceKeyDown('Q'))
 	{
 		tackleKnockBackBool = true;
-	}
+	}*/
 
 
 	//a를 눌렀을때
@@ -288,122 +287,35 @@ void stagePlayer::keyControl()
 	}
 
 	//w를 눌렀을때
-	if (KEYMANAGER->isOnceKeyDown('W'))
+	/*if (KEYMANAGER->isOnceKeyDown('W'))
 	{
 		_state = DEAD;
-	}
+	}*/
 	
 
-	// i를 눌렀을때
-	if (KEYMANAGER->isOnceKeyDown('I'))
-	{
-		_isSkill3Fire = true;
-		
-	}
+	//// i를 눌렀을때
+	//if (KEYMANAGER->isOnceKeyDown('I'))
+	//{
+	//	_isSkill3Fire = true;
+	//	
+	//}
 
-	// o를 눌렀을때
-	if (KEYMANAGER->isOnceKeyDown('O'))
-	{
-		_isSkill1Fire = true;
+	//// o를 눌렀을때
+	//if (KEYMANAGER->isOnceKeyDown('O'))
+	//{
+	//	_isSkill1Fire = true;
 
-	}
+	//}
 
-	// p를 눌렀을때
-	if (KEYMANAGER->isOnceKeyDown('P'))
-	{
-		_isSkill2Fire = true;
+	//// p를 눌렀을때
+	//if (KEYMANAGER->isOnceKeyDown('P'))
+	//{
+	//	_isSkill2Fire = true;
 
-	}
-
-
-	//스킬1을 썻을때 (하바네로)
-	if (_isSkill1Fire)
-	{
-		if (_skill[FIREATTACK]._isFire)
-		{
-			_skill[FIREATTACK]._skillX += 10 * ((2 * _fireDirection) - 1);
-			_skill[FIREATTACK]._skillY = _fireY;
-		}
-		
-		
-		if (fireInt == 0)
-		{
-			skillFire(FIREATTACK, _x, _y, _isRight);
-			fireInt++;
-		}
-		if (fireInt >= 1)
-		{
-			fireInt++;
-		}
-		if (fireInt > 200)
-		{
-			fireInt = 0;
-			fireCount++;
-		}
-		if (fireCount == 6)
-		{
-			_isSkill1Fire = false;
-			_skill[FIREATTACK]._isFire = false;
-			fireInt = 0;
-			fireCount = 0;
-		}
-	}
-
-	//스킬2를 썻을때 (벌)
-	if (_isSkill2Fire)
-	{
-		/*if (!beeBool)
-		{
-			skillFire(BEEATTACK, _x, _y, _isRight);
-			beeBool = true;
-		}
-		
-		_skill[BEEATTACK]._skillX += 12 * sinf(theta + PI);
-		_skill[BEEATTACK]._skillY += 3 * cosf(theta);
-		theta += 0.1f;*/
-
-		if (_skill[BEEATTACK]._isFire)
-		{
-			_skill[BEEATTACK]._skillX = _skill[BEEATTACK]._skillX + 5 * ((2 * _beeDirection) - 1) - 20* sinf(theta);
-			_skill[BEEATTACK]._skillY = _beeY + 70*cosf(theta);
-			theta += 0.2;
-		}
+	//}
 
 
-		if (beeInt == 0)
-		{
-			skillFire(BEEATTACK, _x, _y, _isRight);
-			beeInt++;
-		}
-		if (beeInt >= 1)
-		{
-			beeInt++;
-		}
-		if (beeInt > 200)
-		{
-			beeInt = 0;
-			beeCount++;
-		}
-		if (beeCount == 6)
-		{
-			_isSkill2Fire = false;
-			_skill[BEEATTACK]._isFire = false;
-			beeInt = 0;
-			beeCount = 0;
-		}
-		
-	}
-
-	//스킬3 점프를썻을때
-	if (_isSkill3Fire)
-	{
-		_skill3Count++;
-		if (_skill3Count > 600)
-		{
-			_skill3Count = 0;
-			_isSkill3Fire = false;
-		}
-	}
+	
 
 
 }
@@ -889,6 +801,95 @@ void stagePlayer::stateControl()
 		jakeAttackBool = false;
 		_skill[LATTACK]._isFire = false;
 		
+	}
+
+	//스킬1을 썻을때 (하바네로)
+	if (_isSkill1Fire)
+	{
+		if (_skill[FIREATTACK]._isFire)
+		{
+			_skill[FIREATTACK]._skillX += 10 * ((2 * _fireDirection) - 1);
+			_skill[FIREATTACK]._skillY = _fireY;
+		}
+
+
+		if (fireInt == 0)
+		{
+			skillFire(FIREATTACK, _x, _y, _isRight);
+			fireInt++;
+		}
+		if (fireInt >= 1)
+		{
+			fireInt++;
+		}
+		if (fireInt > 200)
+		{
+			fireInt = 0;
+			fireCount++;
+		}
+		if (fireCount == 6)
+		{
+			_isSkill1Fire = false;
+			_skill[FIREATTACK]._isFire = false;
+			fireInt = 0;
+			fireCount = 0;
+		}
+	}
+
+	//스킬2를 썻을때 (벌)
+	if (_isSkill2Fire)
+	{
+		/*if (!beeBool)
+		{
+		skillFire(BEEATTACK, _x, _y, _isRight);
+		beeBool = true;
+		}
+
+		_skill[BEEATTACK]._skillX += 12 * sinf(theta + PI);
+		_skill[BEEATTACK]._skillY += 3 * cosf(theta);
+		theta += 0.1f;*/
+
+		if (_skill[BEEATTACK]._isFire)
+		{
+			_skill[BEEATTACK]._skillX = _skill[BEEATTACK]._skillX + 5 * ((2 * _beeDirection) - 1) - 20 * sinf(theta);
+			_skill[BEEATTACK]._skillY = _beeY + 70 * cosf(theta);
+			theta += 0.2;
+		}
+
+
+		if (beeInt == 0)
+		{
+			skillFire(BEEATTACK, _x, _y, _isRight);
+			beeInt++;
+		}
+		if (beeInt >= 1)
+		{
+			beeInt++;
+		}
+		if (beeInt > 200)
+		{
+			beeInt = 0;
+			beeCount++;
+		}
+		if (beeCount == 6)
+		{
+			_isSkill2Fire = false;
+			_skill[BEEATTACK]._isFire = false;
+			beeInt = 0;
+			beeCount = 0;
+		}
+
+	}
+
+	//스킬3 점프를썻을때
+	if (_isSkill3Fire)
+	{
+		_skill3Count++;
+		if (_skill3Count > 600)
+		{
+			_skill3Count = 0;
+			_isSkill3Fire = false;
+		}
 	}
 
 	

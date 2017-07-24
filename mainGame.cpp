@@ -28,7 +28,7 @@ HRESULT mainGame::init(void)
 
 	DATABASE->init();
 
-	DATABASE->setstatus(0, 0, 0, 1, 5);
+	DATABASE->setstatus(0, 0, 0, 0, 8);
 
 
 	SCENEMANAGER->addScene("SCENE_OPENEING", new openingScene);
@@ -55,7 +55,7 @@ void mainGame::release(void)
 void mainGame::update(void)
 {
 	gameNode::update();
-	if (KEYMANAGER->isOnceKeyDown('U'))
+	if (KEYMANAGER->isOnceKeyDown('I'))
 	{
 		DATABASE->changeInven();
 	}

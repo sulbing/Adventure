@@ -58,12 +58,8 @@ void worldPlayer:: update(void)
 
 	_finnRC = RectMakeCenter(_x, _y, 30, 20);
 
-	if (KEYMANAGER->isOnceKeyDown('A'))
-	{
-		setBridge(WINSIZEX / 2, WINSIZEY / 2, WINSIZEX / 2, WINSIZEY / 2 + 160);
-	}
+	
 	isDirection();
-	KEYANIMANAGER->update();
 }
 
 void worldPlayer:: render(void)

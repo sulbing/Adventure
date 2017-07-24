@@ -12,7 +12,7 @@ HRESULT cheststage::init(void)
 	_rightDoor = RectMake(790, WINSIZEY / 2, 10, 400);
 
 	_stageFinn = new stagePlayer;
-	_stageFinn->init(2, 0, 0, 8, 30, WINSIZEY * 3 / 4, true);
+	_stageFinn->init(DATABASE->getStatusHearts(), DATABASE->getStatusAttack(), DATABASE->getStatusSpeed(), DATABASE->getStatusCureentHP(), 30, WINSIZEY * 3 / 4, true);
 
 	_sceneEffect = new sceneEffect;
 	_sceneEffect->init();
