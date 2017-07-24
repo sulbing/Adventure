@@ -24,6 +24,7 @@ public:
 	void render(void);
 	void pixelCollision(void);
 	void stageDoor(void);
+	void attackCollision(void);
 
 	nymphStage();
 	~nymphStage();
