@@ -28,6 +28,9 @@ HRESULT worldPlayer::init()
 
 	_finnRC = RectMakeCenter(_x, _y, 40, 20);
 
+	_maxHP = 8 + 4 * (DATABASE->getStatusHearts());
+	_currentHP = DATABASE->getStatusCureentHP();
+
 	return S_OK;
 }
 
