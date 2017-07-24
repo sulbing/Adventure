@@ -166,7 +166,6 @@ void cheststage::eatItem(void)
 
 	if (IntersectRect(&temp, &_stageFinn->getBodyRC(), &_item->getRect()))
 	{
-		_stageFinn->setState(HIT);
 		DATABASE->pushbackaddVector(_itemNum);
 		SAFE_DELETE(_item);
 	}

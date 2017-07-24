@@ -52,13 +52,12 @@ private:
 	float _playerX[RECTCOLLISION_END] = { 844,	2009,	1417,	855,	876,	2100,	2268,	2233,	1027,	1032,	2310,	1817,	1817,	2257,	2392 };
 	float _playerY[RECTCOLLISION_END] = { 304,	920,	857,	541,	367,	1709,	1558,	832,	358,	355,	1493,	1472,	1646,	518,	315 };
 
-	//_playerX[STAGE_NYMPH_1], _playerY[STAGE_NYMPH_1]
-
 	int _probeTop;
 	int _probeBottom;
 	int _probeLeft;
 	int _probeRight;
 
+	bool _isChange;
 
 	DIRECTION _direction;
 	RECT _rcSour[4];
