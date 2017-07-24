@@ -32,8 +32,11 @@ HRESULT nymphStage::init(void)
 
 	SOUNDMANAGER->play("스테이지", 0.3f);
 
-	_worm = new littleWorm;
-	_worm->init(WINSIZEX / 2, WINSIZEY / 2 + 100, _stageFinn, 500);
+	//_worm = new littleWorm;
+	//_worm->init(WINSIZEX / 2, WINSIZEY / 2 + 100, _stageFinn, 500);
+
+	_bw = new bigWorm;
+	_bw->init(WINSIZEX / 2, WINSIZEY / 2 + 100, _stageFinn, 500);
 
 	return S_OK;
 }
@@ -55,7 +58,8 @@ void nymphStage::update(void)
 	
 	stageDoor();
 	_UI->update();
-	_worm->update();
+	//worm->update();
+	_bw->update();
 	save();
 }
 
@@ -73,12 +77,12 @@ void nymphStage::render(void)
 
 	//핀 랜더
 	_stageFinn->render();
-
+	_bw->render();
 	_UI->render();
 
 	_sceneEffect->render();
 	
-	_worm->render();
+	//_worm->render();
 }
 
 void nymphStage::pixelCollision(void)

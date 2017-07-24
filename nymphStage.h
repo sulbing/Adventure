@@ -4,6 +4,7 @@
 #include "sceneEffect.h"
 #include "UI.h"
 #include "littleWorm.h"
+#include "bigWorm.h"
 
 class nymphStage : public gameNode
 {
@@ -17,6 +18,7 @@ private:
 	stagePlayer*	_stageFinn;
 	sceneEffect*	_sceneEffect;
 	littleWorm*		_worm;
+	bigWorm*		_bw;
 
 
 public:

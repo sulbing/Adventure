@@ -192,6 +192,9 @@
     <ClInclude Include="littleWorm.h">
       <Filter>MainGame\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="bigWorm.h">
+      <Filter>MainGame\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -309,6 +312,9 @@
       <Filter>MainGame</Filter>
     </ClCompile>
     <ClCompile Include="littleWorm.cpp">
+      <Filter>MainGame\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="bigWorm.cpp">
       <Filter>MainGame\Enemy</Filter>
     </ClCompile>
   </ItemGroup>

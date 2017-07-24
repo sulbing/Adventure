@@ -142,6 +142,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="animation.h" />
+    <ClInclude Include="bigWorm.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="cheststage.h" />
     <ClInclude Include="commonMacroFunction.h" />
@@ -184,6 +185,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="animation.cpp" />
+    <ClCompile Include="bigWorm.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="cheststage.cpp" />
     <ClCompile Include="database.cpp" />

@@ -50,6 +50,8 @@ void mainGame::addImage()
 	//에너미
 	IMAGEMANAGER->addFrameImage("bigWorm", "Image/bigWorm.bmp", 2860, 2880, 11, 12, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("liileWorm", "Image/liitleWorm.bmp", 1602, 712, 18, 8, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("bullet", "Image/BOSS_BULLET.bmp", 320, 40, 8, 1, true, RGB(255, 0, 255));
+
 
 	//미니맵
 	IMAGEMANAGER->addImage("MINIMAP", "Image/MINIMAP.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
