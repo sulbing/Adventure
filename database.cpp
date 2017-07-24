@@ -20,6 +20,7 @@ HRESULT database::init(void)
 	_isLoadInventory = false;
 	_isOninventory = false;
 	_isLoadStatus = false;
+	_useItem = false;
 	_status_bonus = 0;
 	_inven = new inventoryScene;
 	_inven->init();
@@ -35,6 +36,11 @@ HRESULT database::init(void)
 	_saveData.status_bonus = 0;
 	_saveData.status_hearts = 0;
 	_saveData.status_speed = 0;
+
+	for (int i = 0; i < 3; i++)
+	{
+		_effectItem[i] = false;
+	}
 	return S_OK;
 }
 

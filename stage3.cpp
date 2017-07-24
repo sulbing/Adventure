@@ -46,6 +46,18 @@ void stage3::update(void)
 {
 	_sceneEffect->update();
 
+	for (_vistageItem = _vstageItem.begin(); _vistageItem != _vstageItem.end(); ++_vistageItem)
+	{
+		(*_vistageItem)->update();
+	}
+
+	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+	{
+		setItem();
+	}
+
+	eatItem();
+
 	//ÇÉ ¾÷µ¥ÀÌÆ®
 	if (!_isChange)
 	{
@@ -63,7 +75,10 @@ void stage3::render(void)
 	IMAGEMANAGER->findImage("STAGE_BACKGROUND")->render(getMemDC(), 0, 0, _camX / 10, _camY / 10, WINSIZEX, WINSIZEY);
 	IMAGEMANAGER->findImage("STAGE3")->render(getMemDC(), 0, 0, _camX, _camY, WINSIZEX, WINSIZEY);
 
-	//Rectangle(getMemDC(), _leftDoor.left, _leftDoor.top, _leftDoor.right, _leftDoor.bottom);
+	for (_vistageItem = _vstageItem.begin(); _vistageItem != _vstageItem.end(); ++_vistageItem)
+	{
+		(*_vistageItem)->render(_camX, true);
+	}
 
 	//ÇÉ ·£´õ
 	_stageFinn->render();
@@ -246,6 +261,8 @@ void stage3::stageDoor(void)
 		//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
 		if (!_sceneEffect->getChangeScene())
 		{
+			_vstageItem.clear();
+
 			DATABASE->setWorldPosition(STAGE_3_LEFT);
 			DATABASE->setstatus(_stageFinn->getStatus_hearts(), _stageFinn->getStatus_attack(), _stageFinn->getStatus_speed(), DATABASE->getStatusBonus(), _stageFinn->getCurrentHP());
 			SCENEMANAGER->changeScene("SCENE_WORLDMAP");
@@ -262,6 +279,8 @@ void stage3::stageDoor(void)
 		//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
 		if (!_sceneEffect->getChangeScene())
 		{
+			_vstageItem.clear();
+
 			DATABASE->setWorldPosition(STAGE_3_RIGHT);
 			DATABASE->setstatus(_stageFinn->getStatus_hearts(), _stageFinn->getStatus_attack(), _stageFinn->getStatus_speed(), DATABASE->getStatusBonus(), _stageFinn->getCurrentHP());
 			SCENEMANAGER->changeScene("SCENE_WORLDMAP");
@@ -312,6 +331,32 @@ void stage3::camMove(void)
 		}
 
 		if (_camX < 0) _camX = 0;
+	}
+}
+
+void stage3::setItem(void)
+{
+	item* stageItem;
+	stageItem = new item;
+	int i = RND->getFromIntTo(0, 8);
+	stageItem->init((ITEMLIST)i, _stageFinn->getX() + 50, _stageFinn->getY() - 10);
+
+	_vstageItem.push_back(stageItem);
+}
+
+void stage3::eatItem(void)
+{
+	RECT temp;
+
+	for (int i = 0; i < _vstageItem.size(); i++)
+	{
+		if (IntersectRect(&temp, &_vstageItem[i]->getRect(),
+			&_stageFinn->getBodyRC()))
+		{
+			DATABASE->pushbackaddVector(_vstageItem[i]->getNum());
+			_vstageItem.erase(_vstageItem.begin() + i);
+			break;
+		}
 	}
 }
 

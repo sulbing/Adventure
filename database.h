@@ -48,12 +48,13 @@ private :
 	int _status_bonus;
 	int _currentHP;
 	std::vector<int> _vItemaddList;
-	std::vector<int> _vItemuseList;
 	std::vector<int> _vItemList;
 	tagSaveData _saveData;
 	bool _isLoadInventory;
 	bool _isLoadStatus;
 	bool _isOninventory;
+	bool _effectItem[3];
+	bool _useItem;
 	int _interfaceNum;
 
 	inventoryScene* _inven;
@@ -86,13 +87,9 @@ public:
 	void changeInven(void) { if (_isOninventory) _isOninventory = false; else _isOninventory = true; }
 
 	void pushbackaddVector(int A) { _vItemaddList.push_back(A); }
-	void pushbackuseVector(int A) { _vItemuseList.push_back(A); }
 
 	std::vector<int> getaddVector(void) { return _vItemaddList; }
 	void clearaddVector(void) { _vItemaddList.clear(); }
-
-	std::vector<int> getuseVector(void) { return _vItemuseList; }
-	void clearuseVector(void) { _vItemuseList.clear(); }
 
 	void invenSaveChange(std::vector<item*> _itemlist);
 	std::vector<int> getItemlist(void) { return _vItemList; }
@@ -104,11 +101,22 @@ public:
 	bool getLoadInven(void) { return _isLoadInventory; }
 	void setLoadStatus(bool A) { _isLoadStatus = A; }
 	bool getLoadStatus(void) { return _isLoadStatus; }
+	
+	void effectOn(int Num) { _effectItem[Num] = true; }
+	void effectOff(int Num, bool A) { _effectItem[Num] = A; }
+
+	void addBonus(void) { _status_bonus++; }
+
+	bool getuseItem(void) { return _useItem; }
+	void imuseItem(void) { _useItem = true; }
+	void imuseItemend(void) { _useItem = false; }
 
 	void setWorldPosition(RECTCOLLISION worldPosition) { _worldPosition = worldPosition; }
 	RECTCOLLISION getWorldPosition() { return _worldPosition; }
 
 	gameNode* getInterface(void);
+
+	bool getEffect(int Num) { return _effectItem[Num]; }
 
 	void changeNum(int Num) { _interfaceNum = Num; }
 

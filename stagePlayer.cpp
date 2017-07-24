@@ -960,20 +960,46 @@ void stagePlayer::skillUpdate()
 }
 void stagePlayer::statusControl()
 {
-	DATABASE->setStatusCurrentHP(_currentHP);
-	_status_attack = DATABASE->getStatusAttack();
-	_status_speed = DATABASE->getStatusSpeed();
 	_status_hearts = DATABASE->getStatusHearts();
 	_maxHP = 8 + 4 * _status_hearts;
-
+	if (DATABASE->getuseItem())
+	{
+		_currentHP = DATABASE->getStatusCureentHP();
+		DATABASE->imuseItemend();
+	}
 	if (_currentHP >= _maxHP)
 	{
 		_maxHP = _currentHP;
 	}
 
+	DATABASE->setStatusCurrentHP(_currentHP);
+	_status_attack = DATABASE->getStatusAttack();
+	_status_speed = DATABASE->getStatusSpeed();
+	
+
+	
+
 	if (_currentHP <= 0)
 	{
 		_state = DEAD;
+	}
+
+	if (DATABASE->getEffect(0))
+	{
+		_isSkill1Fire = true;
+		DATABASE->effectOff(0, false);
+	}
+
+	if (DATABASE->getEffect(1))
+	{
+		_isSkill2Fire = true;
+		DATABASE->effectOff(1, false);
+	}
+
+	if (DATABASE->getEffect(2))
+	{
+		_isSkill3Fire = true;
+		DATABASE->effectOff(2, false);
 	}
 }
 

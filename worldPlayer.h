@@ -90,7 +90,9 @@ private:
 	animation* _finnMotion;
 	animation* _jakeMotion;
 
-	//불값
+	//체력
+	int _maxHP;
+	int _currentHP;
 	
 
 public:

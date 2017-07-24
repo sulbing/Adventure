@@ -43,6 +43,7 @@ public:
 	void update();
 	void release();
 	void render(float x, float y);
+	void render(int camX, bool isCam);
 
 	RECT getRect(void) { return _itemRect; }
 	int getNum(void) { return (int)_itemlist; }

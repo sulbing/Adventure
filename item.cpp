@@ -144,6 +144,11 @@ void item::render(float x, float y)
 	_itemImage->frameRender(getMemDC(), x, y, _frameX, _frameY);
 }
 
+void item::render(int camX, bool isCam)
+{
+	_itemImage->frameRender(getMemDC(), _x - camX, _y, _frameX, _frameY);
+}
+
 void item::setCenterXY(float x, float y)
 {
 	_x = x - _itemImage->getFrameWidth() / 2;

@@ -19,11 +19,11 @@ HRESULT cheststage::init(void)
 	if (!_chestOpen)
 	{
 		_item = new item;
-		_itemNum = RND->getFromIntTo(0, 2);
+		_itemNum = 15;
 		_item->setXY(WINSIZEX / 2, WINSIZEY - 100);
 		_item->init((ITEMLIST)_itemNum, _item->getX(), _item->getY());
 	}
-	_isChange = false;
+	_isChange  = _isChest = false;
 
 	_chestRc = RectMakeCenter(WINSIZEX / 2, WINSIZEY - 88, 58, 56);
 
@@ -67,6 +67,11 @@ void cheststage::render(void)
 	else if (_chestOpen == true)
 	{
 		IMAGEMANAGER->findImage("CHEST_OPEN")->render(getMemDC(), WINSIZEX / 2 - (58 / 2), WINSIZEY - 60 - 56);
+	}
+
+	if (_isChest)
+	{
+		IMAGEMANAGER->findImage("X")->render(getMemDC(), _chestRc.left + 8, _chestRc.top - 80);
 	}
 
 	//ÇÉ ·£´õ
@@ -158,13 +163,24 @@ void cheststage::stageDoor(void)
 void cheststage::chestOpen(void)
 {
 	RECT temp;
-	for (int i = DEFAULT; i < SKILLEND; i++)
+	//for (int i = DEFAULT; i < SKILLEND; i++)
+	//{
+	//	if (IntersectRect(&temp, &_stageFinn->getSkillHitBox(i), &_chestRc))
+	//	{
+	//		_chestOpen = true;
+	//	}
+	//}
+
+	if (IntersectRect(&temp, &_stageFinn->getBodyRC(), &_chestRc))
 	{
-		if (IntersectRect(&temp, &_stageFinn->getSkillHitBox(i), &_chestRc))
+		_isChest = true;
+
+		if (KEYMANAGER->isOnceKeyDown('X'))
 		{
 			_chestOpen = true;
 		}
 	}
+	else _isChest = false;
 }
 
 void cheststage::eatItem(void)
@@ -173,6 +189,10 @@ void cheststage::eatItem(void)
 
 	if (IntersectRect(&temp, &_stageFinn->getBodyRC(), &_item->getRect()))
 	{
+		DATABASE->pushbackaddVector(_itemNum);
+		DATABASE->pushbackaddVector(_itemNum);
+		DATABASE->pushbackaddVector(_itemNum);
+		DATABASE->pushbackaddVector(_itemNum);
 		DATABASE->pushbackaddVector(_itemNum);
 		SAFE_DELETE(_item);
 	}

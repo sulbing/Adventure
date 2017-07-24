@@ -45,6 +45,18 @@ void stage1::update(void)
 {
 	_sceneEffect->update();
 
+	for (_vistageItem = _vstageItem.begin(); _vistageItem != _vstageItem.end(); ++_vistageItem)
+	{
+		(*_vistageItem)->update();
+	}
+
+	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+	{
+		setItem();
+	}
+
+	eatItem();
+
 	//핀 업데이트
 	if (!_isChange)
 	{
@@ -62,8 +74,10 @@ void stage1::render(void)
 	IMAGEMANAGER->findImage("STAGE_BACKGROUND")->render(getMemDC(), 0, 0, _camX / 10, _camY / 10, WINSIZEX, WINSIZEY);
 	IMAGEMANAGER->findImage("STAGE1")->render(getMemDC(), 0, 0, _camX, _camY, WINSIZEX, WINSIZEY);
 
-	Rectangle(getMemDC(), _leftDoor.left, _leftDoor.top, _leftDoor.right, _leftDoor.bottom);
-
+	for (_vistageItem = _vstageItem.begin(); _vistageItem != _vstageItem.end(); ++_vistageItem)
+	{
+		(*_vistageItem)->render(_camX, true);
+	}
 	//핀 랜더
 	_stageFinn->render();
 
@@ -230,6 +244,7 @@ void stage1::stageDoor(void)
 		//씬 전환 끝나면 씬 체인지
 		if (!_sceneEffect->getChangeScene())
 		{
+			_vstageItem.clear();
 			//월드 포지션
 			DATABASE->setWorldPosition(STAGE_1_LEFT);
 			DATABASE->setstatus(_stageFinn->getStatus_hearts(), _stageFinn->getStatus_attack(), _stageFinn->getStatus_speed(), DATABASE->getStatusBonus(), _stageFinn->getCurrentHP());
@@ -248,6 +263,7 @@ void stage1::stageDoor(void)
 		//씬 전환 끝나면 씬 체인지
 		if (!_sceneEffect->getChangeScene())
 		{
+			_vstageItem.clear();
 			//월드 포지션
 			DATABASE->setWorldPosition(STAGE_1_RIGHT);
 			DATABASE->setstatus(_stageFinn->getStatus_hearts(), _stageFinn->getStatus_attack(), _stageFinn->getStatus_speed(), DATABASE->getStatusBonus(), _stageFinn->getCurrentHP());
@@ -300,6 +316,32 @@ void stage1::camMove(void)
 		}
 
 		if (_camX < 0) _camX = 0;
+	}
+}
+
+void stage1::setItem(void)
+{
+	item* stageItem;
+	stageItem = new item;
+	int i = RND->getFromIntTo(0, 8);
+	stageItem->init((ITEMLIST)i, _stageFinn->getX() + 50, _stageFinn->getY() - 10);
+
+	_vstageItem.push_back(stageItem);
+}
+
+void stage1::eatItem(void)
+{
+	RECT temp;
+
+	for (int i = 0; i < _vstageItem.size(); i++)
+	{
+		if (IntersectRect(&temp, &_vstageItem[i]->getRect(),
+			&_stageFinn->getBodyRC()))
+		{
+			DATABASE->pushbackaddVector(_vstageItem[i]->getNum());
+			_vstageItem.erase(_vstageItem.begin() + i);
+			break;
+		}
 	}
 }
 
