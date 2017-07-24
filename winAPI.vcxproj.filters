@@ -165,9 +165,6 @@
     <ClInclude Include="sceneEffect.h">
       <Filter>MainGame</Filter>
     </ClInclude>
-    <ClInclude Include="enemy.h">
-      <Filter>MainGame\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="stage1.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
@@ -191,6 +188,9 @@
     </ClInclude>
     <ClInclude Include="worldPlayer.h">
       <Filter>MainGame\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="littleWorm.h">
+      <Filter>MainGame\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -281,9 +281,6 @@
     <ClCompile Include="sceneEffect.cpp">
       <Filter>MainGame</Filter>
     </ClCompile>
-    <ClCompile Include="enemy.cpp">
-      <Filter>MainGame\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="stage1.cpp">
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
@@ -310,6 +307,9 @@
     </ClCompile>
     <ClCompile Include="mainGame_Sound.cpp">
       <Filter>MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="littleWorm.cpp">
+      <Filter>MainGame\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

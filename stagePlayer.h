@@ -135,6 +135,7 @@ private:
 	int beeCount = 0;
 	int beeInt = 0;
 	int _skill3Count = 0;
+	bool deadComplete = false;
 
 	int fireInt = 0;
 	int fireCount = 0;
@@ -179,6 +180,7 @@ public:
 	int getSkillDamage(int skillName) { return _skill[skillName]._damage; }
 	bool getSkillIsFire(int skillName) { return _skill[skillName]._isFire; }
 	int getCamX() { return _camX; }
+	bool getIsDead() { return deadComplete; }
 
 	//ผผลอ
 	void setCurrentHP(int HP) { _currentHP = HP; }

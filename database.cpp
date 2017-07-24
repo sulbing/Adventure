@@ -29,6 +29,12 @@ HRESULT database::init(void)
 	_minimap->init();
 	_interfaceNum = 0;
 	setstatus(0, 0, 0, 0, 8);
+
+	_saveData.currentHP = 8;
+	_saveData.status_attack = 0;
+	_saveData.status_bonus = 0;
+	_saveData.status_hearts = 0;
+	_saveData.status_speed = 0;
 	return S_OK;
 }
 
@@ -48,24 +54,35 @@ void database::invenSaveChange(std::vector<item*> _itemlist)
 
 void database::saveData(void)
 {
-	_saveData._status_attack = _status_attack;
-	_saveData._status_hearts = _status_hearts;
-	_saveData._status_speed = _status_speed;
-	_saveData._status_bonus = _status_bonus;
+	_saveData.status_attack = _status_attack;
+	_saveData.status_hearts = _status_hearts;
+	_saveData.status_speed = _status_speed;
+	_saveData.status_bonus = _status_bonus;
+	_saveData.currentHP = _currentHP;
+
+	if (_saveData.vItemaddList.size() != 0) _saveData.vItemaddList.clear();
+	if (_vItemaddList.size() != 0) _saveData.vItemaddList = _vItemaddList;
+
+	if (_saveData.vItemList.size() != 0) _saveData.vItemList.clear();
+	if (_vItemList.size() != 0) _saveData.vItemList = _vItemList;
 }
 
 void database::loadData(void)
 {
-	_status_attack = _saveData._status_attack;
-	_status_hearts = _saveData._status_hearts;
-	_status_speed = _saveData._status_speed;
-	_status_bonus = _saveData._status_bonus;
+	_status_attack = _saveData.status_attack;
+	_status_hearts = _saveData.status_hearts;
+	_status_speed = _saveData.status_speed;
+	_status_bonus = _saveData.status_bonus;
+	_currentHP = _saveData.currentHP;
+
+	if (_saveData.vItemaddList.size() != 0) _vItemaddList = _saveData.vItemaddList;
+	if (_saveData.vItemList.size() != 0) _vItemList = _saveData.vItemList;
 }
 
 void database::setstatus(int hearts, int attack, int speed, int bonus, int currentHP)
 {
-	_status_attack = hearts;
-	_status_hearts = attack;
+	_status_attack = attack;
+	_status_hearts = hearts;
 	_status_speed = speed;
 	_status_bonus = bonus;
 	_currentHP = currentHP;

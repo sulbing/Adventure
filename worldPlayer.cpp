@@ -12,10 +12,10 @@ worldPlayer::~worldPlayer()
 HRESULT worldPlayer::init()
 {
 	_state = WORLDIDLE;
-	//_x = 1417;
-	//_y = 857;
-	//_jakeX = 1407;
-	//_jakeY = 847;
+	_x = 100;
+	_y = 100;
+	_jakeX = 0;
+	_jakeY = 0;
 	_jakeRenderX = WINSIZEX / 2;
 	_jakeRenderY = WINSIZEY / 2 - 10;
 	_jakeSpeedX = 0;
@@ -56,18 +56,29 @@ void worldPlayer:: update(void)
 	}
 
 
-	_finnRC = RectMakeCenter(_x, _y, 30, 20);
+	if (_state == WORLDLONGLEG)
+	{
+		longLegMove();
+		_isLongLegState = true;
+	}
 
+	if (_state != WORLDLONGLEG)
+	{
+		_isLongLegState = false;
+	}
+
+
+	_finnRC = RectMakeCenter(_x, _y, 30, 20);
 	
 	isDirection();
 }
 
 void worldPlayer:: render(void)
 {
-	Rectangle(getMemDC(), _finnRC.left, _finnRC.top, _finnRC.right, _finnRC.bottom);
-	Rectangle(getMemDC(), _jakeRC.left, _jakeRC.top, _jakeRC.right, _jakeRC.bottom);
+	/*Rectangle(getMemDC(), _finnRC.left, _finnRC.top, _finnRC.right, _finnRC.bottom);
+	Rectangle(getMemDC(), _jakeRC.left, _jakeRC.top, _jakeRC.right, _jakeRC.bottom);*/
 	
-	if (!_isBridgeOpening)
+	if (!_isBridgeOpening && !_isLongLegOpening)
 	{
 		_jakeBasic->aniRender(getMemDC(), _jakeRenderX - _jakeBasic->getFrameWidth() / 2, _jakeRenderY - _jakeBasic->getFrameHeight() / 2, _jakeMotion);
 	}
@@ -77,6 +88,11 @@ void worldPlayer:: render(void)
 		_jakeBridge->aniRender(getMemDC(), _jakeRenderX - _jakeBridge->getFrameWidth() / 2, _jakeRenderY - _jakeBridge->getFrameHeight() / 2, _jakeMotion);
 	}
 	
+	if (_isLongLegOpening)
+	{
+		_jakeLongLeg->aniRender(getMemDC(), _jakeRenderX - _jakeLongLeg->getFrameWidth() / 2, _jakeRenderY - _jakeLongLeg->getFrameHeight() / 2, _jakeMotion);
+	}
+
 	_finnBasic->aniRender(getMemDC(), WINSIZEX / 2 - _finnBasic->getFrameWidth() / 2, WINSIZEY / 2 - _finnBasic->getFrameHeight() / 2, _finnMotion);
 	
 	
@@ -161,6 +177,18 @@ void worldPlayer::setBridge(int startX, int startY, int EndX, int EndY)
 	_bridgeEndX = EndX;
 	_bridgeEndY = EndY;
 	_bridgeProcInt = 0;
+	_speedX = 0;
+	_speedY = 0;
+}
+
+void worldPlayer::setLongLeg(int startX, int startY, int EndX, int EndY)
+{
+	_state = WORLDLONGLEG;
+	_longLegStartX = startX;
+	_longLegStartY = startY;
+	_longLegEndX = EndX;
+	_longLegEndY = EndY;
+	_longLegProcInt = 0;
 	_speedX = 0;
 	_speedY = 0;
 }
@@ -412,6 +440,197 @@ void worldPlayer::bridgeMove()
 	
 }
 
+void worldPlayer::longLegMove()
+{
+	_jakeX += _jakeSpeedX;
+	_jakeY += _jakeSpeedY;
+	_x += _speedX;
+	_y += _speedY;
+	_jakeRenderX = WINSIZEX / 2 + (_jakeX - _x);
+	_jakeRenderY = WINSIZEY / 2 + (_jakeY - _y);
+
+
+	_finnRC = RectMakeCenter(_x, _y, 50, 50);
+	_jakeRC = RectMakeCenter(_jakeX, _jakeY, 50, 50);
+
+		//제이크 x 이동
+
+	if (_longLegProcInt == 0)
+	{
+		if (_jakeX < _longLegStartX - 3)
+		{
+			_jakeSpeedX = 3;
+		}
+		else if (_jakeX > _longLegStartX + 3)
+		{
+			_jakeSpeedX = -3;
+		}
+		else
+		{
+			_jakeSpeedX = 0;
+			_longLegProcInt++;
+		}
+
+	}
+
+	else if (_longLegProcInt == 1)
+	{
+		if (_jakeY < _longLegStartY - 3)
+		{
+			_jakeSpeedY = 3;
+		}
+		else if (_jakeY > _longLegStartY + 3)
+		{
+			_jakeSpeedY = -3;
+		}
+		else
+		{
+			_jakeSpeedY = 0;
+			_longLegProcInt++;
+		}
+	}
+		
+		//제이크 다리 레디
+		if (_longLegProcInt == 2)
+		{
+			_isLongLegOpening = true;
+			_jakeMotion = KEYANIMANAGER->findAnimation("toUpLongLegDownReady");
+			_jakeY = (_longLegStartY + _longLegEndY) / 2;
+
+
+
+			if (!_jakeMotion->isPlay())
+			{
+				_jakeMotion->start();
+				
+			}
+
+			_longLegProcInt++;
+			
+		}
+		if (_longLegProcInt == 3)
+		{
+			if (!_jakeMotion->isPlay())
+			{
+				_longLegProcInt++;
+			}
+		}
+
+		//핀 x 이동
+		if (_longLegProcInt == 4)
+		{
+			if (_x < _longLegStartX - 3)
+			{
+				_speedX = 3;
+			}
+			else if (_x > _longLegStartX + 3)
+			{
+				_speedX = -3;
+			}
+			else
+			{
+				_speedX = 0;
+				_longLegProcInt++;
+			}
+		}
+
+		//핀 y 이동
+		if (_longLegProcInt == 5)
+		{
+			if (_y < _longLegStartY - 3)
+			{
+				_speedY = 3;
+			}
+			else if (_y > _longLegStartY + 3)
+			{
+				_speedY = -3;
+			}
+			else
+			{
+				_speedY = 0;
+				_longLegProcInt++;
+			}
+		}
+
+
+		//제이크 다리피기 에니메이션 실행
+		if (_longLegProcInt == 6)
+		{
+			_jakeMotion = KEYANIMANAGER->findAnimation("toUpLongLegOpen");
+			
+
+			if (!_jakeMotion->isPlay())
+			{
+				_jakeMotion->start();
+				_longLegProcInt++;
+			}
+		}
+
+		//제이크 다리피기 애니메이션 실행중!
+		if (_longLegProcInt == 7)
+		{
+			if (!_jakeMotion->isPlay())
+			{
+				_longLegProcInt++;
+			}
+		}
+
+		//핀 y 축 이동
+
+		if (_longLegProcInt == 8)
+		{
+			if (_y < _longLegEndY - 53)
+			{
+				_y = 3;
+			}
+			else if (_y > _longLegEndY - 47)
+			{
+				_speedY = -3;
+			}
+			else
+			{
+				_speedY = 0;
+				_longLegProcInt++;
+			}
+		}
+
+
+		//제이크 다리접기 애니메이션 실행!~
+		if (_longLegProcInt == 9)
+		{
+			_jakeMotion = KEYANIMANAGER->findAnimation("toUpLongLegClose");
+
+
+			if (!_jakeMotion->isPlay())
+			{
+				_jakeMotion->start();
+				_longLegProcInt++;
+			}
+		}
+
+		if (_longLegProcInt == 10)
+		{
+			if (!_jakeMotion->isPlay())
+			{
+				_longLegProcInt++;
+			}
+		}
+
+		if (_longLegProcInt == 11)
+		{
+
+			_jakeY = _longLegEndY;
+			_isLongLegOpening = false;
+			_state = WORLDIDLE;
+		}
+
+
+
+
+		
+	
+}
+
 void worldPlayer :: isDirection (void)
 {
 	//핀 방향 판정
@@ -516,7 +735,7 @@ void worldPlayer :: isDirection (void)
 
 
 	//제이크 방향 판정
-	if (!_isBridgeOpening)
+	if (!_isBridgeOpening && !_isLongLegOpening)
 	{
 		if (_jakeSpeedX > 1)
 		{
@@ -627,6 +846,7 @@ void worldPlayer::animationInit()
 	_finnBasic = IMAGEMANAGER->addFrameImage("핀베이직", "playerImage/핀_월드.bmp", 0, 0, 512, 540, 8, 9, true, RGB(255, 0, 255));
 	_jakeBasic = IMAGEMANAGER->addFrameImage("제이크베이직", "playerImage/제이크_월드.bmp", 0, 0, 512, 540, 8, 9, true, RGB(255, 0, 255));
 	_jakeBridge = IMAGEMANAGER->addFrameImage("제이크다리", "playerImage/제이크_다리.bmp", 0, 0, 1024, 260, 16, 2, true, RGB(255, 0, 255));
+	_jakeLongLeg = IMAGEMANAGER->addFrameImage("제이크롱다리", "playerImage/제이크_롱다리.bmp", 0, 0, 1408, 120, 22, 1, true, RGB(255, 0, 255));
 
 	int top[] = { 4 };
 	KEYANIMANAGER->addArrayFrameAnimation("worldFinnTop", "핀베이직", top, 1, 15, true);
@@ -706,6 +926,16 @@ void worldPlayer::animationInit()
 
 	int toUpBridgeClose[] = { 24,25,26,27,28,29,30,31 };
 	KEYANIMANAGER->addArrayFrameAnimation("toUpBridgeClose", "제이크다리", toUpBridgeClose, 8, 8, false);
+
+
+	int toUpLongLegDownReady[] = { 0,1,2,3 };
+	KEYANIMANAGER->addArrayFrameAnimation("toUpLongLegDownReady", "제이크롱다리", toUpLongLegDownReady, 4, 8, false);
+
+	int toUpLongLegOpen[] = { 4,5,6,7,8,9,10,11 };
+	KEYANIMANAGER->addArrayFrameAnimation("toUpLongLegOpen", "제이크롱다리", toUpLongLegOpen, 8, 8, false);
+
+	int toUpLongLegClose[] = { 12,13,14,15,16,17, 18, 19, 20, 21};
+	KEYANIMANAGER->addArrayFrameAnimation("toUpLongLegClose", "제이크롱다리", toUpLongLegClose, 7, 8, false);
 
 	_finnMotion = KEYANIMANAGER->findAnimation("worldFinnBottom");
 	_jakeMotion = KEYANIMANAGER->findAnimation("worldJakeBottom");

@@ -28,23 +28,25 @@ HRESULT worldMapScene::init(void)
 
 	_rc = _worldPlayer->getWorldFinnRect();
 
-	_eventRC[STAGE_NYMPH_1] = RectMake(771, 292, 40, 25);
-	_eventRC[STAGE_NYMPH_2] = RectMake(1988, 868, 40 ,25);
-	_eventRC[STAGE_HOUSE] = RectMake(1385, 717, 60, 100);
-	_eventRC[STAGE_1_LEFT] = RectMake(841, 481, 30, 30);
-	_eventRC[STAGE_1_RIGHT] = RectMake(809, 352, 30, 30);
-	_eventRC[STAGE_2_LEFT] = RectMake(2126, 1694, 30, 30);
-	_eventRC[STAGE_2_RIGHT] = RectMake(2204, 1542, 30, 30);
-	_eventRC[STAGE_3_LEFT] = RectMake(2215, 768, 30, 30);
-	_eventRC[STAGE_3_RIGHT] = RectMake(2184, 608, 30, 30);
-	_eventRC[STAGE_CHEST] = RectMake(1067, 323, 50, 50);
-	_eventRC[STAGE_MIDBOSS] = RectMake(2286, 1418, 30, 30);
-	_eventRC[JAKE_BRIDGE_IN] = RectMake(1801, 1492, 30, 20);
-	_eventRC[JAKE_BRIDGE_OUT] = RectMake(1801, 1575, 30, 20);
-	_eventRC[JAKE_CLIMB_1] = RectMake(2226, 483, 80, 20);
-	_eventRC[JAKE_CLIMB_2] = RectMake(2361, 291, 60, 20);
+	_eventRC[STAGE_NYMPH_1] = RectMake(871, 392, 40, 25);
+	_eventRC[STAGE_NYMPH_2] = RectMake(2088, 968, 40 ,25);
+	_eventRC[STAGE_HOUSE] = RectMake(1485, 817, 60, 100);
+	_eventRC[STAGE_1_LEFT] = RectMake(941, 581, 30, 30);
+	_eventRC[STAGE_1_RIGHT] = RectMake(909, 452, 30, 30);
+	_eventRC[STAGE_2_LEFT] = RectMake(2226, 1794, 30, 30);
+	_eventRC[STAGE_2_RIGHT] = RectMake(2304, 1642, 30, 30);
+	_eventRC[STAGE_3_LEFT] = RectMake(2315, 868, 30, 30);
+	_eventRC[STAGE_3_RIGHT] = RectMake(2284, 708, 30, 30);
+	_eventRC[STAGE_CHEST] = RectMake(1167, 423, 50, 50);
+	_eventRC[STAGE_MIDBOSS] = RectMake(2386, 1518, 30, 30);
+	_eventRC[JAKE_BRIDGE_IN] = RectMake(1901, 1592, 30, 20);
+	_eventRC[JAKE_BRIDGE_OUT] = RectMake(1901, 1675, 30, 20);
+	_eventRC[JAKE_CLIMB_1] = RectMake(2326, 583, 80, 20);
+	_eventRC[JAKE_CLIMB_2] = RectMake(2461, 391, 60, 20);
 
 	_isChange = false;
+
+	SOUNDMANAGER->play("월드", 0.3f);
 	
 	return S_OK;
 }
@@ -64,7 +66,7 @@ void worldMapScene::update(void)
 
 	_rc = _worldPlayer->getWorldFinnRect();
 
-	if (!_worldPlayer->getIsBridgeState())
+	if (!_worldPlayer->getIsBridgeState() && !_worldPlayer->getIsLongLegState())
 	{
 		pixelCollision();
 		rectCollision();
@@ -191,11 +193,11 @@ void worldMapScene::render(void)
 		break;
 	}
 
-	IMAGEMANAGER->findImage("WORLDMAP_PIXEL_COLLISION")->render(getMemDC(), 0, 0);
+	//IMAGEMANAGER->findImage("WORLDMAP_PIXEL_COLLISION")->render(getMemDC(), 0, 0);
 
-	RectangleMakeCenter(getMemDC(), WINSIZEX / 2, WINSIZEY / 2, 30, 30);
+	//RectangleMakeCenter(getMemDC(), WINSIZEX / 2, WINSIZEY / 2, 30, 30);
 	
-	Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
+	//Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
 
 	_worldPlayer->render();
 
@@ -314,6 +316,8 @@ void worldMapScene::rectCollision()
 		RECT temp;
 		if (IntersectRect(&temp, &_rc, &(_eventRC[i])))
 		{
+			SOUNDMANAGER->stop("월드");
+
 			switch (i)
 			{
 			case STAGE_NYMPH_1:	case STAGE_NYMPH_2:	case STAGE_HOUSE:
@@ -448,8 +452,20 @@ void worldMapScene::rectCollision()
 			}
 				break;
 			case JAKE_CLIMB_1:
+			{
+				if (!_worldPlayer->getIsLongLegState())
+				{
+					_worldPlayer->setLongLeg(_eventRC[JAKE_CLIMB_1].left + 45, _eventRC[JAKE_CLIMB_1].top, _eventRC[JAKE_CLIMB_1].left + 45, _eventRC[JAKE_CLIMB_1].top - 100);
+				}
+			}
 				break;
 			case JAKE_CLIMB_2:
+			{
+				if (!_worldPlayer->getIsLongLegState())
+				{
+					_worldPlayer->setLongLeg(_eventRC[JAKE_CLIMB_2].left + 40, _eventRC[JAKE_CLIMB_2].top, _eventRC[JAKE_CLIMB_2].left + 40, _eventRC[JAKE_CLIMB_2].top - 100);
+				}
+			}
 				break;
 			case RECTCOLLISION_END:
 				break;

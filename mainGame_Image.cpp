@@ -10,13 +10,14 @@ void mainGame::addImage()
 	IMAGEMANAGER->addImage("START", "Image/START.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
 
 	//월드맵
-	IMAGEMANAGER->addImage("WORLDMAP", "Image/WORLDMAP.bmp", 2600, 2130, false, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("WORLDMAP_PIXEL_COLLISION", "Image/WORLDMAP_PIXEL_COLLISION.bmp", 2600, 2130, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("WORLDMAP", "Image/WORLDMAP.bmp", 2800, 2330, false, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("WORLDMAP_PIXEL_COLLISION", "Image/WORLDMAP_PIXEL_COLLISION.bmp", 2800, 2330, true, RGB(255, 0, 255));
 
 	//워터님프
 	IMAGEMANAGER->addImage("savePointCollision", "Image/NYMPH_PIXEL_COLLISION.bmp", 860, 480, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("savePoint", "Image/WATTERNYMPH_BACKGROUND.bmp", 860, 480, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("nymph", "Image/WATTERNYMPH.bmp", 1752, 148, 6, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("X", "Image/X.bmp", 38, 37, true, RGB(255, 0, 255));
 
 	//스테이지1
 	IMAGEMANAGER->addImage("STAGE1", "Image/STAGE1_GROUND.bmp", 6379, 480, true, RGB(255, 0, 255));
@@ -47,10 +48,8 @@ void mainGame::addImage()
 	IMAGEMANAGER->addImage("PLUS", "Image/PLUS.bmp", 34, 36, true, RGB(255, 0, 255));
 
 	//에너미
-	IMAGEMANAGER->addFrameImage("minion1", "Image/minion1.bmp", 535, 568, 5, 8, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("minion2", "Image/minion2.bmp", 890, 890, 10, 10, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("minion3", "Image/minion3.bmp", 2860, 2880, 11, 12, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("boss", "Image/bossV.bmp", 1917, 1917, 9, 9, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("bigWorm", "Image/bigWorm.bmp", 2860, 2880, 11, 12, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("liileWorm", "Image/liitleWorm.bmp", 1602, 712, 18, 8, true, RGB(255, 0, 255));
 
 	//미니맵
 	IMAGEMANAGER->addImage("MINIMAP", "Image/MINIMAP.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));

@@ -8,10 +8,14 @@ class item;
 
 struct tagSaveData
 {
-	int _status_hearts;
-	int _status_attack;
-	int _status_speed;
-	int _status_bonus;
+	int status_hearts;
+	int status_attack;
+	int status_speed;
+	int status_bonus;
+	int currentHP;
+
+	std::vector<int> vItemaddList;
+	std::vector<int> vItemList;
 };
 
 enum RECTCOLLISION
@@ -75,6 +79,7 @@ public:
 	int getStatusCureentHP(void) { return _currentHP; }
 	bool getInvenOn(void) { return _isOninventory; }
 	POINT getWorldstate(void) { return PointMake(_WorldX, _WorldY); }
+	tagSaveData getSaveData(void) { return _saveData; }
 
 	void setstatus(int hearts, int attack, int speed, int bonus, int currentHP);
 	void useBonus(int Num);

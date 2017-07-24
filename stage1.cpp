@@ -32,6 +32,8 @@ HRESULT stage1::init(void)
 
 	_isChange = false;
 
+	SOUNDMANAGER->play("스테이지", 0.3f);
+
 	return S_OK;
 }
 
@@ -234,6 +236,8 @@ void stage1::stageDoor(void)
 
 	if (IntersectRect(&temp, &_leftDoor, &_stageFinn->getBodyRC()))
 	{
+		SOUNDMANAGER->stop("스테이지");
+
 		_isChange = true;
 		_sceneEffect->setFadeOUT(true);
 
@@ -251,6 +255,8 @@ void stage1::stageDoor(void)
 
 	if (IntersectRect(&temp, &_rightDoor, &_stageFinn->getBodyRC()))
 	{
+		SOUNDMANAGER->stop("스테이지");
+
 		_isChange = true;
 		_sceneEffect->setFadeOUT(true);
 
