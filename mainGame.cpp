@@ -25,6 +25,8 @@ HRESULT mainGame::init(void)
 	gameNode::init(true);
 
 	addImage();
+	addSound();
+
 	DATABASE->init();
 
 	DATABASE->setstatus(2, 1, 1, 1, 5);

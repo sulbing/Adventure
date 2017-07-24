@@ -23,6 +23,7 @@ public:
 	virtual void render(void);
 
 	void addImage();
+	void addSound();
 
 
 	mainGame();

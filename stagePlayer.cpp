@@ -12,8 +12,7 @@ stagePlayer::~stagePlayer()
 HRESULT stagePlayer::init(int hearts, int attack, int speed, int currentHP, float x, float y, bool isRight)
 {
 	//기본정보
-	//하트 + 2 입니당
-	_maxHP = 4 * (hearts + 1);
+	_maxHP = 4 * (hearts + 2);
 	_currentHP = currentHP;
 	if (_currentHP > _maxHP)
 	{

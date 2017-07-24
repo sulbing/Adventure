@@ -11,6 +11,8 @@ HRESULT openingScene::init(void)
 	_sceneEffect = new sceneEffect;
 	_sceneEffect->init();
 
+	SOUNDMANAGER->play("opening", 1.0f);
+
 	return S_OK;
 }
 
@@ -30,6 +32,7 @@ void openingScene::update(void)
 	//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
 	if (!_sceneEffect->getChangeScene() && !_sceneEffect->isFadeOUT())
 	{
+		SOUNDMANAGER->pause("opening");
 		SCENEMANAGER->changeScene("SCENE_WORLDMAP");
 	}
 }
