@@ -157,7 +157,7 @@ void stagePlayer::keyControl()
 	{
 		if (_state == IDLE || _state == JUMP || _state == WALK || _state == JUMPATTACK)
 		{
-			_speedX = MOVESPEED + DATABASE->getStatusSpeed();
+			_speedX = MOVESPEED + DATABASE->getStatusSpeed() /2;
 			if(_state != JUMPATTACK)_isRight = true;
 			
 			if (_state == IDLE) _state = WALK;
@@ -169,7 +169,7 @@ void stagePlayer::keyControl()
 	{
 		if (_state == IDLE || _state == JUMP || _state == WALK || _state == JUMPATTACK)
 		{
-			_speedX = - MOVESPEED - DATABASE->getStatusSpeed();
+			_speedX = - MOVESPEED - DATABASE->getStatusSpeed() / 2;
 			if (_state != JUMPATTACK) _isRight = false;
 			if (_state == IDLE) _state = WALK;
 		}
@@ -926,7 +926,7 @@ void stagePlayer::basicMove()
 	
 
 	//중력적용
-	if (_state == JUMP || _state == JUMPATTACK)
+	if (_state == JUMP || _state == JUMPATTACK )
 	{
 		_speedY += GRAVITY * moveTime;
 	}

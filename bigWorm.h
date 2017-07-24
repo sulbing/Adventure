@@ -39,6 +39,8 @@ private:
 	int				_count;
 	int				_bulletDelay;
 
+	int				_HP;
+
 public:
 	HRESULT init(float x, float y, stagePlayer* z, int moveLength);
 	void release();
@@ -59,9 +61,14 @@ public:
 	float getY(void) { return _y; }
 	int getState() { return (int)_direction; }
 	void setHit();
+	void delHP(int Num) { _HP -= Num; }
+	int getHP(void) { return _HP; }
 
 	void makeBullet(float x, float y, float angle);
 
+	std::vector<Bullet*> getVector(void) { return _vBullet; }
+
+	void eraseBullet(int Num) { _vBullet.erase(_vBullet.begin() + Num); }
 
 	bigWorm();
 	~bigWorm();
@@ -88,6 +95,8 @@ public:
 	float getY() { return _y; }
 	float getStartX() { return _StartX; }
 	float getStartY() { return _StartY; }
+
+	RECT getRect() { return _rc; }
 
 	Bullet();
 	~Bullet();

@@ -10,6 +10,8 @@
 #include "cheststage.h"
 #include "minimapScene.h"
 #include "inventoryScene.h"
+#include "darkForest.h"
+#include "bossScene.h"
 
 class inventoryScene;
 

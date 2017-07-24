@@ -23,6 +23,7 @@ enum RECTCOLLISION
 	JAKE_BRIDGE_OUT,	//다리 아래
 	JAKE_CLIMB_1,		//아래 올라가기
 	JAKE_CLIMB_2,		//위 올라가기
+	FINAL_BOSS,			//막보스
 	RECTCOLLISION_END
 };
 

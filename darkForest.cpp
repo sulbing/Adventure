@@ -1,80 +1,99 @@
 #include "stdafx.h"
-#include "nymphStage.h"
+#include "darkForest.h"
 
 
-HRESULT nymphStage::init(void)
+darkForest::darkForest()
+{
+}
+
+
+darkForest::~darkForest()
+{
+}
+
+HRESULT darkForest::init(void)
 {
 	_UI = new UI;
 	_UI->init();
 
-	_nymph = IMAGEMANAGER->findImage("nymph");
-
-	_nymphAni = new animation;
-	_nymphAni->init(_nymph->getWidth(), _nymph->getHeight(), _nymph->getFrameWidth(), _nymph->getFrameHeight());
-	_nymphAni->setPlayFrame(0, 5, false, true);
-	_nymphAni->setFPS(1);
-	_nymphAni->start();
 
 	_leftDoor = RectMake(0, WINSIZEY / 2, 10, 400);
 	_rightDoor = RectMake(790, WINSIZEY / 2, 10, 400);
 
 	_stageFinn = new stagePlayer;
-	_stageFinn->init(DATABASE->getStatusHearts(), DATABASE->getStatusAttack(), DATABASE->getStatusSpeed(), DATABASE->getStatusCureentHP(), WINSIZEX / 4, WINSIZEY * 3 / 4, true);
-
-	_stageFinn->setCamX(0);
+	_stageFinn->init(DATABASE->getStatusHearts(), DATABASE->getStatusAttack(), DATABASE->getStatusSpeed(), DATABASE->getStatusCureentHP(), 30, WINSIZEY * 3 / 4, true);
 
 	_sceneEffect = new sceneEffect;
 	_sceneEffect->init();
+	if (!_chestOpen)
+	{
+		_item = new item;
+		_itemNum = 15;
+		_item->setXY(WINSIZEX / 2, WINSIZEY - 100);
+		_item->init((ITEMLIST)_itemNum, _item->getX(), _item->getY());
+	}
+	_isChange = _isChest = false;
 
-	_isChange = _isSave = false;
+	_chestRc = RectMakeCenter(WINSIZEX / 2, WINSIZEY - 88, 58, 56);
 
-	_nymphRC = RectMake(275, WINSIZEY - 208, _nymph->getFrameWidth() - 50, _nymph->getFrameHeight());
-
-	SOUNDMANAGER->play("스테이지", 0.3f);
+	SOUNDMANAGER->play("보물상자", 0.3f);
 
 	return S_OK;
 }
 
-void nymphStage::release(void)
+void darkForest::release(void)
 {
 }
 
-void nymphStage::update(void)
+void darkForest::update(void)
 {
 	_sceneEffect->update();
 
-	_nymphAni->frameUpdate(TIMEMANAGER->getElapsedTime() * 8);
-
-
+	chestOpen();
 	//핀 업데이트
 	if (!_isChange) _stageFinn->update();
 	pixelCollision();
-	
 	stageDoor();
+	if (_chestOpen)
+	{
+		if (_item)
+		{
+			_item->update();
+			eatItem();
+		}
+	}
 	_UI->update();
-	save();
 }
 
-void nymphStage::render(void)
+void darkForest::render(void)
 {
-	Rectangle(getMemDC(), _nymphRC.left, _nymphRC.top, _nymphRC.right, _nymphRC.bottom);
-	IMAGEMANAGER->findImage("savePointCollision")->render(getMemDC(), 0, 0);
-	IMAGEMANAGER->findImage("savePoint")->render(getMemDC(), 0, 0, 0, 0, WINSIZEX, WINSIZEY);
-	_nymph->aniRender(getMemDC(), 250, WINSIZEY - 208, _nymphAni);
-
-	if (_isSave)
+	IMAGEMANAGER->findImage("CHEST_STAGE_PIXEL_COLLISION")->render(getMemDC(), 0, 0, 0, 0, WINSIZEX, WINSIZEY);
+	IMAGEMANAGER->findImage("DARK_FOREST_STAGE")->render(getMemDC(), 0, 0, 0, 0, WINSIZEX, WINSIZEY);
+	if (_chestOpen == false)
 	{
-		IMAGEMANAGER->findImage("X")->render(getMemDC(), _nymphRC.left + 105, _nymphRC.top - 60);
+		IMAGEMANAGER->findImage("CHEST_IDLE")->render(getMemDC(), WINSIZEX / 2 - (58 / 2), WINSIZEY - 60 - 56);
+	}
+	else if (_chestOpen == true)
+	{
+		IMAGEMANAGER->findImage("CHEST_OPEN")->render(getMemDC(), WINSIZEX / 2 - (58 / 2), WINSIZEY - 60 - 56);
+	}
+
+	if (_isChest)
+	{
+		IMAGEMANAGER->findImage("X")->render(getMemDC(), _chestRc.left + 8, _chestRc.top - 80);
 	}
 
 	//핀 랜더
 	_stageFinn->render();
-	_UI->render();
+
+	_stageFinn->setCamX(0);
+
 	_sceneEffect->render();
-	
+	if (_chestOpen) if (_item) _item->render(_item->getX(), _item->getY());
+	_UI->render();
 }
 
-void nymphStage::pixelCollision(void)
+void darkForest::pixelCollision(void)
 {
 	if (_stageFinn->getState() == JUMP || _stageFinn->getState() == HIT || _stageFinn->getState() == JUMPATTACK)
 	{
@@ -115,14 +134,13 @@ void nymphStage::pixelCollision(void)
 	}
 }
 
-void nymphStage::stageDoor(void)
+void darkForest::stageDoor(void)
 {
-
 	RECT temp;
 
 	if (IntersectRect(&temp, &_leftDoor, &_stageFinn->getBodyRC()))
 	{
-		SOUNDMANAGER->stop("스테이지");
+		SOUNDMANAGER->stop("보물상자");
 
 		_isChange = true;
 		_sceneEffect->setFadeOUT(true);
@@ -136,7 +154,7 @@ void nymphStage::stageDoor(void)
 
 	else if (IntersectRect(&temp, &_rightDoor, &_stageFinn->getBodyRC()))
 	{
-		SOUNDMANAGER->stop("스테이지");
+		SOUNDMANAGER->stop("보물상자");
 
 		_isChange = true;
 		_sceneEffect->setFadeOUT(true);
@@ -149,30 +167,32 @@ void nymphStage::stageDoor(void)
 	}
 }
 
-
-void nymphStage::save()
+void darkForest::chestOpen(void)
 {
 	RECT temp;
 
-	if (IntersectRect(&temp, &_nymphRC, &_stageFinn->getBodyRC()))
+	if (IntersectRect(&temp, &_stageFinn->getBodyRC(), &_chestRc))
 	{
-		_isSave = true;
+		_isChest = true;
 
 		if (KEYMANAGER->isOnceKeyDown('X'))
 		{
-			_stageFinn->setCurrentHP(8 + DATABASE->getStatusHearts() * 4);
-			DATABASE->setStatusCurrentHP(_stageFinn->getCurrentHP());
-			DATABASE->saveData();
+			_chestOpen = true;
 		}
 	}
-	else _isSave = false;
+	else _isChest = false;
 }
 
-nymphStage::nymphStage()
+void darkForest::eatItem(void)
 {
-}
-
-
-nymphStage::~nymphStage()
-{
+	RECT temp;
+	if (IntersectRect(&temp, &_stageFinn->getBodyRC(), &_item->getRect()))
+	{
+		DATABASE->pushbackaddVector(_itemNum);
+		DATABASE->pushbackaddVector(_itemNum);
+		DATABASE->pushbackaddVector(_itemNum);
+		DATABASE->pushbackaddVector(_itemNum);
+		DATABASE->pushbackaddVector(_itemNum);
+		SAFE_DELETE(_item);
+	}
 }
