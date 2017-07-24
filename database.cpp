@@ -20,6 +20,7 @@ HRESULT database::init(void)
 	_isLoadInventory = false;
 	_isOninventory = false;
 	_isLoadStatus = false;
+	_useItem = false;
 	_status_bonus = 0;
 	_inven = new inventoryScene;
 	_inven->init();

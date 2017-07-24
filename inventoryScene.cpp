@@ -126,6 +126,7 @@ void inventoryScene::useItem(void)
 			case 12: case 13: case 14: DATABASE->setStatusCurrentHP(DATABASE->getStatusCureentHP() + 7); break;
 			case 15: DATABASE->addBonus(); break;
 			}
+			DATABASE->imuseItem();
 			_vItem.erase(_vItem.begin() + i);
 			break;
 		}

@@ -54,6 +54,7 @@ private :
 	bool _isLoadStatus;
 	bool _isOninventory;
 	bool _effectItem[3];
+	bool _useItem;
 	int _interfaceNum;
 
 	inventoryScene* _inven;
@@ -106,10 +107,16 @@ public:
 
 	void addBonus(void) { _status_bonus++; }
 
+	bool getuseItem(void) { return _useItem; }
+	void imuseItem(void) { _useItem = true; }
+	void imuseItemend(void) { _useItem = false; }
+
 	void setWorldPosition(RECTCOLLISION worldPosition) { _worldPosition = worldPosition; }
 	RECTCOLLISION getWorldPosition() { return _worldPosition; }
 
 	gameNode* getInterface(void);
+
+	bool getEffect(int Num) { return _effectItem[Num]; }
 
 	void changeNum(int Num) { _interfaceNum = Num; }
 
