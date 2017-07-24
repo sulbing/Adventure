@@ -37,9 +37,11 @@ public:
 	void stageDoor(void);
 	void camMove(void);
 	void addEnemy();
-	void setItem(void);
 
+	void setItem(int x, int y);
 	void eatItem(void);
+
+	void attackCollision(void);
 
 public:
 	stage1();

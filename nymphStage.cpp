@@ -169,6 +169,7 @@ void nymphStage::save()
 
 		if (KEYMANAGER->isOnceKeyDown('X'))
 		{
+			_stageFinn->setCurrentHP(8 + DATABASE->getStatusHearts() * 4);
 			DATABASE->saveData();
 		}
 	}

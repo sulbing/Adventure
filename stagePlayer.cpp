@@ -508,8 +508,9 @@ void stagePlayer::stateControl()
 			}
 			else if (deadBool)
 			{
-				deadBool = false;
+				//deadBool = false;
 				deadComplete = true;
+				_isHit = false;
 			}
 		}
 	}
@@ -946,10 +947,10 @@ void stagePlayer::skillUpdate()
 	_skill[ATTACK1]._damage = 1 + DATABASE->getStatusAttack();
 	_skill[ATTACK2]._damage = 2 + DATABASE->getStatusAttack();
 	_skill[ATTACK3]._damage = 1 + DATABASE->getStatusAttack();
-	_skill[LATTACK]._damage = DATABASE->getStatusAttack();
+	_skill[LATTACK]._damage = 1 + DATABASE->getStatusAttack();
 	_skill[JATTACK]._damage = 2 + DATABASE->getStatusAttack();
 	_skill[CATTACK]._damage = 1 + DATABASE->getStatusAttack();
-	_skill[TATTACK]._damage = DATABASE->getStatusAttack();
+	_skill[TATTACK]._damage = 1 + DATABASE->getStatusAttack();
 	_skill[BEEATTACK]._damage = 2;
 	_skill[FIREATTACK]._damage = 3;
 
