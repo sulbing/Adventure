@@ -39,10 +39,12 @@ HRESULT worldMapScene::init(void)
 	_eventRC[STAGE_3_RIGHT] = RectMake(2184, 608, 30, 30);
 	_eventRC[STAGE_CHEST] = RectMake(1067, 323, 50, 50);
 	_eventRC[STAGE_MIDBOSS] = RectMake(2286, 1418, 30, 30);
-	_eventRC[JAKE_BRIDGE_IN] = RectMake(1801, 1492, 30, 30);
-	_eventRC[JAKE_BRIDGE_OUT] = RectMake(1801, 1582, 30, 30);
+	_eventRC[JAKE_BRIDGE_IN] = RectMake(1801, 1492, 30, 20);
+	_eventRC[JAKE_BRIDGE_OUT] = RectMake(1801, 1575, 30, 20);
 	_eventRC[JAKE_CLIMB_1] = RectMake(2226, 483, 80, 20);
 	_eventRC[JAKE_CLIMB_2] = RectMake(2361, 291, 60, 20);
+
+	_isChange = false;
 	
 	return S_OK;
 }
@@ -55,7 +57,7 @@ void worldMapScene::release(void)
 void worldMapScene::update(void)
 {
 	_sceneEffect->update();
-	_worldPlayer->update();
+	if (!_isChange) _worldPlayer->update();
 
 	_x = _worldPlayer->getWorldFinnX();
 	_y = _worldPlayer->getWorldFinnY();
@@ -65,8 +67,8 @@ void worldMapScene::update(void)
 	if (!_worldPlayer->getIsBridgeState())
 	{
 		pixelCollision();
+		rectCollision();
 	}
-	rectCollision();
 
 	_UI->update();
 }
@@ -316,6 +318,7 @@ void worldMapScene::rectCollision()
 			{
 			case STAGE_NYMPH_1:	case STAGE_NYMPH_2:	case STAGE_HOUSE:
 			{
+				_isChange = true;
 				_sceneEffect->setFadeOUT(true);
 
 				//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
@@ -331,6 +334,8 @@ void worldMapScene::rectCollision()
 				break;
 			case STAGE_1_LEFT:
 			{
+				_isChange = true;
+
 				_sceneEffect->setFadeOUT(true);
 				DATABASE->setWorldPosition(STAGE_1_LEFT);
 				//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
@@ -342,22 +347,21 @@ void worldMapScene::rectCollision()
 				break;
 			case STAGE_1_RIGHT:
 			{
+				_isChange = true;
 
-				if (!_worldPlayer->getIsBridgeState())
+				_sceneEffect->setFadeOUT(true);
+				DATABASE->setWorldPosition(STAGE_1_RIGHT);
+				//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
+				if (!_sceneEffect->getChangeScene())
 				{
-					_worldPlayer->setBridge(_eventRC[STAGE_1_RIGHT].left, _eventRC[STAGE_1_RIGHT].bottom, _eventRC[STAGE_1_LEFT].left, _eventRC[STAGE_1_LEFT].bottom);
+					SCENEMANAGER->changeScene("STAGE1");
 				}
-				//_sceneEffect->setFadeOUT(true);
-				//DATABASE->setWorldPosition(STAGE_1_RIGHT);
-				////¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
-				//if (!_sceneEffect->getChangeScene())
-				//{
-				//	SCENEMANAGER->changeScene("STAGE1");
-				//}
 			}
 				break;
 			case STAGE_2_LEFT:
 			{
+				_isChange = true;
+
 				_sceneEffect->setFadeOUT(true);
 				DATABASE->setWorldPosition(STAGE_2_LEFT);
 				//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
@@ -369,6 +373,8 @@ void worldMapScene::rectCollision()
 				break;
 			case STAGE_2_RIGHT:
 			{
+				_isChange = true;
+
 				_sceneEffect->setFadeOUT(true);
 				DATABASE->setWorldPosition(STAGE_2_RIGHT);
 				//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
@@ -381,6 +387,8 @@ void worldMapScene::rectCollision()
 			case STAGE_3_LEFT:
 			{
 				{
+					_isChange = true;
+
 					_sceneEffect->setFadeOUT(true);
 					DATABASE->setWorldPosition(STAGE_3_LEFT);
 					//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
@@ -394,6 +402,8 @@ void worldMapScene::rectCollision()
 			case STAGE_3_RIGHT:
 			{
 				{
+					_isChange = true;
+
 					_sceneEffect->setFadeOUT(true);
 					DATABASE->setWorldPosition(STAGE_3_RIGHT);
 					//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
@@ -407,6 +417,8 @@ void worldMapScene::rectCollision()
 			case STAGE_CHEST:
 			{
 				{
+					_isChange = true;
+
 					_sceneEffect->setFadeOUT(true);
 					DATABASE->setWorldPosition(STAGE_CHEST);
 					//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
@@ -421,19 +433,18 @@ void worldMapScene::rectCollision()
 				break;
 			case JAKE_BRIDGE_IN:
 			{
-
 				if (!_worldPlayer->getIsBridgeState())
 				{
-					_worldPlayer->setBridge(_eventRC[JAKE_BRIDGE_IN].left + 10, _eventRC[JAKE_BRIDGE_IN].bottom + 10, _eventRC[JAKE_BRIDGE_OUT].left + 10, _eventRC[JAKE_BRIDGE_OUT].bottom + 10);
+					_worldPlayer->setBridge(_eventRC[JAKE_BRIDGE_IN].left + 15, _eventRC[JAKE_BRIDGE_IN].bottom, _eventRC[JAKE_BRIDGE_OUT].left + 15, _eventRC[JAKE_BRIDGE_OUT].top);
 				}
 			}
 				break;
 			case JAKE_BRIDGE_OUT:
 			{
-				//if (!_worldPlayer->getIsBridgeState())
-				//{
-				//	_worldPlayer->setBridge(_eventRC[JAKE_BRIDGE_OUT].left, _eventRC[JAKE_BRIDGE_OUT].bottom, _eventRC[JAKE_BRIDGE_IN].left, _eventRC[JAKE_BRIDGE_IN].bottom);
-				//}
+				if (!_worldPlayer->getIsBridgeState())
+				{
+					_worldPlayer->setBridge(_eventRC[JAKE_BRIDGE_OUT].left + 15, _eventRC[JAKE_BRIDGE_OUT].top, _eventRC[JAKE_BRIDGE_IN].left + 15, _eventRC[JAKE_BRIDGE_IN].bottom);
+				}
 			}
 				break;
 			case JAKE_CLIMB_1:
