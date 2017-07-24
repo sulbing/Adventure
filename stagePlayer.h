@@ -71,7 +71,13 @@ private:
 	image* _basicImage;
 	image* _attackImage;
 
+	image* _beeWingImage;
+	image* _fireImage;
+
 	animation* _playerMotion;
+	animation* _fireAnimation;
+	animation* _beeAnimation;
+	animation* _wingAnimation;
 
 	//스테이터스
 	int _status_hearts;
@@ -94,6 +100,7 @@ private:
 	void stateControl();
 	void basicMove();
 	void skillUpdate();
+	void statusControl();
 
 	//초기화에 들어갈 함수
 	void animaitionInit();
@@ -121,8 +128,16 @@ private:
 	bool tackleKnockBackBool = false;
 	bool deadBool = false;
 	bool beeBool = false;
+	bool _fireDirection = 0;
+	float _fireY;
+	bool _beeDirection = 0;
+	float _beeY;
+	int beeCount = 0;
+	int beeInt = 0;
+	int _skill3Count = 0;
 
 	int fireInt = 0;
+	int fireCount = 0;
 
 	//스킬관련 변수
 	TAGSKILL _skill[SKILLEND];
@@ -161,6 +176,7 @@ public:
 	bool getIsRight() { return _isRight; }
 	bool getIsHit() { return _isHit; }
 	RECT getSkillHitBox(int skillName) { return _skill[skillName]._hitBox; }
+	int getSkillDamage(int skillName) { return _skill[skillName]._damage; }
 
 	//세터
 	void setCurrentHP(int HP) { _currentHP = HP; }

@@ -12,7 +12,8 @@ stagePlayer::~stagePlayer()
 HRESULT stagePlayer::init(int hearts, int attack, int speed, int currentHP, float x, float y, bool isRight)
 {
 	//기본정보
-	_maxHP = 4 * (hearts + 2);
+	//하트 + 2 입니당
+	_maxHP = 4 * (hearts + 1);
 	_currentHP = currentHP;
 	if (_currentHP > _maxHP)
 	{
@@ -70,21 +71,55 @@ void stagePlayer::update(void)
 	basicMove();
 	skillUpdate();
 	KEYANIMANAGER->update();
+	statusControl();
 }
 
 void stagePlayer::render(void)
 {
-	Rectangle(getMemDC(), _bodyRC.left, _bodyRC.top, _bodyRC.right, _bodyRC.bottom);
+	//플레이어 몸통 랜더
+	Rectangle(getMemDC(), _bodyRC.left - _camX, _bodyRC.top, _bodyRC.right - _camX, _bodyRC.bottom);
 
 	//스킬렉트 랜더
 	for (int i = DEFAULT; i < SKILLEND; i++)
 	{
 		if (_skill[i]._isFire == true)
 		{
-			Rectangle(getMemDC(), _skill[i]._hitBox.left, _skill[i]._hitBox.top, _skill[i]._hitBox.right, _skill[i]._hitBox.bottom);
+			Rectangle(getMemDC(), _skill[i]._hitBox.left - _camX, _skill[i]._hitBox.top, _skill[i]._hitBox.right - _camX, _skill[i]._hitBox.bottom);
 		}
 	}
 
+
+
+	if (_isSkill1Fire)
+	{
+		_fireImage->aniRender(getMemDC(), _skill[FIREATTACK]._hitBox.left - _camX, _skill[FIREATTACK]._hitBox.top, _fireAnimation);
+	}
+
+	if (_isSkill2Fire)
+	{
+		if (_beeDirection)
+		{
+			_beeAnimation = KEYANIMANAGER->findAnimation("beeRight");
+		}
+		else if (!_beeDirection)
+		{
+			_beeAnimation = KEYANIMANAGER->findAnimation("beeLeft");
+		}
+		_beeWingImage->aniRender(getMemDC(), _skill[BEEATTACK]._hitBox.left - _camX, _skill[BEEATTACK]._hitBox.top, _beeAnimation);
+	}
+
+	if (_isSkill3Fire)
+	{
+		if (_isRight)
+		{
+			_wingAnimation = KEYANIMANAGER->findAnimation("wingRight");
+		}
+		else if (_beeDirection)
+		{
+			_wingAnimation = KEYANIMANAGER->findAnimation("wingLeft");
+		}
+		_beeWingImage->aniRender(getMemDC(), _x - _beeWingImage->getFrameWidth() / 2 - _camX, _y - _attackImage->getFrameHeight() / 2 - 18, _wingAnimation);
+	}
 
 	//애니 랜더
 
@@ -161,7 +196,8 @@ void stagePlayer::keyControl()
 		if (_state == IDLE || _state == WALK)
 		{
 			_state = JUMP;
-			_speedY -= JUMPPOWER;
+			if (!_isSkill3Fire)_speedY -= JUMPPOWER;
+			else if (_isSkill3Fire)_speedY -= 1.5 * JUMPPOWER;
 		}
 
 		if (_state == CROUCH)
@@ -258,26 +294,66 @@ void stagePlayer::keyControl()
 		_state = DEAD;
 	}
 	
+
+	// i를 눌렀을때
+	if (KEYMANAGER->isOnceKeyDown('I'))
+	{
+		_isSkill3Fire = true;
+		
+	}
+
+	// o를 눌렀을때
 	if (KEYMANAGER->isOnceKeyDown('O'))
 	{
+		_isSkill1Fire = true;
+
+	}
+
+	// p를 눌렀을때
+	if (KEYMANAGER->isOnceKeyDown('P'))
+	{
 		_isSkill2Fire = true;
+
 	}
 
 
 	//스킬1을 썻을때 (하바네로)
 	if (_isSkill1Fire)
 	{
+		if (_skill[FIREATTACK]._isFire)
+		{
+			_skill[FIREATTACK]._skillX += 10 * ((2 * _fireDirection) - 1);
+			_skill[FIREATTACK]._skillY = _fireY;
+		}
+		
+		
 		if (fireInt == 0)
 		{
 			skillFire(FIREATTACK, _x, _y, _isRight);
 			fireInt++;
+		}
+		if (fireInt >= 1)
+		{
+			fireInt++;
+		}
+		if (fireInt > 200)
+		{
+			fireInt = 0;
+			fireCount++;
+		}
+		if (fireCount == 6)
+		{
+			_isSkill1Fire = false;
+			_skill[FIREATTACK]._isFire = false;
+			fireInt = 0;
+			fireCount = 0;
 		}
 	}
 
 	//스킬2를 썻을때 (벌)
 	if (_isSkill2Fire)
 	{
-		if (!beeBool)
+		/*if (!beeBool)
 		{
 			skillFire(BEEATTACK, _x, _y, _isRight);
 			beeBool = true;
@@ -285,8 +361,52 @@ void stagePlayer::keyControl()
 		
 		_skill[BEEATTACK]._skillX += 12 * sinf(theta + PI);
 		_skill[BEEATTACK]._skillY += 3 * cosf(theta);
-		theta += 0.1f;
+		theta += 0.1f;*/
+
+		if (_skill[BEEATTACK]._isFire)
+		{
+			_skill[BEEATTACK]._skillX = _skill[BEEATTACK]._skillX + 5 * ((2 * _beeDirection) - 1) - 20* sinf(theta);
+			_skill[BEEATTACK]._skillY = _beeY + 70*cosf(theta);
+			theta += 0.2;
+		}
+
+
+		if (beeInt == 0)
+		{
+			skillFire(BEEATTACK, _x, _y, _isRight);
+			beeInt++;
+		}
+		if (beeInt >= 1)
+		{
+			beeInt++;
+		}
+		if (beeInt > 200)
+		{
+			beeInt = 0;
+			beeCount++;
+		}
+		if (beeCount == 6)
+		{
+			_isSkill2Fire = false;
+			_skill[BEEATTACK]._isFire = false;
+			beeInt = 0;
+			beeCount = 0;
+		}
+		
 	}
+
+	//스킬3 점프를썻을때
+	if (_isSkill3Fire)
+	{
+		_skill3Count++;
+		if (_skill3Count > 600)
+		{
+			_skill3Count = 0;
+			_isSkill3Fire = false;
+		}
+	}
+
+
 }
 void stagePlayer::stateControl()
 {
@@ -772,6 +892,8 @@ void stagePlayer::stateControl()
 		
 	}
 
+	
+
 }
 void stagePlayer::basicMove()
 {
@@ -826,6 +948,24 @@ void stagePlayer::skillUpdate()
 		_skill[i]._hitBox = RectMakeCenter(_skill[i]._skillX, _skill[i]._skillY, _skill[i]._skillWidth, _skill[i]._skillHeight);
 	}
 }
+void stagePlayer::statusControl()
+{
+	DATABASE->setStatusCurrentHP(_currentHP);
+	_status_attack = DATABASE->getStatusAttack();
+	_status_speed = DATABASE->getStatusSpeed();
+	_status_hearts = DATABASE->getStatusHearts();
+	_maxHP = 8 + 4 * _status_hearts;
+
+	if (_currentHP >= _maxHP)
+	{
+		_maxHP = _currentHP;
+	}
+
+	if (_currentHP <= 0)
+	{
+		_state = DEAD;
+	}
+}
 
 // 초기화에 들어가는 함수들
 
@@ -833,7 +973,8 @@ void stagePlayer::animaitionInit()
 {
 	_basicImage = IMAGEMANAGER->addFrameImage("스테이지기본모션", "playerImage/핀_스테이지_기본모션.bmp", 0, 0, 2000, 1792, 10, 14, true, RGB(255, 0, 255));
 	_attackImage = IMAGEMANAGER->addFrameImage("스테이지공격모션", "playerImage/핀_스테이지_공격.bmp", 0, 0, 3000, 1280, 10, 10, true, RGB(255, 0, 255));
-
+	_fireImage = IMAGEMANAGER->addFrameImage("하바네로", "playerImage/FINN_HABANERO.bmp", 0, 0, 72, 24, 3, 1, true, RGB(255, 0, 255));
+	_beeWingImage = IMAGEMANAGER->addFrameImage("벌과날개", "playerImage/벌과날개.bmp", 0, 0, 60, 50, 2, 2, true, RGB(255, 0, 255));
 
 	int rightIDLE[] = { 0,1,2,3,4,5,6,7,8,9,10,11 };
 	KEYANIMANAGER->addArrayFrameAnimation("stageRightIdle", "스테이지기본모션", rightIDLE, 12, 15, true);
@@ -918,6 +1059,26 @@ void stagePlayer::animaitionInit()
 
 	int leftJakeAttack[] = { 86,85,84,83,82,81,80,99,98,97,96,95 };
 	KEYANIMANAGER->addArrayFrameAnimation("stageLeftJakeAttack", "스테이지공격모션", leftJakeAttack, 12, 15, false);
+
+	int fireAttack[] = { 0,1,2 };
+	KEYANIMANAGER->addArrayFrameAnimation("habaneroAttack", "하바네로", fireAttack, 3, 15, true);
+
+	_fireAnimation = KEYANIMANAGER->findAnimation("habaneroAttack");
+	_fireAnimation->start();
+
+	int beeRight[] = { 0 };
+	KEYANIMANAGER->addArrayFrameAnimation("beeRight", "벌과날개", beeRight, 1, 15, false);
+
+	int beeLeft[] = { 1 };
+	KEYANIMANAGER->addArrayFrameAnimation("beeLeft", "벌과날개", beeLeft, 1, 15, false);
+
+	int wingRight[] = { 2 };
+	KEYANIMANAGER->addArrayFrameAnimation("wingRight", "벌과날개", wingRight, 1, 15, false);
+
+	int wingLeft[] = { 3 };
+	KEYANIMANAGER->addArrayFrameAnimation("wingLeft", "벌과날개", wingLeft, 1, 15, false);
+
+	
 
 
 
@@ -1036,16 +1197,20 @@ void stagePlayer :: skillFire(SKILLNAME skillName, int x, int y, bool isRight)
 	{
 		_skill[skillName]._skillX = x;
 		_skill[skillName]._skillY = y - 60;
+		_beeY = y - 60;
 		_skill[skillName]._skillWidth = 20;
 		_skill[skillName]._skillHeight = 20;
+		_beeDirection = _isRight;
 	}
 
 	else if (skillName == FIREATTACK)
 	{
-		_skill[skillName]._skillX = x + 40;
+		_skill[skillName]._skillX = x + 40 * (2 * (isRight)-1);
 		_skill[skillName]._skillY = _bodyRC.top + 20;
+		_fireY = _bodyRC.top + 20;
 		_skill[skillName]._skillWidth = 24;
 		_skill[skillName]._skillHeight = 24;
+		_fireDirection = _isRight;
 	}
 }
 
