@@ -21,6 +21,8 @@ HRESULT nymphStage::init(void)
 	_stageFinn = new stagePlayer;
 	_stageFinn->init(2, 0, 0, 8, WINSIZEX / 4, WINSIZEY * 3 / 4, true);
 
+	_stageFinn->setCamX(0);
+
 	_sceneEffect = new sceneEffect;
 	_sceneEffect->init();
 
@@ -29,8 +31,6 @@ HRESULT nymphStage::init(void)
 	_mi1 = new enemy;
 	_mi1->init(2, WINSIZEX / 6, WINSIZEY * 3 / 4, _stageFinn);
 
-	//_mi1 = new enemy;
-	//_mi1->init(1, WINSIZEX / 4, WINSIZEY * 3 / 4);
 
 	return S_OK;
 }
@@ -50,7 +50,7 @@ void nymphStage::update(void)
 	if (!_isChange) _stageFinn->update();
 	pixelCollision();
 
-	_mi1->update();
+	if (_mi1) _mi1->update();
 
 	//¾ÀÀüÈ¯
 	if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
@@ -62,7 +62,7 @@ void nymphStage::update(void)
 	{
 		SCENEMANAGER->changeScene("CHEST_STAGE");
 	}
-
+	attackCollision();
 	stageDoor();
 	_UI->update();
 }
@@ -77,7 +77,7 @@ void nymphStage::render(void)
 	//ÇÉ ·£´õ
 	_stageFinn->render();
 
-	_mi1->render();
+	if (_mi1) _mi1->render();
 	_UI->render();
 
 	_sceneEffect->render();
@@ -155,6 +155,38 @@ void nymphStage::stageDoor(void)
 		_stageFinn->setSpeedX(0);
 	}
 }
+
+void nymphStage::attackCollision(void)
+{
+
+	RECT temp;
+	for (int i = DEFAULT; i < SKILLEND; i++)
+	{
+		
+		if (IntersectRect(&temp, &_stageFinn->getSkillHitBox(i), &_mi1->getRect()))
+		{
+			if (_stageFinn->getX() < _mi1->getX())
+			{
+				_mi1->setDirection(DIRECTION_LEFT_HIT);
+			}
+			if (_stageFinn->getX() > _mi1->getX())
+			{
+				_mi1->setDirection(DIRECTION_RIGHT_HIT);
+			}
+		}	
+	}
+
+	if (IntersectRect(&temp, &_stageFinn->getBodyRC(), &_mi1->getRect()))
+	{
+		if (_stageFinn->getIsHit() == false)
+		{
+			_stageFinn->setState(HIT);
+			_stageFinn->setCurrentHP(_stageFinn->getCurrentHP() - 1);
+		}
+	}
+
+}
+
 
 nymphStage::nymphStage()
 {
