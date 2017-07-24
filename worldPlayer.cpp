@@ -26,7 +26,7 @@ HRESULT worldPlayer::init()
 
 	animationInit();
 
-	_finnRC = RectMakeCenter(_x, _y, 40, 40);
+	_finnRC = RectMakeCenter(_x, _y, 40, 20);
 
 	return S_OK;
 }
@@ -56,7 +56,7 @@ void worldPlayer:: update(void)
 	}
 
 
-	_finnRC = RectMakeCenter(_x, _y, 30, 40);
+	_finnRC = RectMakeCenter(_x, _y, 30, 20);
 
 	if (KEYMANAGER->isOnceKeyDown('A'))
 	{
@@ -152,7 +152,7 @@ void worldPlayer::basicMove(void)
 	}
 	
 	
-	_finnRC = RectMakeCenter(_x, _y, 30, 40);
+	_finnRC = RectMakeCenter(_x, _y, 30, 20);
 	_jakeRC = RectMakeCenter(_jakeX, _jakeY, 50, 50);
 
 }
@@ -259,11 +259,11 @@ void worldPlayer::bridgeMove()
 		}
 		if (_bridgeProcInt == 5)
 		{
-			if (_y < _bridgeEndY - 3)
+			if (_y < _bridgeEndY + 37)
 			{
 				_speedY = 3;
 			}
-			else if (_y > _bridgeEndY + 3)
+			else if (_y > _bridgeEndY + 43)
 			{
 				_speedY = -3;
 			}
@@ -375,11 +375,11 @@ void worldPlayer::bridgeMove()
 		}
 		if (_bridgeProcInt == 5)
 		{
-			if (_y < _bridgeEndY - 3)
+			if (_y < _bridgeEndY - 63)
 			{
 				_speedY = 3;
 			}
-			else if (_y > _bridgeEndY + 3)
+			else if (_y > _bridgeEndY - 57)
 			{
 				_speedY = -3;
 			}
