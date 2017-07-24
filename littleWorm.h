@@ -2,7 +2,7 @@
 #include "gameNode.h"
 #include "stagePlayer.h"
 
-#define SPEED 5
+#define SPEED 3
 #define COUNTMAX 70
 #define	COUNTMINI 10
 #define ATTACKRANGE 70
@@ -33,6 +33,8 @@ private:
 	bool			_isRight;
 	int				_count;
 
+	int				_HP;
+
 public:
 	HRESULT init(float x, float y, stagePlayer* z, int moveLength);
 	void release();
@@ -44,6 +46,8 @@ public:
 	void move();
 	void Hitmove();
 	void countupdate();
+	void delHP(int Num) { _HP -= Num; }
+	int getHP(void) { return _HP; }
 
 	//GET & SET
 	RECT getRect() { return _rc; }

@@ -34,6 +34,8 @@ HRESULT stage1::init(void)
 
 	SOUNDMANAGER->play("스테이지", 0.3f);
 
+	addEnemy();
+
 	return S_OK;
 }
 
@@ -44,6 +46,10 @@ void stage1::release(void)
 void stage1::update(void)
 {
 	_sceneEffect->update();
+	for (int i = 0; i < _vLittleWorm.size(); i++)
+	{
+		_vLittleWorm[i]->update();
+	}
 
 	for (_vistageItem = _vstageItem.begin(); _vistageItem != _vstageItem.end(); ++_vistageItem)
 	{
@@ -79,6 +85,12 @@ void stage1::render(void)
 		(*_vistageItem)->render(_camX, true);
 	}
 	//핀 랜더
+	for (int i = 0; i < _vLittleWorm.size(); i++)
+	{
+		_vLittleWorm[i]->render();
+	}
+
+
 	_stageFinn->render();
 
 	_UI->render();
@@ -343,6 +355,18 @@ void stage1::eatItem(void)
 			break;
 		}
 	}
+}
+
+void stage1::addEnemy()
+{
+	littleWorm* _littleWorm;
+	_littleWorm = new littleWorm;
+	_littleWorm->init(844, 240 - IMAGEMANAGER->findImage("liileWorm")->getFrameHeight()/2 + 10, _stageFinn, 280);
+	_vLittleWorm.push_back(_littleWorm);
+
+	_littleWorm = new littleWorm;
+	_littleWorm->init(1600, 378 - IMAGEMANAGER->findImage("liileWorm")->getFrameHeight()/2 + 10, _stageFinn, 280);
+	_vLittleWorm.push_back(_littleWorm);
 }
 
 

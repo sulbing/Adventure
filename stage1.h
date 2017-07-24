@@ -5,12 +5,15 @@
 #include"item.h"
 #include <vector>
 #include "UI.h"
+#include "littleWorm.h"
 
 class stage1 : public gameNode
 {
 private:
 	typedef vector<item*> vstageItem;
 	typedef vector<item*>::iterator vistageItem;
+
+	std::vector<littleWorm*> _vLittleWorm;
 
 	vstageItem _vstageItem;
 	vistageItem _vistageItem;
@@ -33,7 +36,7 @@ public:
 	void pixelCollision(void);
 	void stageDoor(void);
 	void camMove(void);
-
+	void addEnemy();
 	void setItem(void);
 
 	void eatItem(void);

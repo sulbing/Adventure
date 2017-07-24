@@ -31,23 +31,6 @@ private:
 	int _x,  _y;			//캐릭터 x, y
 	RECT _rc;				//캐릭터 RECT
 
-	//	STAGE_NYMPH_1,		  //왼쪽 연못
-	//	STAGE_NYMPH_2,		  //오른쪽 연못
-	//	STAGE_HOUSE,		  //집 앞
-	//	STAGE_1_LEFT,		  //왼쪽 계단 아래
-	//	STAGE_1_RIGHT,		  //왼쪽 계단 위
-	//	STAGE_2_LEFT,		  //오른쪽 아래 계단 아래
-	//	STAGE_2_RIGHT,		  //오른쪽 아래 계단 위
-	//	STAGE_3_LEFT,		  //오른쪽 위 계단 아래
-	//	STAGE_3_RIGHT,		  //오른쪽 위 계단 위
-	//	STAGE_CHEST,		  //왼쪽 숲
-	//	STAGE_MIDBOSS,		  //오른쪽 아래 숲
-	//	JAKE_BRIDGE_IN,		  //다리 위
-	//	JAKE_BRIDGE_OUT,	  //다리 아래
-	//	JAKE_CLIMB_1,		  //아래 올라가기
-	//	JAKE_CLIMB_2,		  //위 올라가기
-	//	RECTCOLLISION_END
-
 	//									님프1	님프2	하우스	1왼		1오		2왼		2오		3왼		3오		보물		중보스	다리위	다리아래	올라가기1	올라가기2
 	float _playerX[RECTCOLLISION_END] = { 944,	2109,	1517,	955,	976,	2500,	2368,	2333,	2300,	1132,	2410,	1917,	1917,	2357,	2492 };
 	float _playerY[RECTCOLLISION_END] = { 404,	1020,	957,	641,	467,	1809,	1658,	932,	679,	455,	1593,	1572,	1746,	618,	415 };

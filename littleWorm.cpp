@@ -9,6 +9,8 @@ HRESULT littleWorm::init(float x, float y, stagePlayer* z, int moveLength)
 	_x = x, _y = y;
 	_sp = z;
 
+	_HP = 5;
+
 	_count = 0;
 
 	_image = IMAGEMANAGER->findImage("liileWorm");
@@ -39,7 +41,7 @@ void littleWorm::update()
 void littleWorm::render()
 {
 	//Rectangle(getMemDC(), _moveRc.left, _moveRc.top, _moveRc.right, _moveRc.bottom);
-	_image->frameRender(getMemDC(), _x - _image->getFrameWidth()/2, _rc.bottom - _image->getFrameHeight(), _frameX, _frameY);
+	_image->frameRender(getMemDC(), _x - _image->getFrameWidth()/2 - _sp->getCamX(), _rc.bottom - _image->getFrameHeight(), _frameX, _frameY);
 }
 void littleWorm::frameManiger()
 {
