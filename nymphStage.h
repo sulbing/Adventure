@@ -17,8 +17,6 @@ private:
 	BOOL			_isChange, _isSave;
 	stagePlayer*	_stageFinn;
 	sceneEffect*	_sceneEffect;
-	littleWorm*		_worm;
-	bigWorm*		_bw;
 
 
 public:

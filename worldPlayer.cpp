@@ -555,11 +555,11 @@ void worldPlayer::longLegMove()
 		//핀 y 이동
 		if (_longLegProcInt == 5)
 		{
-			if (_y < _longLegStartY - 3)
+			if (_y < _longLegStartY - 23)
 			{
 				_speedY = 3;
 			}
-			else if (_y > _longLegStartY + 3)
+			else if (_y > _longLegStartY - 17)
 			{
 				_speedY = -3;
 			}
@@ -587,6 +587,7 @@ void worldPlayer::longLegMove()
 		//제이크 다리피기 애니메이션 실행중!
 		if (_longLegProcInt == 7)
 		{
+			_y -= 2;
 			if (!_jakeMotion->isPlay())
 			{
 				_longLegProcInt++;

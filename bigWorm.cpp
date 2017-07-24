@@ -16,6 +16,8 @@ HRESULT bigWorm::init(float x, float y, stagePlayer* z, int moveLength)
 	_bulletDelay = 0;
 	_count = 0;
 
+	_HP = 40;
+
 	_image = IMAGEMANAGER->findImage("bigWorm");
 	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
 
@@ -136,7 +138,7 @@ void bigWorm::frameManiger()
 void bigWorm::move()
 {
 	RECT rcTemp;
-	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
+	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth() - 40, _image->getFrameHeight());
 	if (_direction == BDIRECTION_ATTACK)
 	{
 		_bulletDelay++;

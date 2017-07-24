@@ -38,6 +38,8 @@ HRESULT mainGame::init(void)
 	SCENEMANAGER->addScene("STAGE2", new stage2);
 	SCENEMANAGER->addScene("STAGE3", new stage3);
 	SCENEMANAGER->addScene("CHEST_STAGE", new cheststage);
+	SCENEMANAGER->addScene("DARK_FOREST_SCENE", new darkForest);
+	SCENEMANAGER->addScene("BOSS_SCENE", new bossScene);
 
 	SCENEMANAGER->changeScene("SCENE_OPENEING");
 

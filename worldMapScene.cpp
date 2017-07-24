@@ -43,6 +43,7 @@ HRESULT worldMapScene::init(void)
 	_eventRC[JAKE_BRIDGE_OUT] = RectMake(1901, 1675, 30, 20);
 	_eventRC[JAKE_CLIMB_1] = RectMake(2326, 583, 80, 20);
 	_eventRC[JAKE_CLIMB_2] = RectMake(2461, 391, 60, 20);
+	_eventRC[FINAL_BOSS] = RectMake(2440, 200, 50, 50);
 
 	_isChange = false;
 
@@ -434,6 +435,19 @@ void worldMapScene::rectCollision()
 			}
 				break;
 			case STAGE_MIDBOSS:
+			{
+				{
+					_isChange = true;
+
+					_sceneEffect->setFadeOUT(true);
+					DATABASE->setWorldPosition(STAGE_MIDBOSS);
+					//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
+					if (!_sceneEffect->getChangeScene())
+					{
+						SCENEMANAGER->changeScene("DARK_FOREST_SCENE");
+					}
+				}
+			}
 				break;
 			case JAKE_BRIDGE_IN:
 			{
@@ -467,6 +481,19 @@ void worldMapScene::rectCollision()
 				}
 			}
 				break;
+			case FINAL_BOSS:
+			{
+				_isChange = true;
+
+				_sceneEffect->setFadeOUT(true);
+				DATABASE->setWorldPosition(FINAL_BOSS);
+				//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
+				if (!_sceneEffect->getChangeScene())
+				{
+					SCENEMANAGER->changeScene("BOSS_SCENE");
+				}
+			}
+			break;
 			case RECTCOLLISION_END:
 				break;
 			default:
