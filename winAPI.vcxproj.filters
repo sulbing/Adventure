@@ -308,5 +308,8 @@
     <ClCompile Include="worldPlayer.cpp">
       <Filter>MainGame\Player</Filter>
     </ClCompile>
+    <ClCompile Include="mainGame_Sound.cpp">
+      <Filter>MainGame</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

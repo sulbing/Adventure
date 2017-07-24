@@ -200,6 +200,7 @@
     <ClCompile Include="loading.cpp" />
     <ClCompile Include="mainGame.cpp" />
     <ClCompile Include="mainGame_Image.cpp" />
+    <ClCompile Include="mainGame_Sound.cpp" />
     <ClCompile Include="minimapScene.cpp" />
     <ClCompile Include="nymphStage.cpp" />
     <ClCompile Include="openingScene.cpp" />
