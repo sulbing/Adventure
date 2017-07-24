@@ -26,6 +26,8 @@ HRESULT cheststage::init(void)
 	_isChange = false;
 
 	_chestRc = RectMakeCenter(WINSIZEX / 2, WINSIZEY - 88, 58, 56);
+
+	SOUNDMANAGER->play("보물상자", 0.3f);
 	
 	return S_OK;
 }
@@ -125,6 +127,8 @@ void cheststage::stageDoor(void)
 
 	if (IntersectRect(&temp, &_leftDoor, &_stageFinn->getBodyRC()))
 	{
+		SOUNDMANAGER->stop("보물상자");
+
 		_isChange = true;
 		_sceneEffect->setFadeOUT(true);
 
@@ -137,6 +141,8 @@ void cheststage::stageDoor(void)
 
 	else if (IntersectRect(&temp, &_rightDoor, &_stageFinn->getBodyRC()))
 	{
+		SOUNDMANAGER->stop("보물상자");
+
 		_isChange = true;
 		_sceneEffect->setFadeOUT(true);
 

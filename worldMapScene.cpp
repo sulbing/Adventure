@@ -45,6 +45,8 @@ HRESULT worldMapScene::init(void)
 	_eventRC[JAKE_CLIMB_2] = RectMake(2361, 291, 60, 20);
 
 	_isChange = false;
+
+	SOUNDMANAGER->play("월드", 0.3f);
 	
 	return S_OK;
 }
@@ -314,6 +316,8 @@ void worldMapScene::rectCollision()
 		RECT temp;
 		if (IntersectRect(&temp, &_rc, &(_eventRC[i])))
 		{
+			SOUNDMANAGER->stop("월드");
+
 			switch (i)
 			{
 			case STAGE_NYMPH_1:	case STAGE_NYMPH_2:	case STAGE_HOUSE:

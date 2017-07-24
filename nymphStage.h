@@ -12,7 +12,8 @@ private:
 	image*			_nymph;
 	animation*		 _nymphAni;
 	RECT			_leftDoor, _rightDoor;
-	BOOL			_isChange;
+	RECT			_nymphRC;
+	BOOL			_isChange, _isSave;
 	stagePlayer*	_stageFinn;
 	sceneEffect* _sceneEffect;
 
@@ -23,7 +24,8 @@ public:
 	void render(void);
 	void pixelCollision(void);
 	void stageDoor(void);
-	void attackCollision(void);
+
+	void save();
 
 	nymphStage();
 	~nymphStage();

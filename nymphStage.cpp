@@ -26,8 +26,12 @@ HRESULT nymphStage::init(void)
 	_sceneEffect = new sceneEffect;
 	_sceneEffect->init();
 
-	_isChange = false;
-	
+	_isChange = _isSave = false;
+
+	_nymphRC = RectMake(275, WINSIZEY - 208, _nymph->getFrameWidth() - 50, _nymph->getFrameHeight());
+
+	SOUNDMANAGER->play("스테이지", 0.3f);
+
 	return S_OK;
 }
 
@@ -48,14 +52,21 @@ void nymphStage::update(void)
 	
 	stageDoor();
 	_UI->update();
+
+	save();
 }
 
 void nymphStage::render(void)
 {
+	Rectangle(getMemDC(), _nymphRC.left, _nymphRC.top, _nymphRC.right, _nymphRC.bottom);
 	IMAGEMANAGER->findImage("savePointCollision")->render(getMemDC(), 0, 0);
 	IMAGEMANAGER->findImage("savePoint")->render(getMemDC(), 0, 0, 0, 0, WINSIZEX, WINSIZEY);
-	_nymph->aniRender(getMemDC(), 300, WINSIZEY - 208, _nymphAni);
+	_nymph->aniRender(getMemDC(), 250, WINSIZEY - 208, _nymphAni);
 
+	if (_isSave)
+	{
+		IMAGEMANAGER->findImage("X")->render(getMemDC(), _nymphRC.left + 105, _nymphRC.top - 60);
+	}
 
 	//핀 랜더
 	_stageFinn->render();
@@ -63,6 +74,7 @@ void nymphStage::render(void)
 	_UI->render();
 
 	_sceneEffect->render();
+	
 
 }
 
@@ -114,6 +126,8 @@ void nymphStage::stageDoor(void)
 
 	if (IntersectRect(&temp, &_leftDoor, &_stageFinn->getBodyRC()))
 	{
+		SOUNDMANAGER->stop("스테이지");
+
 		_isChange = true;
 		_sceneEffect->setFadeOUT(true);
 
@@ -126,6 +140,8 @@ void nymphStage::stageDoor(void)
 
 	else if (IntersectRect(&temp, &_rightDoor, &_stageFinn->getBodyRC()))
 	{
+		SOUNDMANAGER->stop("스테이지");
+
 		_isChange = true;
 		_sceneEffect->setFadeOUT(true);
 
@@ -135,6 +151,23 @@ void nymphStage::stageDoor(void)
 			SCENEMANAGER->changeScene("SCENE_WORLDMAP");
 		}
 	}
+}
+
+
+void nymphStage::save()
+{
+	RECT temp;
+
+	if (IntersectRect(&temp, &_nymphRC, &_stageFinn->getBodyRC()))
+	{
+		_isSave = true;
+
+		if (KEYMANAGER->isOnceKeyDown('X'))
+		{
+			DATABASE->saveData();
+		}
+	}
+	else _isSave = false;
 }
 
 nymphStage::nymphStage()

@@ -25,14 +25,14 @@ void openingScene::update(void)
 {
 	_sceneEffect->update();
 
-	if (!_sceneEffect->isFadeIN() && KEYMANAGER->isOnceKeyDown(VK_RETURN))
+	if (!_sceneEffect->isFadeIN() && KEYMANAGER->isOnceKeyDown(VK_RETURN) && !_sceneEffect->isFadeOUT())
 	{
 		_sceneEffect->setFadeOUT(true);
 	}
 	//¾À ÀüÈ¯ ³¡³ª¸é ¾À Ã¼ÀÎÁö
 	if (!_sceneEffect->getChangeScene() && !_sceneEffect->isFadeOUT())
 	{
-		SOUNDMANAGER->pause("opening");
+		SOUNDMANAGER->stop("opening");
 		SCENEMANAGER->changeScene("SCENE_WORLDMAP");
 	}
 }

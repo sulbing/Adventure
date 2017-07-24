@@ -17,6 +17,7 @@ void mainGame::addImage()
 	IMAGEMANAGER->addImage("savePointCollision", "Image/NYMPH_PIXEL_COLLISION.bmp", 860, 480, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("savePoint", "Image/WATTERNYMPH_BACKGROUND.bmp", 860, 480, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("nymph", "Image/WATTERNYMPH.bmp", 1752, 148, 6, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("X", "Image/X.bmp", 38, 37, true, RGB(255, 0, 255));
 
 	//스테이지1
 	IMAGEMANAGER->addImage("STAGE1", "Image/STAGE1_GROUND.bmp", 6379, 480, true, RGB(255, 0, 255));
