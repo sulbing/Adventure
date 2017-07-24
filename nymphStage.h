@@ -1,9 +1,9 @@
 #pragma once
 #include"gameNode.h"
 #include"stagePlayer.h"
-#include"enemy.h"
 #include "sceneEffect.h"
 #include "UI.h"
+#include "littleWorm.h"
 
 class nymphStage : public gameNode
 {
@@ -15,7 +15,9 @@ private:
 	RECT			_nymphRC;
 	BOOL			_isChange, _isSave;
 	stagePlayer*	_stageFinn;
-	sceneEffect* _sceneEffect;
+	sceneEffect*	_sceneEffect;
+	littleWorm*		_worm;
+
 
 public:
 	HRESULT init(void);

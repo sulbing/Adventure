@@ -32,6 +32,9 @@ HRESULT nymphStage::init(void)
 
 	SOUNDMANAGER->play("스테이지", 0.3f);
 
+	_worm = new littleWorm;
+	_worm->init(WINSIZEX / 2, WINSIZEY / 2 + 100, _stageFinn, 500);
+
 	return S_OK;
 }
 
@@ -52,7 +55,7 @@ void nymphStage::update(void)
 	
 	stageDoor();
 	_UI->update();
-
+	_worm->update();
 	save();
 }
 
@@ -75,7 +78,7 @@ void nymphStage::render(void)
 
 	_sceneEffect->render();
 	
-
+	_worm->render();
 }
 
 void nymphStage::pixelCollision(void)

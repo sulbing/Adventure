@@ -48,10 +48,8 @@ void mainGame::addImage()
 	IMAGEMANAGER->addImage("PLUS", "Image/PLUS.bmp", 34, 36, true, RGB(255, 0, 255));
 
 	//에너미
-	IMAGEMANAGER->addFrameImage("minion1", "Image/minion1.bmp", 535, 568, 5, 8, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("minion2", "Image/minion2.bmp", 890, 890, 10, 10, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("minion3", "Image/minion3.bmp", 2860, 2880, 11, 12, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("boss", "Image/bossV.bmp", 1917, 1917, 9, 9, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("bigWorm", "Image/bigWorm.bmp", 2860, 2880, 11, 12, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("liileWorm", "Image/liitleWorm.bmp", 1602, 712, 18, 8, true, RGB(255, 0, 255));
 
 	//미니맵
 	IMAGEMANAGER->addImage("MINIMAP", "Image/MINIMAP.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
