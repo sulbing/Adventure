@@ -37,6 +37,10 @@ HRESULT stagePlayer::init(int hearts, int attack, int speed, int currentHP, floa
 	_isHit = false;
 	_isAttack = false;
 
+
+
+	deadComplete = false;
+
 	//스테이터스
 	_status_hearts = hearts;
 	_status_attack = attack;
@@ -153,7 +157,7 @@ void stagePlayer::keyControl()
 	{
 		if (_state == IDLE || _state == JUMP || _state == WALK || _state == JUMPATTACK)
 		{
-			_speedX = MOVESPEED;
+			_speedX = MOVESPEED + DATABASE->getStatusSpeed();
 			if(_state != JUMPATTACK)_isRight = true;
 			
 			if (_state == IDLE) _state = WALK;
@@ -165,7 +169,7 @@ void stagePlayer::keyControl()
 	{
 		if (_state == IDLE || _state == JUMP || _state == WALK || _state == JUMPATTACK)
 		{
-			_speedX = - MOVESPEED;
+			_speedX = - MOVESPEED - DATABASE->getStatusSpeed();
 			if (_state != JUMPATTACK) _isRight = false;
 			if (_state == IDLE) _state = WALK;
 		}
@@ -493,6 +497,7 @@ void stagePlayer::stateControl()
 
 	if (_state == DEAD)
 	{
+		_speedX = 0;
 		aniInput("stageLeftDead", "stageRightDead");
 		if (!_playerMotion->isPlay())
 		{
@@ -500,6 +505,11 @@ void stagePlayer::stateControl()
 			{
 				_playerMotion->start();
 				deadBool = true;
+			}
+			else if (deadBool)
+			{
+				deadBool = false;
+				deadComplete = true;
 			}
 		}
 	}
@@ -940,8 +950,8 @@ void stagePlayer::skillUpdate()
 	_skill[JATTACK]._damage = 2 + DATABASE->getStatusAttack();
 	_skill[CATTACK]._damage = 1 + DATABASE->getStatusAttack();
 	_skill[TATTACK]._damage = DATABASE->getStatusAttack();
-	_skill[BEEATTACK]._damage = 10;
-	_skill[FIREATTACK]._damage = 5;
+	_skill[BEEATTACK]._damage = 2;
+	_skill[FIREATTACK]._damage = 3;
 
 	for (int i = DEFAULT; i < SKILLEND; i++)
 	{
