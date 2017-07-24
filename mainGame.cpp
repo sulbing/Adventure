@@ -23,18 +23,15 @@ mainGame::~mainGame()
 HRESULT mainGame::init(void)
 {
 	gameNode::init(true);
-
 	addImage();
 	DATABASE->init();
 
-	DATABASE->setstatus(2, 1, 1, 1, 5);
+	DATABASE->setstatus(0, 0, 0, 1, 5);
+
 
 	SCENEMANAGER->addScene("SCENE_OPENEING", new openingScene);
 	SCENEMANAGER->addScene("SCENE_WORLDMAP", new worldMapScene);
 	SCENEMANAGER->addScene("SCENE_SAVE_POINT", new nymphStage);
-	SCENEMANAGER->addScene("SCENE_INVENTORY", new inventoryScene);
-	SCENEMANAGER->addScene("SCENE_STATUS", new statusScene);
-	SCENEMANAGER->addScene("SCENE_MINIMAP", new minimapScene);
 	SCENEMANAGER->addScene("STAGE1", new stage1);
 	SCENEMANAGER->addScene("STAGE2", new stage2);
 	SCENEMANAGER->addScene("STAGE3", new stage3);
@@ -56,8 +53,13 @@ void mainGame::release(void)
 void mainGame::update(void)
 {
 	gameNode::update();
-
-	SCENEMANAGER->update();
+	if (KEYMANAGER->isOnceKeyDown('U'))
+	{
+		DATABASE->changeInven();
+	}
+	KEYANIMANAGER->update();
+	if(!DATABASE->getInvenOn()) SCENEMANAGER->update();
+	else DATABASE->getInterface()->update();
 }
 
 //앞으로 여기에다 그려라 
@@ -66,7 +68,8 @@ void mainGame::render(void)
 	PatBlt(getMemDC(), 0, 0, WINSIZEX, WINSIZEY, WHITENESS);
 	//================ 위에 건들지마라 ================
 
-	SCENEMANAGER->render();
+	if (!DATABASE->getInvenOn()) SCENEMANAGER->render();
+	else DATABASE->getInterface()->render();
 
 	//TIMEMANAGER->render(getMemDC());
 

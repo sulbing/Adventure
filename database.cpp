@@ -1,7 +1,9 @@
 #include "stdafx.h"
 #include "database.h"
 #include "item.h"
-
+#include "inventoryScene.h"
+#include "statusScene.h"
+#include "minimapScene.h"
 
 database::database()
 	: _worldPosition(STAGE_HOUSE)
@@ -16,9 +18,16 @@ database::~database()
 HRESULT database::init(void)
 {
 	_isLoadInventory = false;
+	_isOninventory = false;
 	_isLoadStatus = false;
 	_status_bonus = 0;
-
+	_inven = new inventoryScene;
+	_inven->init();
+	_status = new statusScene;
+	_status->init();
+	_minimap = new minimapScene;
+	_minimap->init();
+	_interfaceNum = 0;
 	return S_OK;
 }
 
@@ -76,4 +85,15 @@ void database::useBonus(int Num)
 		_status_speed++;
 		break;
 	}
+}
+
+gameNode* database::getInterface(void)
+{
+	switch (_interfaceNum)
+	{
+	case 0: return _status; break;
+	case 1: return _inven; break;
+	case 2: return _minimap; break;
+	}
+	
 }

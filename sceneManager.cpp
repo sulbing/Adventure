@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "sceneManager.h"
+#include "inventoryScene.h"
 #include "gameNode.h"
 
 DWORD CALLBACK loadingThread(LPVOID prc)
@@ -20,7 +21,6 @@ DWORD CALLBACK loadingThread(LPVOID prc)
 gameNode* sceneManager::_currentScene = NULL;
 gameNode* sceneManager::_loadingScene = NULL;
 gameNode* sceneManager::_readyScene = NULL;
-
 
 sceneManager::sceneManager()
 {
@@ -61,12 +61,13 @@ void sceneManager::release(void)
 	_mSceneList.clear();
 }
 
-void sceneManager::update(void)
+void sceneManager::update(void)	
 {
-	if (_currentScene) _currentScene->update();
+	if (_currentScene && !DATABASE->getInvenOn()) _currentScene->update();
+	else if (DATABASE->getInvenOn()) DATABASE->getInterface()->update();
 }
 
-void sceneManager::render(void)
+void sceneManager::render(void)	
 {
 	if (_currentScene) _currentScene->render();
 }
@@ -82,6 +83,7 @@ gameNode* sceneManager::addScene(string sceneName, gameNode* scene)
 	_mSceneList.insert(make_pair(sceneName, scene));
 
 	return scene;
+
 }
 
 
