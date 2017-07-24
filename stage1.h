@@ -2,11 +2,20 @@
 #include"gameNode.h"
 #include"stagePlayer.h"
 #include"sceneEffect.h"
+#include"item.h"
+#include <vector>
 #include "UI.h"
 
 class stage1 : public gameNode
 {
 private:
+	typedef vector<item*> vstageItem;
+	typedef vector<item*>::iterator vistageItem;
+
+	vstageItem _vstageItem;
+	vistageItem _vistageItem;
+
+
 	UI* _UI;
 	stagePlayer* _stageFinn;
 	BOOL _isTurn = false;
@@ -24,6 +33,10 @@ public:
 	void pixelCollision(void);
 	void stageDoor(void);
 	void camMove(void);
+
+	void setItem(void);
+
+	void eatItem(void);
 
 public:
 	stage1();
