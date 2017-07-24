@@ -6,18 +6,6 @@ class statusScene;
 class minimapScene;
 class item;
 
-struct tagSaveData
-{
-	int status_hearts;
-	int status_attack;
-	int status_speed;
-	int status_bonus;
-	int currentHP;
-
-	std::vector<int> vItemaddList;
-	std::vector<int> vItemList;
-};
-
 enum RECTCOLLISION
 {
 	STAGE_NYMPH_1,		//왼쪽 연못
@@ -36,6 +24,20 @@ enum RECTCOLLISION
 	JAKE_CLIMB_1,		//아래 올라가기
 	JAKE_CLIMB_2,		//위 올라가기
 	RECTCOLLISION_END
+};
+
+struct tagSaveData
+{
+	int status_hearts;
+	int status_attack;
+	int status_speed;
+	int status_bonus;
+	int currentHP;
+
+	std::vector<int> vItemaddList;
+	std::vector<int> vItemList;
+
+	RECTCOLLISION worldPosition;
 };
 
 class database : public singletonBase<database>
@@ -123,4 +125,3 @@ public:
 	database();
 	~database();
 };
-

@@ -505,6 +505,7 @@ void stagePlayer::stateControl()
 			{
 				_playerMotion->start();
 				deadBool = true;
+				SOUNDMANAGER->play("Á×À»¶§", 1.0f);
 			}
 			else if (deadBool)
 			{

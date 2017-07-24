@@ -32,9 +32,6 @@ HRESULT nymphStage::init(void)
 
 	SOUNDMANAGER->play("스테이지", 0.3f);
 
-	//_worm = new littleWorm;
-	//_worm->init(WINSIZEX / 2, WINSIZEY / 2 + 100, _stageFinn, 500);
-
 	_bw = new bigWorm;
 	_bw->init(WINSIZEX / 2, WINSIZEY / 2 + 100, _stageFinn, 500);
 
@@ -170,6 +167,7 @@ void nymphStage::save()
 		if (KEYMANAGER->isOnceKeyDown('X'))
 		{
 			_stageFinn->setCurrentHP(8 + DATABASE->getStatusHearts() * 4);
+			DATABASE->setStatusCurrentHP(_stageFinn->getCurrentHP());
 			DATABASE->saveData();
 		}
 	}
