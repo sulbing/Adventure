@@ -21,6 +21,7 @@ private:
 	int _itemNum;
 	BOOL _chestOpen = false;
 	BOOL _isChange = false;
+	BOOL _isChest;
 
 public:
 	HRESULT init(void);
