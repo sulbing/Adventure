@@ -377,17 +377,11 @@ void stage1::attackCollision(void)
 
 				if (_vLittleWorm[i]->getHP() <= 0)
 				{
-					setItem(_vLittleWorm[i]->getX(), _vLittleWorm[i]->getY());
+					setItem(_vLittleWorm[i]->getX(), _vLittleWorm[i]->getY() - 10);
 				}
 
 				if (_vLittleWorm[i]->getHP() <= 0)
 				{
-					//item* stageItem;
-					//stageItem = new item;
-					//int i = RND->getFromIntTo(0, 8);
-					//stageItem->init((ITEMLIST)i, _vLittleWorm[i]->getX(), _vLittleWorm[i]->getY());
-
-					//_vstageItem.push_back(stageItem);
 					_vLittleWorm.erase(_vLittleWorm.begin() + i);
 					return;
 				}

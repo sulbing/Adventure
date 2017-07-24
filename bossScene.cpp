@@ -85,6 +85,10 @@ void bossScene::render(void)
 	_sceneEffect->render();
 
 	_UI->render();
+	if (_bw->getHP() <= 0)
+	{
+		IMAGEMANAGER->findImage("ENDING")->render(getMemDC(), 0, 0, 0, 0, WINSIZEX, WINSIZEY);
+	}
 }
 
 void bossScene::pixelCollision(void)

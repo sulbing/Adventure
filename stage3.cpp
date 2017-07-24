@@ -58,12 +58,9 @@ void stage3::update(void)
 		(*_vistageItem)->update();
 	}
 
-	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
-	{
-		setItem();
-	}
 
 	eatItem();
+	attackCollision();
 
 	//핀 업데이트
 	if (!_isChange)
@@ -346,16 +343,6 @@ void stage3::camMove(void)
 	}
 }
 
-void stage3::setItem(void)
-{
-	item* stageItem;
-	stageItem = new item;
-	int i = RND->getFromIntTo(0, 8);
-	stageItem->init((ITEMLIST)i, _stageFinn->getX() + 50, _stageFinn->getY() - 10);
-
-	_vstageItem.push_back(stageItem);
-}
-
 void stage3::eatItem(void)
 {
 	RECT temp;
@@ -369,6 +356,80 @@ void stage3::eatItem(void)
 			_vstageItem.erase(_vstageItem.begin() + i);
 			break;
 		}
+	}
+}
+
+void stage3::setItem(int x, int y)
+{
+	item* stageItem;
+	stageItem = new item;
+	int i = RND->getFromIntTo(0, 8);
+	stageItem->init((ITEMLIST)i, x, y);
+
+	_vstageItem.push_back(stageItem);
+}
+
+void stage3::attackCollision(void)
+{
+	RECT temp;
+
+	for (int i = 0; i < _vLittleWorm.size(); i++)
+	{
+		for (int j = DEFAULT; j < SKILLEND; j++)
+		{
+			if (IntersectRect(&temp, &_vLittleWorm[i]->getRect(),
+				&_stageFinn->getSkillHitBox(j)) && _stageFinn->getSkillIsFire(j) && _vLittleWorm[i]->getState() != DIRECTION_HIT)
+			{
+				int k = RND->getInt(2);
+
+				if (k) SOUNDMANAGER->play("타격음1", 1.0f);
+				else SOUNDMANAGER->play("타격음2", 1.0f);
+
+				_vLittleWorm[i]->delHP(_stageFinn->getSkillDamage(j));
+				_vLittleWorm[i]->setHit();
+				if (_stageFinn->getState() == TACKLE)
+				{
+					_stageFinn->tackleKnockBack();
+				}
+
+				if (_vLittleWorm[i]->getHP() <= 0)
+				{
+					setItem(_vLittleWorm[i]->getX(), _vLittleWorm[i]->getY() - 10);
+				}
+
+				if (_vLittleWorm[i]->getHP() <= 0)
+				{
+					_vLittleWorm.erase(_vLittleWorm.begin() + i);
+					return;
+				}
+
+			}
+		}
+
+		if (IntersectRect(&temp, &_vLittleWorm[i]->getRect(),
+			&_stageFinn->getBodyRC()) && _stageFinn->getState() != DEAD && (_stageFinn->getIsHit() == false))
+		{
+			SOUNDMANAGER->play("맞았을때", 1.0f);
+			_stageFinn->setCurrentHP(_stageFinn->getCurrentHP() - 1);
+			_stageFinn->setState(HIT);
+		}
+	}
+
+	if (_stageFinn->getIsDead())
+	{
+		SOUNDMANAGER->stop("스테이지");
+
+		_isChange = true;
+		_sceneEffect->setFadeOUT(true);
+
+		//씬 전환 끝나면 씬 체인지
+		if (!_sceneEffect->getChangeScene())
+		{
+			_vstageItem.clear();
+			DATABASE->loadData();
+			SCENEMANAGER->changeScene("SCENE_SAVE_POINT");
+		}
+		_stageFinn->setSpeedX(0);
 	}
 }
 

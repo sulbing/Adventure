@@ -34,6 +34,7 @@ void mainGame::addImage()
 
 	//보스 스테이지
 	IMAGEMANAGER->addImage("BOSS_STAGE", "Image/FINALBOSS_STAGE.bmp", 800, 480, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("ENDING", "Image/엔딩.bmp", 800, 480, true, RGB(255, 0, 255));
 
 	//체스트스테이지
 	IMAGEMANAGER->addImage("CHEST_STAGE_BACKGROUND", "Image/CHESTSTAGE_BACKGROUND.bmp", 1150, 480, true, RGB(255, 0, 255));
