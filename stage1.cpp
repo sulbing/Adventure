@@ -56,13 +56,8 @@ void stage1::update(void)
 		(*_vistageItem)->update();
 	}
 
-	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
-	{
-		setItem();
-	}
-
 	eatItem();
-
+	attackCollision();
 	//ÇÉ ¾÷µ¥ÀÌÆ®
 	if (!_isChange)
 	{
@@ -331,12 +326,12 @@ void stage1::camMove(void)
 	}
 }
 
-void stage1::setItem(void)
+void stage1::setItem(int x, int y)
 {
 	item* stageItem;
 	stageItem = new item;
 	int i = RND->getFromIntTo(0, 8);
-	stageItem->init((ITEMLIST)i, _stageFinn->getX() + 50, _stageFinn->getY() - 10);
+	stageItem->init((ITEMLIST)i, x, y);
 
 	_vstageItem.push_back(stageItem);
 }
@@ -355,6 +350,54 @@ void stage1::eatItem(void)
 			break;
 		}
 	}
+}
+
+void stage1::attackCollision(void)
+{
+	RECT temp;
+
+	for (int i = 0; i < _vLittleWorm.size(); i++)
+	{
+		for (int j = DEFAULT; j < SKILLEND; j++)
+		{
+			if (IntersectRect(&temp, &_vLittleWorm[i]->getRect(),
+				&_stageFinn->getSkillHitBox(j)) && _stageFinn->getSkillIsFire(j)&& _vLittleWorm[i]->getState() != DIRECTION_HIT)
+			{
+				_vLittleWorm[i]->delHP(_stageFinn->getSkillDamage(j));
+				_vLittleWorm[i]->setHit();
+				if (_stageFinn->getState() == TACKLE)
+				{
+					_stageFinn->tackleKnockBack();
+				}
+
+				if (_vLittleWorm[i]->getHP() <= 0)
+				{
+					setItem(_vLittleWorm[i]->getX(), _vLittleWorm[i]->getY());
+				}
+
+				if (_vLittleWorm[i]->getHP() <= 0)
+				{
+					//item* stageItem;
+					//stageItem = new item;
+					//int i = RND->getFromIntTo(0, 8);
+					//stageItem->init((ITEMLIST)i, _vLittleWorm[i]->getX(), _vLittleWorm[i]->getY());
+
+					//_vstageItem.push_back(stageItem);
+					_vLittleWorm.erase(_vLittleWorm.begin() + i);
+					return;
+				}
+			
+			}
+		}
+
+		if (IntersectRect(&temp, &_vLittleWorm[i]->getRect(),
+			&_stageFinn->getBodyRC()) && _stageFinn->getState() != DEAD && (_stageFinn->getIsHit() == false))
+		{
+			_stageFinn->setCurrentHP(_stageFinn->getCurrentHP() - 1);
+			_stageFinn->setState(HIT);
+		}
+	}
+
 }
 
 void stage1::addEnemy()

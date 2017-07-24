@@ -101,6 +101,7 @@ void database::useBonus(int Num)
 	{
 	case 12:
 		_status_hearts++;
+		setStatusCurrentHP(getStatusCureentHP() + 4);
 		break;
 	case 13:
 		_status_attack++;
