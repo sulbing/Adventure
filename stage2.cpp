@@ -319,7 +319,7 @@ void stage2::setItem(void)
 {
 	item* stageItem;
 	stageItem = new item;
-	int i = RND->getFromIntTo(3, 8);
+	int i = RND->getFromIntTo(0, 8);
 	stageItem->init((ITEMLIST)i, _stageFinn->getX() + 50, _stageFinn->getY() - 10);
 
 	_vstageItem.push_back(stageItem);

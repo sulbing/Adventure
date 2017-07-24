@@ -19,7 +19,7 @@ HRESULT cheststage::init(void)
 	if (!_chestOpen)
 	{
 		_item = new item;
-		_itemNum = RND->getFromIntTo(0, 2);
+		_itemNum = 15;
 		_item->setXY(WINSIZEX / 2, WINSIZEY - 100);
 		_item->init((ITEMLIST)_itemNum, _item->getX(), _item->getY());
 	}
@@ -189,6 +189,10 @@ void cheststage::eatItem(void)
 
 	if (IntersectRect(&temp, &_stageFinn->getBodyRC(), &_item->getRect()))
 	{
+		DATABASE->pushbackaddVector(_itemNum);
+		DATABASE->pushbackaddVector(_itemNum);
+		DATABASE->pushbackaddVector(_itemNum);
+		DATABASE->pushbackaddVector(_itemNum);
 		DATABASE->pushbackaddVector(_itemNum);
 		SAFE_DELETE(_item);
 	}
